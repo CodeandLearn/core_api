@@ -36,7 +36,7 @@ public class Application {
 			 * intanciés mais SpringMVC ne fait pas le lien.
 			 * loadJar("./plugins/HelloWorld.jar");
 			 */
-			//loadJar("./plugins/HelloWorld.jar");
+			// loadJar("./plugins/HelloWorld.jar");
 			SpringApplication app = new SpringApplication(Application.class);
 			app.run(args);
 		} catch (Exception e) {
