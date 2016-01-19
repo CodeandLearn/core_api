@@ -11,11 +11,9 @@ public class CustomizationBean implements EmbeddedServletContainerCustomizer {
 	@Override
 	public void customize(ConfigurableEmbeddedServletContainer container) {
 		MimeMappings mappings = new MimeMappings(MimeMappings.DEFAULT);
-		container.setPort(8080);
 		mappings.add("json", "text/html;charset=utf-8");
+		container.setPort(8080);
 		container.setSessionTimeout(10, TimeUnit.MINUTES);
-		// container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND,
-		// "/notfound.html"));
+		//container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/notfound.html"));
 	}
-
 }

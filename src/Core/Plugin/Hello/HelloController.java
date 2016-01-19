@@ -1,4 +1,4 @@
-package Core;
+package Core.Plugin.Hello;
 
 import java.util.concurrent.atomic.AtomicLong;
 

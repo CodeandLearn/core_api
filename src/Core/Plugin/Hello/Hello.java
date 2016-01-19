@@ -1,4 +1,4 @@
-package Core;
+package Core.Plugin.Hello;
 
 public class Hello {
 	private final long id;
