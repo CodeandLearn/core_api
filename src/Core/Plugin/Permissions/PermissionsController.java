@@ -13,7 +13,7 @@ public class PermissionsController {
 	public Default permissions(@RequestParam(value = "id") Integer id) {
 		return new Default(String.valueOf(id));
 	}
-	
+
 	@RequestMapping(value = "/permissions/groupid/", method = RequestMethod.GET)
 	public Default permissionsGroupId(@RequestParam(value = "groupid") Integer groupid) {
 		return new Default(String.valueOf(groupid));

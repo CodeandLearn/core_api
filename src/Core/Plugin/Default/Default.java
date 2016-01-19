@@ -6,7 +6,7 @@ public class Default {
 	public Default(String content) {
 		this.content = content;
 	}
-	
+
 	public String getContent() {
 		return content;
 	}

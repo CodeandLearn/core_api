@@ -13,19 +13,20 @@ public class CourseController {
 	public Default courseList() {
 		return new Default("Courses");
 	}
-	
+
 	@RequestMapping(value = "/course/", method = RequestMethod.GET)
 	public Default course(@RequestParam(value = "id") Integer id) {
 		return new Default(String.valueOf(id));
 	}
-	
+
 	@RequestMapping(value = "/course/comment/", method = RequestMethod.GET)
 	public Default courseComment(@RequestParam(value = "course_id") Integer course_id) {
 		return new Default(String.valueOf(course_id));
 	}
-	
+
 	@RequestMapping(value = "/course/languages/list/", method = RequestMethod.GET)
-	public Default courseLanguagesList(@RequestParam(value = "id") Integer id, @RequestParam(value = "name") String name) {
+	public Default courseLanguagesList(@RequestParam(value = "id") Integer id,
+			@RequestParam(value = "name") String name) {
 		return new Default(name);
 	}
 }
