@@ -1,5 +1,10 @@
 package Core.Plugin.Hello;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import Core.Tool.SQLiteJDBC;
+
 public class Hello {
 	private final long id;
 	private final String content;
@@ -15,5 +20,22 @@ public class Hello {
 
 	public String getContent() {
 		return content;
+	}
+
+	public void testSQL() {
+		SQLiteJDBC sql = new SQLiteJDBC("data");
+		ResultSet result = sql.selectDB("SELECT * FROM test");
+		int id = -1;
+		try {
+			if (result.next()) {
+				id = result.getInt(1);
+			} else {
+				System.out.println("Aucun résultat");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		System.out.println(String.valueOf(id));
+		sql.closeDB();
 	}
 }
