@@ -3,10 +3,13 @@ package Core.Plugin.Default;
 import java.sql.Timestamp;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.HandlerMapping;
 
 public class Default {
+	protected HttpServletRequest request;
+	protected HttpServletResponse reply;
 	private Timestamp timestamp;
 	private Integer status;
 	private String error;
@@ -14,6 +17,17 @@ public class Default {
 	private String path;
 
 	public Default(HttpServletRequest request) {
+		this.request = request;
+		this.timestamp = new Timestamp(System.currentTimeMillis());
+		this.status = 200;
+		this.error = "OK";
+		this.message = "";
+		this.path = request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE).toString();
+	}
+	
+	public Default(HttpServletRequest request, HttpServletResponse reply) {
+		this.request = request;
+		this.reply = reply;
 		this.timestamp = new Timestamp(System.currentTimeMillis());
 		this.status = 200;
 		this.error = "OK";

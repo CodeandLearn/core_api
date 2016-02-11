@@ -9,7 +9,7 @@ public class SQLiteJDBC {
 	public SQLiteJDBC(String dbName) {
 		try {
 			Class.forName("org.sqlite.JDBC");
-			c = DriverManager.getConnection("jdbc:sqlite:" + dbName + ".db");
+			c = DriverManager.getConnection("jdbc:sqlite:./db/" + dbName + ".db");
 			stmt = c.createStatement();
 			c.setAutoCommit(false);
 		} catch (ClassNotFoundException e) {

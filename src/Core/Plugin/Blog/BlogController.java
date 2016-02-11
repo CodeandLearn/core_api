@@ -1,12 +1,19 @@
 package Core.Plugin.Blog;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import Core.Plugin.Blog.GET.BlogPostCategoryGet;
+import Core.Plugin.Blog.GET.BlogPostCategoryIdGet;
+import Core.Plugin.Blog.GET.BlogPostCommentGet;
+import Core.Plugin.Blog.GET.BlogPostCommentIdGet;
+import Core.Plugin.Blog.GET.BlogPostGet;
+import Core.Plugin.Blog.GET.BlogPostIdGet;
 import Core.Plugin.Default.Default;
 
 @RestController
@@ -15,28 +22,38 @@ public class BlogController {
 	 * GET
 	 */
 	@RequestMapping(value = "/blog/post/{id}", method = RequestMethod.GET)
-	public Blog blogPostId(@PathVariable int id, HttpServletRequest request) {
-		return new Blog(request, id);
+	public BlogPostIdGet blogPostIdGet(@PathVariable int id, HttpServletRequest request, HttpServletResponse reply) {
+		return new BlogPostIdGet(request, reply, id);
 	}
 
 	@RequestMapping(value = "/blog/post", method = RequestMethod.GET)
-	public Default blogPost(HttpServletRequest request) {
-		return new Default(request);
+	public BlogPostGet blogPostGet(HttpServletRequest request, HttpServletResponse reply) {
+		return new BlogPostGet(request, reply, 0);
+	}
+	
+	@RequestMapping(value = "/blog/post/limit/{limit}", method = RequestMethod.GET)
+	public BlogPostGet blogPostLimitGet(@PathVariable int limit, HttpServletRequest request, HttpServletResponse reply) {
+		return new BlogPostGet(request, reply, limit);
 	}
 
 	@RequestMapping(value = "/blog/post/category/{id}", method = RequestMethod.GET)
-	public Default blogPostCategory(HttpServletRequest request) {
-		return new Default(request);
+	public Default blogPostCategoryIdGet(@PathVariable int id, HttpServletRequest request, HttpServletResponse reply) {
+		return new BlogPostCategoryIdGet(request, reply, id);
+	}
+	
+	@RequestMapping(value = "/blog/post/category", method = RequestMethod.GET)
+	public Default blogPostCategoryGet(HttpServletRequest request, HttpServletResponse reply) {
+		return new BlogPostCategoryGet(request, reply);
 	}
 
-	@RequestMapping(value = "/blog/post/comment/{id}", method = RequestMethod.GET)
-	public Default blogPostCommentId(HttpServletRequest request) {
-		return new Default(request);
+	@RequestMapping(value = "/blog/post/comment/one/{id}", method = RequestMethod.GET)
+	public Default blogPostCommentIdGet(@PathVariable int id, HttpServletRequest request, HttpServletResponse reply) {
+		return new BlogPostCommentIdGet(request, reply, id);
 	}
 
-	@RequestMapping(value = "/blog/post/comment", method = RequestMethod.GET)
-	public Default blogPostComment(HttpServletRequest request) {
-		return new Default(request);
+	@RequestMapping(value = "/blog/post/comment/{blog_post_id}", method = RequestMethod.GET)
+	public Default blogPostCommentGet(@PathVariable int blog_post_id, HttpServletRequest request, HttpServletResponse reply) {
+		return new BlogPostCommentGet(request, reply, blog_post_id);
 	}
 
 	/*
