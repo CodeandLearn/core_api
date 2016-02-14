@@ -12,25 +12,24 @@ import Core.Plugin.Default.Default;
 @RestController
 public class ExerciceController {
 	@RequestMapping(value = "/exercice/", method = RequestMethod.GET)
-	public Default exercice(@RequestParam(value = "id") Integer id, HttpServletRequest request) {
+	public Default exercice(@RequestParam(value = "id") int id, HttpServletRequest request) {
 		return new Default(request);
 	}
 
 	@RequestMapping(value = "/exercice/comment/", method = RequestMethod.GET)
-	public Default exerciceComment(@RequestParam(value = "exercice_id") Integer exercice_id,
-			HttpServletRequest request) {
+	public Default exerciceComment(@RequestParam(value = "exercice_id") int exercice_id, HttpServletRequest request) {
 		return new Default(request);
 	}
 
 	@RequestMapping(value = "/exercice/correction/", method = RequestMethod.GET)
-	public Default exerciceCorrection(@RequestParam(value = "exercice_id") Integer exercice_id,
-			@RequestParam(value = "token") Integer token, HttpServletRequest request) {
+	public Default exerciceCorrection(@RequestParam(value = "exercice_id") int exercice_id,
+			@RequestParam(value = "token") int token, HttpServletRequest request) {
 		return new Default(request);
 	}
 
 	@RequestMapping(value = "/exercice/user_code/", method = RequestMethod.GET)
-	public Default exerciceUserCode(@RequestParam(value = "exercice_id") Integer exercice_id,
-			@RequestParam(value = "author_id") Integer author_id, @RequestParam(value = "token") Integer token,
+	public Default exerciceUserCode(@RequestParam(value = "exercice_id") int exercice_id,
+			@RequestParam(value = "author_id") int author_id, @RequestParam(value = "token") int token,
 			HttpServletRequest request) {
 		return new Default(request);
 	}

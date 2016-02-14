@@ -34,7 +34,7 @@ public class BlogPostCategoryGet extends Default {
 	}
 
 	private void sqlBlogPostCategoryGet() throws IOException, SQLException {
-		Integer i = 0;
+		int i = 0;
 		SQLiteJDBC sql = new SQLiteJDBC("db_SQLlite");
 		ResultSet result = sql.selectDB(
 				"SELECT (SELECT COUNT(id) FROM blog_posts_category)'nb', * FROM blog_posts_category ORDER BY name");
@@ -46,5 +46,4 @@ public class BlogPostCategoryGet extends Default {
 		}
 		sql.closeDB();
 	}
-
 }

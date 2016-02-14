@@ -12,12 +12,12 @@ import Core.Plugin.Default.Default;
 @RestController
 public class PermissionsController {
 	@RequestMapping(value = "/permissions/", method = RequestMethod.GET)
-	public Default permissions(@RequestParam(value = "id") Integer id, HttpServletRequest request) {
+	public Default permissions(@RequestParam(value = "id") int id, HttpServletRequest request) {
 		return new Default(request);
 	}
 
 	@RequestMapping(value = "/permissions/groupid/", method = RequestMethod.GET)
-	public Default permissionsGroupId(@RequestParam(value = "groupid") Integer groupid, HttpServletRequest request) {
+	public Default permissionsGroupId(@RequestParam(value = "groupid") int groupid, HttpServletRequest request) {
 		return new Default(request);
 	}
 }

@@ -16,7 +16,7 @@ public class HelloObj {
 	@NotNull
 	@Min(1)
 	@Max(value = 10, message = "test de message d'erreur")
-	private Integer id;
+	private int id;
 
 	public void setName(String name) {
 		this.name = name;
@@ -26,7 +26,7 @@ public class HelloObj {
 		this.title = title;
 	}
 
-	public void setId(Integer id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -38,7 +38,7 @@ public class HelloObj {
 		return title;
 	}
 
-	public Integer getId() {
+	public int getId() {
 		return id;
 	}
 }

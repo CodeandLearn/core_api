@@ -17,7 +17,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/user/id/", method = RequestMethod.GET)
-	public Default userId(@RequestParam(value = "id") Integer id, HttpServletRequest request) {
+	public Default userId(@RequestParam(value = "id") int id, HttpServletRequest request) {
 		return new Default(request);
 	}
 }

@@ -12,55 +12,63 @@ import Core.Plugin.Default.Default;
 import Core.Tool.SQLiteJDBC;
 
 public class BlogPostIdGet extends Default {
-	private Integer id;
-	private Integer account_id;
-	private Integer locales_id;
-	private Integer blog_category_id;
+	private int id;
+	private int account_id;
+	private int locales_id;
+	private int blog_category_id;
 	private String title;
 	private String content;
 	private Timestamp create_timestamp;
 	private Timestamp modify_timestamp;
 
-	public BlogPostIdGet(HttpServletRequest request, HttpServletResponse reply, Integer id) {
+	public BlogPostIdGet(HttpServletRequest request, HttpServletResponse reply, int id) {
 		super(request, reply);
 		this.id = id;
 		sqlBlogPostId();
 	}
 
-	public Integer getId() {
+	public int getId() {
 		return id;
 	}
-	
-	public Integer getAccountId() {
+
+	public int getAccountId() {
 		return account_id;
 	}
-	
-	public Integer getLocalesId() {
+
+	public int getLocalesId() {
 		return locales_id;
 	}
-	
-	public Integer getBlogCategoryId() {
+
+	public int getBlogCategoryId() {
 		return blog_category_id;
 	}
-	
+
 	public String getTitle() {
 		return title;
 	}
-	
+
 	public String getContent() {
 		return content;
 	}
-	
+
 	public Timestamp getCreateTimestamp() {
 		return create_timestamp;
 	}
-	
+
 	public Timestamp getModifyTimestamp() {
 		return modify_timestamp;
 	}
-	
+
 	public void sqlBlogPostId() {
-		SQLiteJDBC sql = new SQLiteJDBC("db_SQLlite"); //INSERT INTO blog_posts (blog_posts.account_id, blog_posts.locales_id, blog_posts.blog_category_id, blog_posts.title, blog_posts.content, blog_posts.create_timestamp, blog_posts.modify_timestamp)VALUES ();
+		SQLiteJDBC sql = new SQLiteJDBC("db_SQLlite"); // INSERT INTO blog_posts
+														// (blog_posts.account_id,
+														// blog_posts.locales_id,
+														// blog_posts.blog_category_id,
+														// blog_posts.title,
+														// blog_posts.content,
+														// blog_posts.create_timestamp,
+														// blog_posts.modify_timestamp)VALUES
+														// ();
 		ResultSet result = sql.selectDB("SELECT * FROM blog_posts WHERE id=" + id);
 		try {
 			if (result.next()) {

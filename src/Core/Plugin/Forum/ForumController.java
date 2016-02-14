@@ -17,18 +17,18 @@ public class ForumController {
 	}
 
 	@RequestMapping(value = "/forum/subject/", method = RequestMethod.GET)
-	public Default forumSubjects(@RequestParam(value = "id") Integer id, HttpServletRequest request) {
+	public Default forumSubjects(@RequestParam(value = "id") int id, HttpServletRequest request) {
 		return new Default(request);
 	}
 
 	@RequestMapping(value = "/forum/categories/", method = RequestMethod.GET)
-	public Default forumCategories(@RequestParam(value = "id_forum") Integer id_forum, HttpServletRequest request) {
+	public Default forumCategories(@RequestParam(value = "id_forum") int id_forum, HttpServletRequest request) {
 		return new Default(request);
 	}
 
 	@RequestMapping(value = "/forum/posts/", method = RequestMethod.GET)
-	public Default forumPosts(@RequestParam(value = "id_subject") Integer id_subject,
-			@RequestParam(value = "token") Integer token, HttpServletRequest request) {
+	public Default forumPosts(@RequestParam(value = "id_subject") int id_subject,
+			@RequestParam(value = "token") int token, HttpServletRequest request) {
 		return new Default(request);
 	}
 }

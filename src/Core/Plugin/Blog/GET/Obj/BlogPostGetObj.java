@@ -3,10 +3,10 @@ package Core.Plugin.Blog.GET.Obj;
 import java.sql.Timestamp;
 
 public class BlogPostGetObj {
-	public Integer id;
-	public Integer account_id;
-	public Integer locales_id;
-	public Integer blog_category_id;
+	public int id;
+	public int account_id;
+	public int locales_id;
+	public int blog_category_id;
 	public String title;
 	public String content;
 	public Timestamp create_timestamp;

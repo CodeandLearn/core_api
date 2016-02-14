@@ -17,18 +17,18 @@ public class CourseController {
 	}
 
 	@RequestMapping(value = "/course/", method = RequestMethod.GET)
-	public Default course(@RequestParam(value = "id") Integer id, HttpServletRequest request) {
+	public Default course(@RequestParam(value = "id") int id, HttpServletRequest request) {
 		return new Default(request);
 	}
 
 	@RequestMapping(value = "/course/comment/", method = RequestMethod.GET)
-	public Default courseComment(@RequestParam(value = "course_id") Integer course_id, HttpServletRequest request) {
+	public Default courseComment(@RequestParam(value = "course_id") int course_id, HttpServletRequest request) {
 		return new Default(request);
 	}
 
 	@RequestMapping(value = "/course/languages/list/", method = RequestMethod.GET)
-	public Default courseLanguagesList(@RequestParam(value = "id") Integer id,
-			@RequestParam(value = "name") String name, HttpServletRequest request) {
+	public Default courseLanguagesList(@RequestParam(value = "id") int id, @RequestParam(value = "name") String name,
+			HttpServletRequest request) {
 		return new Default(request);
 	}
 }

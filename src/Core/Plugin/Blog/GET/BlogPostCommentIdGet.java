@@ -11,47 +11,48 @@ import javax.servlet.http.HttpServletResponse;
 import Core.Plugin.Default.Default;
 import Core.Tool.SQLiteJDBC;
 
-public class BlogPostCommentIdGet extends Default{
-	private Integer id;
-	private Integer account_id;
-	private Integer blog_post_id;
+public class BlogPostCommentIdGet extends Default {
+	private int id;
+	private int account_id;
+	private int blog_post_id;
 	private String content;
 	private Timestamp create_timestamp;
 	private Timestamp modify_timestamp;
-	
+
 	public BlogPostCommentIdGet(HttpServletRequest request, HttpServletResponse reply, int id) {
 		super(request, reply);
 		this.id = id;
 		sqlBlogPostCommentIdGet();
 	}
-	
-	public Integer getId() {
+
+	public int getId() {
 		return id;
 	}
-	
-	public Integer getAccountId() {
+
+	public int getAccountId() {
 		return account_id;
 	}
-	
-	public Integer getBlogPostId() {
+
+	public int getBlogPostId() {
 		return blog_post_id;
 	}
-	
+
 	public String getContent() {
 		return content;
 	}
-	
+
 	public Timestamp getCreateTimestamp() {
 		return create_timestamp;
 	}
-	
+
 	public Timestamp getModifyTimestamp() {
 		return modify_timestamp;
 	}
 
 	private void sqlBlogPostCommentIdGet() {
 		SQLiteJDBC sql = new SQLiteJDBC("db_SQLlite");
-		ResultSet result = sql.selectDB("SELECT (SELECT COUNT(id) FROM blog_posts_comments)'nb', * FROM blog_posts_comments WHERE id = " + id);
+		ResultSet result = sql.selectDB(
+				"SELECT (SELECT COUNT(id) FROM blog_posts_comments)'nb', * FROM blog_posts_comments WHERE id = " + id);
 		try {
 			if (result.next()) {
 				id = result.getInt("id");
@@ -70,5 +71,4 @@ public class BlogPostCommentIdGet extends Default{
 		}
 		sql.closeDB();
 	}
-
 }

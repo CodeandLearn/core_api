@@ -1,6 +1,6 @@
 package Core.Plugin.Blog.GET.Obj;
 
 public class BlogCategoryGetObj {
-	public Integer id;
+	public int id;
 	public String name;
 }

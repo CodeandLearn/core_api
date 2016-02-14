@@ -12,23 +12,25 @@ import Core.Plugin.Default.Default;
 import Core.Tool.SQLiteJDBC;
 
 public class BlogPostCommentGet extends Default {
-	private Integer blog_post_id;
+	private int blog_post_id;
 	private BlogCommentGetObj[] obj;
-	
+
 	public BlogPostCommentGet(HttpServletRequest request, HttpServletResponse reply, int blog_post_id) {
 		super(request, reply);
 		this.blog_post_id = blog_post_id;
 		sqlBlogPostCommentGet();
 	}
-	
+
 	public BlogCommentGetObj[] getObj() {
 		return obj;
 	}
 
 	private void sqlBlogPostCommentGet() {
-		Integer i = 0;
+		int i = 0;
 		SQLiteJDBC sql = new SQLiteJDBC("db_SQLlite");
-		ResultSet result = sql.selectDB("SELECT (SELECT COUNT(id) FROM blog_posts_comments)'nb', * FROM blog_posts_comments WHERE blog_post_id = " + blog_post_id + " ORDER BY id DESC");
+		ResultSet result = sql.selectDB(
+				"SELECT (SELECT COUNT(id) FROM blog_posts_comments)'nb', * FROM blog_posts_comments WHERE blog_post_id = "
+						+ blog_post_id + " ORDER BY id DESC");
 		try {
 			obj = new BlogCommentGetObj[result.getInt("nb")];
 			if (result.next()) {
@@ -49,5 +51,4 @@ public class BlogPostCommentGet extends Default {
 		}
 		sql.closeDB();
 	}
-
 }

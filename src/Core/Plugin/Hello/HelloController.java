@@ -20,7 +20,7 @@ public class HelloController {
 	public Hello hello(@PathVariable String name) {
 		return new Hello(counter.incrementAndGet(), String.format(template, name));
 	}
-	
+
 	@RequestMapping(value = "/hello/test", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Hello helloTest(@Valid @RequestBody HelloObj helloObj) {
 		return new Hello(counter.incrementAndGet(), helloObj.getName());

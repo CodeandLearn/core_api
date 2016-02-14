@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import Core.Plugin.Blog.DELETE.BlogPostCategoryDelete;
+import Core.Plugin.Blog.DELETE.BlogPostCommentDelete;
+import Core.Plugin.Blog.DELETE.BlogPostDelete;
 import Core.Plugin.Blog.GET.BlogPostCategoryGet;
 import Core.Plugin.Blog.GET.BlogPostCategoryIdGet;
 import Core.Plugin.Blog.GET.BlogPostCommentGet;
@@ -30,29 +33,33 @@ public class BlogController {
 	public BlogPostGet blogPostGet(HttpServletRequest request, HttpServletResponse reply) {
 		return new BlogPostGet(request, reply, 0);
 	}
-	
+
 	@RequestMapping(value = "/blog/post/limit/{limit}", method = RequestMethod.GET)
-	public BlogPostGet blogPostLimitGet(@PathVariable int limit, HttpServletRequest request, HttpServletResponse reply) {
+	public BlogPostGet blogPostLimitGet(@PathVariable int limit, HttpServletRequest request,
+			HttpServletResponse reply) {
 		return new BlogPostGet(request, reply, limit);
 	}
 
 	@RequestMapping(value = "/blog/post/category/{id}", method = RequestMethod.GET)
-	public Default blogPostCategoryIdGet(@PathVariable int id, HttpServletRequest request, HttpServletResponse reply) {
+	public BlogPostCategoryIdGet blogPostCategoryIdGet(@PathVariable int id, HttpServletRequest request,
+			HttpServletResponse reply) {
 		return new BlogPostCategoryIdGet(request, reply, id);
 	}
-	
+
 	@RequestMapping(value = "/blog/post/category", method = RequestMethod.GET)
-	public Default blogPostCategoryGet(HttpServletRequest request, HttpServletResponse reply) {
+	public BlogPostCategoryGet blogPostCategoryGet(HttpServletRequest request, HttpServletResponse reply) {
 		return new BlogPostCategoryGet(request, reply);
 	}
 
 	@RequestMapping(value = "/blog/post/comment/one/{id}", method = RequestMethod.GET)
-	public Default blogPostCommentIdGet(@PathVariable int id, HttpServletRequest request, HttpServletResponse reply) {
+	public BlogPostCommentIdGet blogPostCommentIdGet(@PathVariable int id, HttpServletRequest request,
+			HttpServletResponse reply) {
 		return new BlogPostCommentIdGet(request, reply, id);
 	}
 
 	@RequestMapping(value = "/blog/post/comment/{blog_post_id}", method = RequestMethod.GET)
-	public Default blogPostCommentGet(@PathVariable int blog_post_id, HttpServletRequest request, HttpServletResponse reply) {
+	public BlogPostCommentGet blogPostCommentGet(@PathVariable int blog_post_id, HttpServletRequest request,
+			HttpServletResponse reply) {
 		return new BlogPostCommentGet(request, reply, blog_post_id);
 	}
 
@@ -60,18 +67,20 @@ public class BlogController {
 	 * DELETE
 	 */
 	@RequestMapping(value = "/blog/post/delete/{id}", method = RequestMethod.DELETE)
-	public Default blogPostDelete(HttpServletRequest request) {
-		return new Default(request);
+	public BlogPostDelete blogPostDelete(@PathVariable int id, HttpServletRequest request, HttpServletResponse reply) {
+		return new BlogPostDelete(request, reply, id);
 	}
 
 	@RequestMapping(value = "/blog/post/category/delete/{id}", method = RequestMethod.DELETE)
-	public Default blogPostCategoryDelete(HttpServletRequest request) {
-		return new Default(request);
+	public BlogPostCategoryDelete blogPostCategoryDelete(@PathVariable int id, HttpServletRequest request,
+			HttpServletResponse reply) {
+		return new BlogPostCategoryDelete(request, reply, id);
 	}
 
 	@RequestMapping(value = "/blog/post/comment/delete/{id}", method = RequestMethod.DELETE)
-	public Default blogPostCommentDelete(HttpServletRequest request) {
-		return new Default(request);
+	public BlogPostCommentDelete blogPostCommentDelete(@PathVariable int id, HttpServletRequest request,
+			HttpServletResponse reply) {
+		return new BlogPostCommentDelete(request, reply, id);
 	}
 
 	/*

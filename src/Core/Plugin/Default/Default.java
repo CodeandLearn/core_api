@@ -11,7 +11,7 @@ public class Default {
 	protected HttpServletRequest request;
 	protected HttpServletResponse reply;
 	private Timestamp timestamp;
-	private Integer status;
+	private int status;
 	private String error;
 	private String message;
 	private String path;
@@ -24,7 +24,7 @@ public class Default {
 		this.message = "";
 		this.path = request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE).toString();
 	}
-	
+
 	public Default(HttpServletRequest request, HttpServletResponse reply) {
 		this.request = request;
 		this.reply = reply;
@@ -39,7 +39,7 @@ public class Default {
 		return timestamp;
 	}
 
-	public Integer getStatus() {
+	public int getStatus() {
 		return status;
 	}
 
@@ -55,7 +55,7 @@ public class Default {
 		return path;
 	}
 
-	public void setStatus(Integer status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 

@@ -12,7 +12,7 @@ import Core.Plugin.Default.Default;
 import Core.Tool.SQLiteJDBC;
 
 public class BlogPostGet extends Default {
-	private Integer limit;
+	private int limit;
 	private BlogPostGetObj[] obj;
 
 	public BlogPostGet(HttpServletRequest request, HttpServletResponse reply, int limit) {
@@ -26,7 +26,7 @@ public class BlogPostGet extends Default {
 	}
 
 	public void sqlBlogPost() {
-		Integer i = 0;
+		int i = 0;
 		ResultSet result;
 		SQLiteJDBC sql = new SQLiteJDBC("db_SQLlite");
 		try {
@@ -36,8 +36,8 @@ public class BlogPostGet extends Default {
 								+ limit);
 				obj = new BlogPostGetObj[(result.getInt("nb") > limit) ? limit : result.getInt("nb")];
 			} else {
-				result = sql.selectDB(
-						"SELECT (SELECT COUNT(id) FROM blog_posts)'nb', * FROM blog_posts ORDER BY id DESC");
+				result = sql
+						.selectDB("SELECT (SELECT COUNT(id) FROM blog_posts)'nb', * FROM blog_posts ORDER BY id DESC");
 				obj = new BlogPostGetObj[result.getInt("nb")];
 			}
 			while (result.next()) {

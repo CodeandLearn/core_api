@@ -11,19 +11,19 @@ import Core.Plugin.Default.Default;
 import Core.Tool.SQLiteJDBC;
 
 public class BlogPostCategoryIdGet extends Default {
-	private Integer id;
+	private int id;
 	private String name;
 
-	public BlogPostCategoryIdGet(HttpServletRequest request, HttpServletResponse reply, Integer id) {
+	public BlogPostCategoryIdGet(HttpServletRequest request, HttpServletResponse reply, int id) {
 		super(request, reply);
 		this.id = id;
 		sqlBlogPostCategoryIdGet();
 	}
-	
-	public Integer getId() {
+
+	public int getId() {
 		return id;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
