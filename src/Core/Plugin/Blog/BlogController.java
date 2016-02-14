@@ -17,7 +17,12 @@ import Core.Plugin.Blog.GET.BlogPostCommentGet;
 import Core.Plugin.Blog.GET.BlogPostCommentIdGet;
 import Core.Plugin.Blog.GET.BlogPostGet;
 import Core.Plugin.Blog.GET.BlogPostIdGet;
-import Core.Plugin.Default.Default;
+import Core.Plugin.Blog.POST.BlogPostCategoryModify;
+import Core.Plugin.Blog.POST.BlogPostCommentModify;
+import Core.Plugin.Blog.POST.BlogPostModify;
+import Core.Plugin.Blog.PUT.BlogPostCategoryCreate;
+import Core.Plugin.Blog.PUT.BlogPostCommentCreate;
+import Core.Plugin.Blog.PUT.BlogPostCreate;
 
 @RestController
 public class BlogController {
@@ -87,35 +92,35 @@ public class BlogController {
 	 * PUT
 	 */
 	@RequestMapping(value = "/blog/post/create", method = RequestMethod.PUT)
-	public Default blogPostCreate(HttpServletRequest request) {
-		return new Default(request);
+	public BlogPostCreate blogPostCreate(HttpServletRequest request, HttpServletResponse reply) {
+		return new BlogPostCreate(request, reply);
 	}
 
 	@RequestMapping(value = "/blog/post/category/create", method = RequestMethod.PUT)
-	public Default blogPostCategoryCreate(HttpServletRequest request) {
-		return new Default(request);
+	public BlogPostCategoryCreate blogPostCategoryCreate(HttpServletRequest request, HttpServletResponse reply) {
+		return new BlogPostCategoryCreate(request, reply);
 	}
 
 	@RequestMapping(value = "/blog/post/comment/create", method = RequestMethod.PUT)
-	public Default blogPostCommentCreate(HttpServletRequest request) {
-		return new Default(request);
+	public BlogPostCommentCreate blogPostCommentCreate(HttpServletRequest request, HttpServletResponse reply) {
+		return new BlogPostCommentCreate(request, reply);
 	}
 
 	/*
 	 * POST
 	 */
 	@RequestMapping(value = "/blog/post/modify", method = RequestMethod.POST)
-	public Default blogPostModify(HttpServletRequest request) {
-		return new Default(request);
+	public BlogPostModify blogPostModify(HttpServletRequest request, HttpServletResponse reply) {
+		return new BlogPostModify(request, reply);
 	}
 
 	@RequestMapping(value = "/blog/post/category/modify", method = RequestMethod.POST)
-	public Default blogPostCategoryModify(HttpServletRequest request) {
-		return new Default(request);
+	public BlogPostCategoryModify blogPostCategoryModify(HttpServletRequest request, HttpServletResponse reply) {
+		return new BlogPostCategoryModify(request, reply);
 	}
 
 	@RequestMapping(value = "/blog/post/comment/modify", method = RequestMethod.POST)
-	public Default blogPostCommentModify(HttpServletRequest request) {
-		return new Default(request);
+	public BlogPostCommentModify blogPostCommentModify(HttpServletRequest request, HttpServletResponse reply) {
+		return new BlogPostCommentModify(request, reply);
 	}
 }

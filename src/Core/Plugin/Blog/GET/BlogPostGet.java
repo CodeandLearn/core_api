@@ -7,13 +7,13 @@ import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import Core.Plugin.Blog.GET.Obj.BlogPostGetObj;
+import Core.Plugin.Blog.Obj.BlogPostObj;
 import Core.Plugin.Default.Default;
 import Core.Tool.SQLiteJDBC;
 
 public class BlogPostGet extends Default {
 	private int limit;
-	private BlogPostGetObj[] obj;
+	private BlogPostObj[] obj;
 
 	public BlogPostGet(HttpServletRequest request, HttpServletResponse reply, int limit) {
 		super(request, reply);
@@ -21,7 +21,7 @@ public class BlogPostGet extends Default {
 		sqlBlogPost();
 	}
 
-	public BlogPostGetObj[] getObj() {
+	public BlogPostObj[] getObj() {
 		return obj;
 	}
 
@@ -34,14 +34,14 @@ public class BlogPostGet extends Default {
 				result = sql.selectDB(
 						"SELECT (SELECT COUNT(id) FROM blog_posts)'nb', * FROM blog_posts ORDER BY id DESC LIMIT "
 								+ limit);
-				obj = new BlogPostGetObj[(result.getInt("nb") > limit) ? limit : result.getInt("nb")];
+				obj = new BlogPostObj[(result.getInt("nb") > limit) ? limit : result.getInt("nb")];
 			} else {
 				result = sql
 						.selectDB("SELECT (SELECT COUNT(id) FROM blog_posts)'nb', * FROM blog_posts ORDER BY id DESC");
-				obj = new BlogPostGetObj[result.getInt("nb")];
+				obj = new BlogPostObj[result.getInt("nb")];
 			}
 			while (result.next()) {
-				obj[i] = new BlogPostGetObj();
+				obj[i] = new BlogPostObj();
 				obj[i].id = result.getInt("id");
 				obj[i].account_id = result.getInt("account_id");
 				obj[i].locales_id = result.getInt("locales_id");

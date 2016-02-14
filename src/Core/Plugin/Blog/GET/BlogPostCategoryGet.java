@@ -7,12 +7,12 @@ import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import Core.Plugin.Blog.GET.Obj.BlogCategoryGetObj;
+import Core.Plugin.Blog.Obj.BlogCategoryObj;
 import Core.Plugin.Default.Default;
 import Core.Tool.SQLiteJDBC;
 
 public class BlogPostCategoryGet extends Default {
-	private BlogCategoryGetObj[] obj;
+	private BlogCategoryObj[] obj;
 
 	public BlogPostCategoryGet(HttpServletRequest request, HttpServletResponse reply) {
 		super(request, reply);
@@ -29,7 +29,7 @@ public class BlogPostCategoryGet extends Default {
 		}
 	}
 
-	public BlogCategoryGetObj[] getObj() {
+	public BlogCategoryObj[] getObj() {
 		return obj;
 	}
 
@@ -38,9 +38,9 @@ public class BlogPostCategoryGet extends Default {
 		SQLiteJDBC sql = new SQLiteJDBC("db_SQLlite");
 		ResultSet result = sql.selectDB(
 				"SELECT (SELECT COUNT(id) FROM blog_posts_category)'nb', * FROM blog_posts_category ORDER BY name");
-		obj = new BlogCategoryGetObj[result.getInt("nb")];
+		obj = new BlogCategoryObj[result.getInt("nb")];
 		while (result.next()) {
-			obj[i] = new BlogCategoryGetObj();
+			obj[i] = new BlogCategoryObj();
 			obj[i].id = result.getInt("id");
 			obj[i].name = result.getString("name");
 		}
