@@ -2,8 +2,10 @@ package Core.Plugin.Blog;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +19,9 @@ import Core.Plugin.Blog.GET.BlogPostCommentGet;
 import Core.Plugin.Blog.GET.BlogPostCommentIdGet;
 import Core.Plugin.Blog.GET.BlogPostGet;
 import Core.Plugin.Blog.GET.BlogPostIdGet;
+import Core.Plugin.Blog.Obj.BlogCategoryObj;
+import Core.Plugin.Blog.Obj.BlogCommentObj;
+import Core.Plugin.Blog.Obj.BlogPostObj;
 import Core.Plugin.Blog.POST.BlogPostCategoryModify;
 import Core.Plugin.Blog.POST.BlogPostCommentModify;
 import Core.Plugin.Blog.POST.BlogPostModify;
@@ -92,18 +97,19 @@ public class BlogController {
 	 * PUT
 	 */
 	@RequestMapping(value = "/blog/post/create", method = RequestMethod.PUT)
-	public BlogPostCreate blogPostCreate(HttpServletRequest request, HttpServletResponse reply) {
-		return new BlogPostCreate(request, reply);
+	public BlogPostCreate blogPostCreate(@Valid @RequestBody BlogPostObj blogPostObj, HttpServletRequest request, HttpServletResponse reply) {
+		return new BlogPostCreate(request, reply, blogPostObj);
 	}
 
 	@RequestMapping(value = "/blog/post/category/create", method = RequestMethod.PUT)
-	public BlogPostCategoryCreate blogPostCategoryCreate(HttpServletRequest request, HttpServletResponse reply) {
-		return new BlogPostCategoryCreate(request, reply);
+	public BlogPostCategoryCreate blogPostCategoryCreate(@Valid @RequestBody BlogCategoryObj blogCategoryObj,
+			HttpServletRequest request, HttpServletResponse reply) {
+		return new BlogPostCategoryCreate(request, reply, blogCategoryObj);
 	}
 
 	@RequestMapping(value = "/blog/post/comment/create", method = RequestMethod.PUT)
-	public BlogPostCommentCreate blogPostCommentCreate(HttpServletRequest request, HttpServletResponse reply) {
-		return new BlogPostCommentCreate(request, reply);
+	public BlogPostCommentCreate blogPostCommentCreate(@Valid @RequestBody BlogCommentObj blogCommentObj, HttpServletRequest request, HttpServletResponse reply) {
+		return new BlogPostCommentCreate(request, reply, blogCommentObj);
 	}
 
 	/*

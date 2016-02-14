@@ -33,7 +33,7 @@ public class BlogPostCommentGet extends Default {
 						+ blog_post_id + " ORDER BY id DESC");
 		try {
 			obj = new BlogCommentObj[result.getInt("nb")];
-			if (result.next()) {
+			while (result.next()) {
 				obj[i] = new BlogCommentObj();
 				obj[i].id = result.getInt("id");
 				obj[i].account_id = result.getInt("account_id");
@@ -41,6 +41,7 @@ public class BlogPostCommentGet extends Default {
 				obj[i].content = result.getString("content");
 				obj[i].create_timestamp = result.getTimestamp("create_timestamp");
 				obj[i].modify_timestamp = result.getTimestamp("modify_timestamp");
+				++i;
 			}
 		} catch (SQLException e) {
 			try {

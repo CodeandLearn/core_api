@@ -10,5 +10,4 @@ public class BlogPostCategoryModify extends Default {
 	public BlogPostCategoryModify(HttpServletRequest request, HttpServletResponse reply) {
 		super(request, reply);
 	}
-
 }

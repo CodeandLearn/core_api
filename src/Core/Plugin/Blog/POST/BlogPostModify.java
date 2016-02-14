@@ -10,5 +10,4 @@ public class BlogPostModify extends Default {
 	public BlogPostModify(HttpServletRequest request, HttpServletResponse reply) {
 		super(request, reply);
 	}
-
 }

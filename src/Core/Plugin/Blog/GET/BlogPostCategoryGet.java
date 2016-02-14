@@ -43,6 +43,7 @@ public class BlogPostCategoryGet extends Default {
 			obj[i] = new BlogCategoryObj();
 			obj[i].id = result.getInt("id");
 			obj[i].name = result.getString("name");
+			++i;
 		}
 		sql.closeDB();
 	}
