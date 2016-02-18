@@ -15,6 +15,7 @@ public class BlogPostDelete extends Default {
 	private void sqlBlogPostDelete(int id) {
 		SQLiteJDBC sql = new SQLiteJDBC("db_SQLlite");
 		sql.deleteDB("DELETE FROM blog_posts WHERE id=" + id);
+		sql.deleteDB("DELETE FROM blog_posts_comments WHERE blog_post_id=" + id);
 		sql.closeDB();
 	}
 }

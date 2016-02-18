@@ -60,15 +60,7 @@ public class BlogPostIdGet extends Default {
 	}
 
 	public void sqlBlogPostId() {
-		SQLiteJDBC sql = new SQLiteJDBC("db_SQLlite"); // INSERT INTO blog_posts
-														// (blog_posts.account_id,
-														// blog_posts.locales_id,
-														// blog_posts.blog_category_id,
-														// blog_posts.title,
-														// blog_posts.content,
-														// blog_posts.create_timestamp,
-														// blog_posts.modify_timestamp)VALUES
-														// ();
+		SQLiteJDBC sql = new SQLiteJDBC("db_SQLlite");
 		ResultSet result = sql.selectDB("SELECT * FROM blog_posts WHERE id=" + id);
 		try {
 			if (result.next()) {
