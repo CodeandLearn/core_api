@@ -1,4 +1,4 @@
-package Core.Plugin.Blog.PUT;
+package Core.Plugin.Blog.POST;
 
 import java.io.IOException;
 import java.sql.SQLException;

@@ -1,4 +1,4 @@
-package Core.Plugin.Blog.POST;
+package Core.Plugin.Blog.PUT;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

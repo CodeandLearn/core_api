@@ -22,12 +22,12 @@ import Core.Plugin.Blog.GET.BlogPostIdGet;
 import Core.Plugin.Blog.Obj.BlogCategoryObj;
 import Core.Plugin.Blog.Obj.BlogCommentObj;
 import Core.Plugin.Blog.Obj.BlogPostObj;
-import Core.Plugin.Blog.POST.BlogPostCategoryModify;
-import Core.Plugin.Blog.POST.BlogPostCommentModify;
-import Core.Plugin.Blog.POST.BlogPostModify;
-import Core.Plugin.Blog.PUT.BlogPostCategoryCreate;
-import Core.Plugin.Blog.PUT.BlogPostCommentCreate;
-import Core.Plugin.Blog.PUT.BlogPostCreate;
+import Core.Plugin.Blog.POST.BlogPostCategoryCreate;
+import Core.Plugin.Blog.POST.BlogPostCommentCreate;
+import Core.Plugin.Blog.POST.BlogPostCreate;
+import Core.Plugin.Blog.PUT.BlogPostCategoryModify;
+import Core.Plugin.Blog.PUT.BlogPostCommentModify;
+import Core.Plugin.Blog.PUT.BlogPostModify;
 
 @RestController
 public class BlogController {
@@ -94,43 +94,43 @@ public class BlogController {
 	}
 
 	/*
-	 * PUT
+	 * POST
 	 */
-	@RequestMapping(value = "/blog/post/create", method = RequestMethod.PUT)
+	@RequestMapping(value = "/blog/post/create", method = RequestMethod.POST)
 	public BlogPostCreate blogPostCreate(@Valid @RequestBody BlogPostObj blogPostObj, HttpServletRequest request,
 			HttpServletResponse reply) {
 		return new BlogPostCreate(request, reply, blogPostObj);
 	}
 
-	@RequestMapping(value = "/blog/post/category/create", method = RequestMethod.PUT)
+	@RequestMapping(value = "/blog/post/category/create", method = RequestMethod.POST)
 	public BlogPostCategoryCreate blogPostCategoryCreate(@Valid @RequestBody BlogCategoryObj blogCategoryObj,
 			HttpServletRequest request, HttpServletResponse reply) {
 		return new BlogPostCategoryCreate(request, reply, blogCategoryObj);
 	}
 
-	@RequestMapping(value = "/blog/post/comment/create", method = RequestMethod.PUT)
+	@RequestMapping(value = "/blog/post/comment/create", method = RequestMethod.POST)
 	public BlogPostCommentCreate blogPostCommentCreate(@Valid @RequestBody BlogCommentObj blogCommentObj,
 			HttpServletRequest request, HttpServletResponse reply) {
 		return new BlogPostCommentCreate(request, reply, blogCommentObj);
 	}
 
 	/*
-	 * POST
+	 * PUT
 	 */
-	@RequestMapping(value = "/blog/post/modify/{id}", method = RequestMethod.POST)
+	@RequestMapping(value = "/blog/post/modify/{id}", method = RequestMethod.PUT)
 	public BlogPostModify blogPostModify(@PathVariable int id, @Valid @RequestBody BlogPostObj blogPostObj,
 			HttpServletRequest request, HttpServletResponse reply) {
 		return new BlogPostModify(request, reply, id, blogPostObj);
 	}
 
-	@RequestMapping(value = "/blog/post/category/modify/{id}", method = RequestMethod.POST)
+	@RequestMapping(value = "/blog/post/category/modify/{id}", method = RequestMethod.PUT)
 	public BlogPostCategoryModify blogPostCategoryModify(@PathVariable int id,
 			@Valid @RequestBody BlogCategoryObj blogCategoryObj, HttpServletRequest request,
 			HttpServletResponse reply) {
 		return new BlogPostCategoryModify(request, reply, id, blogCategoryObj);
 	}
 
-	@RequestMapping(value = "/blog/post/comment/modify/{id}", method = RequestMethod.POST)
+	@RequestMapping(value = "/blog/post/comment/modify/{id}", method = RequestMethod.PUT)
 	public BlogPostCommentModify blogPostCommentModify(@PathVariable int id,
 			@Valid @RequestBody BlogCommentObj blogCommentObj, HttpServletRequest request, HttpServletResponse reply) {
 		return new BlogPostCommentModify(request, reply, id, blogCommentObj);
