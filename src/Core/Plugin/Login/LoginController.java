@@ -21,19 +21,27 @@ public class LoginController {
 }
 
 /*
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.UUID;
 
 public class UserAuth {
+	private String timestamp;
 	private String username;
 	private String password;
 	private String token;
 	private int ttl;
 	
-	public UserAuth(String username, String pwd, String token) {
+	public UserAuth(String timestamp, String username, String pwd, String token) {
+		this.timestamp = timestamp;
 		this.username = username;
 		this.password = pwd;
 		this.token = token;
 		this.ttl = 3600;
+	}
+	
+	public String getTimestamp() {
+		return this.timestamp;
 	}
 	
 	public String getUsername() {
@@ -63,7 +71,8 @@ public class Login {
 	public UserAuth userAuth(@PathVariable String username, @PathVariable String password) {
 		String hashpwd = hashString(password, "MD5");
 		String token = UUID.randomUUID.toString().replaceAll("-","");
-		return new UserAuth(username, hashpwd, token);
+		String timestamp = new java.text.SimpleDateFormat("MM/dd/yyyy h:mm:ss").format(new Date());
+		return new UserAuth(timestamp, username, hashpwd, token);
 	}
 }
 */
