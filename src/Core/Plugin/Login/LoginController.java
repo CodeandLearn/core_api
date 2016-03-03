@@ -19,3 +19,51 @@ public class LoginController {
 		return new Hello(1, "test");
 	}
 }
+
+/*
+import java.util.UUID;
+
+public class UserAuth {
+	private String username;
+	private String password;
+	private String token;
+	private int ttl;
+	
+	public UserAuth(String username, String pwd, String token) {
+		this.username = username;
+		this.password = pwd;
+		this.token = token;
+		this.ttl = 3600;
+	}
+	
+	public String getUsername() {
+		return this.username;
+	}
+	
+	public String getPassword() {
+		return this.password;
+	}
+	
+	public String getToken() {
+		return this.token;
+	}
+	
+	public int getTtl() {
+		return this.ttl;
+	}
+	
+	public void setTtl(int newTtl) {
+		this.ttl = newTtl;
+	}
+}
+
+@RestController
+public class Login {
+	@RequestMapping(value = "/login/{username}/{password}", method = RequestMethod.GET)
+	public UserAuth userAuth(@PathVariable String username, @PathVariable String password) {
+		String hashpwd = hashString(password, "MD5");
+		String token = UUID.randomUUID.toString().replaceAll("-","");
+		return new UserAuth(username, hashpwd, token);
+	}
+}
+*/
