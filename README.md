@@ -6,9 +6,9 @@ Fonctionne mieux sous linux.
 ```
 	java -jar server.jar
 ```
-Adresse de requête voir la doc
+Adresse de requï¿½te voir la doc
 ```
-	http://127.0.0.1:8080/[requête...]
+	http://127.0.0.1:8080/[requï¿½te...]
 ```
 
 I - username:password en base64 example test:secret donne dGVzdDpzZWNyZXQ=

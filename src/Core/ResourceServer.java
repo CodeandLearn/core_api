@@ -9,17 +9,17 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 @Configuration
 @EnableResourceServer
 public class ResourceServer extends ResourceServerConfigurerAdapter {
-	private static final String RESOURCE_ID = "api";
+    private static final String RESOURCE_ID = "api";
 
-	@Override
-	public void configure(HttpSecurity http) throws Exception {
-		http.requestMatchers().antMatchers("/**").and().authorizeRequests().anyRequest()
-				.access("#oauth2.hasScope('read', 'write')");
-	}
+    @Override
+    public void configure(HttpSecurity http) throws Exception {
+        http.requestMatchers().antMatchers("/**").and().authorizeRequests().anyRequest()
+                .access("#oauth2.hasScope('read')");
+    }
 
-	@Override
-	public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
-		resources.resourceId(RESOURCE_ID);
-	}
+    @Override
+    public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
+        resources.resourceId(RESOURCE_ID);
+    }
 
 }

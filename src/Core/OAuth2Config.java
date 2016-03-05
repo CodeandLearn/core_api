@@ -16,34 +16,34 @@ import org.springframework.security.oauth2.provider.token.store.InMemoryTokenSto
 @Configuration
 @EnableAuthorizationServer
 public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
-	private static final String RESOURCE_ID = "api";
-	private TokenStore tokenStore = new InMemoryTokenStore();
+    private static final String RESOURCE_ID = "api";
+    private TokenStore tokenStore = new InMemoryTokenStore();
 
-	@Autowired
-	private AuthenticationManager authenticationManager;
-	@Autowired
-	private CustomUserDetailsService userDetailsService;
+    @Autowired
+    private AuthenticationManager authenticationManager;
+    @Autowired
+    private CustomUserDetailsService userDetailsService;
 
-	@Override
-	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-		endpoints.tokenStore(tokenStore).authenticationManager(authenticationManager)
-				.userDetailsService(userDetailsService);
-	}
+    @Override
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+        endpoints.tokenStore(tokenStore).authenticationManager(authenticationManager)
+                .userDetailsService(userDetailsService);
+    }
 
-	@Override
-	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-		clients.inMemory().withClient("test")
-				.authorizedGrantTypes("client_credentials", "password", "refresh_token", "implicit")
-				.accessTokenValiditySeconds(60 * 60 * 24).refreshTokenValiditySeconds(60 * 60 * 24 * 5)
-				.authorities("USER").scopes("read", "write").resourceIds(RESOURCE_ID).secret("secret");
-	}
+    @Override
+    public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+        clients.inMemory().withClient("test")
+                .authorizedGrantTypes("client_credentials", "password", "refresh_token", "implicit")
+                .accessTokenValiditySeconds(60 * 60 * 24).refreshTokenValiditySeconds(60 * 60 * 24 * 5)
+                .authorities("USER").scopes("read").resourceIds(RESOURCE_ID).secret("secret");
+    }
 
-	@Bean
-	@Primary
-	public DefaultTokenServices tokenServices() {
-		DefaultTokenServices tokenServices = new DefaultTokenServices();
-		tokenServices.setSupportRefreshToken(true);
-		tokenServices.setTokenStore(this.tokenStore);
-		return tokenServices;
-	}
+    @Bean
+    @Primary
+    public DefaultTokenServices tokenServices() {
+        DefaultTokenServices tokenServices = new DefaultTokenServices();
+        tokenServices.setSupportRefreshToken(true);
+        tokenServices.setTokenStore(this.tokenStore);
+        return tokenServices;
+    }
 }
