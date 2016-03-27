@@ -5,6 +5,7 @@
     <groupId>CL_SpringMVC_APIRestFul_Core</groupId>
     <artifactId>CL_SpringMVC_APIRestFul_Core</artifactId>
     <version>0.0.1</version>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -41,6 +42,28 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.1</version>
+                <executions>
+                    <execution>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <echo>Add Database</echo>
+                                <copy file="./db/db_SQLlite.db" tofile="${basedir}/target/db/db_SQLlite.db"/>
+                                <copy file="./db/db_SQLlite_script.sql" tofile="${basedir}/target/db/db_SQLlite_script.sql"/>
+                                <echo>Add Launcher script</echo>
+                                <copy file="./scripts/launcher.bat" tofile="${basedir}/target/launcher.bat"/>
+                                <copy file="./scripts/launcher.sh" tofile="${basedir}/target/launcher.sh"/>
+                            </tasks>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
