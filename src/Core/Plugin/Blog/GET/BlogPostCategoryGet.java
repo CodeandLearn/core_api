@@ -28,7 +28,7 @@ public class BlogPostCategoryGet extends Default {
         }
     }
 
-    public BlogCategoryObj[] getObj() {
+    public BlogCategoryObj[] getArticles() {
         return obj;
     }
 
