@@ -33,7 +33,7 @@ public class SQLite {
             while (result.next()) {
                 int i = 1;
                 HashMap<String, String> data = new HashMap<>();
-                while (i < metaData.getColumnCount()) {
+                while (i <= metaData.getColumnCount()) {
                     data.put(metaData.getColumnName(i), result.getString(i));
                     i++;
                 }
