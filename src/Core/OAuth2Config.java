@@ -1,6 +1,7 @@
 package Core;
 
 import Core.Plugin.Login.Login;
+import Core.Tool.Global;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -24,7 +25,6 @@ import javax.sql.DataSource;
 @Configuration
 @EnableAuthorizationServer
 public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
-    private static final String RESOURCE_ID = "api";
     private TokenStore tokenStore = new InMemoryTokenStore();
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -45,7 +45,7 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
             clients.inMemory().withClient(login.getUser()[i].username)
                     .authorizedGrantTypes("client_credentials", "password", "refresh_token", "implicit")
                     .accessTokenValiditySeconds(60 * 60 * 24).refreshTokenValiditySeconds(60 * 60 * 24 * 5)
-                    .authorities("USER").scopes("read").resourceIds(RESOURCE_ID).secret(login.getUser()[i].password);
+                    .authorities("USER").scopes("read").resourceIds(Global.RESOURCE_ID).secret(login.getUser()[i].password);
         }
     }
 

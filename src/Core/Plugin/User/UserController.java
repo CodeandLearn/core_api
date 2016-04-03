@@ -13,9 +13,4 @@ public class UserController {
     public UserGet user(HttpServletRequest request, HttpServletResponse reply) {
         return new UserGet(request, reply);
     }
-
-    @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
-    public UserGetId userId(@PathVariable int id, HttpServletRequest request, HttpServletResponse reply) {
-        return new UserGetId(request, reply, id);
-    }
 }
