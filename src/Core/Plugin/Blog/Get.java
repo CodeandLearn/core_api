@@ -38,6 +38,11 @@ public class Get extends Default {
             blogObj.local.name = sql.getResultSet().get(i).get("locales.name");
             blogObj.user.id = Integer.parseInt(sql.getResultSet().get(i).get("accounts.id"));
             blogObj.user.username = sql.getResultSet().get(i).get("accounts.username");
+            blogObj.user.group.id = Integer.parseInt(sql.getResultSet().get(i).get("groups.id"));
+            blogObj.user.group.name = sql.getResultSet().get(i).get("groups.name");
+            blogObj.user.group.parent_id = Integer.parseInt(sql.getResultSet().get(i).get("groups.parent_id"));
+            blogObj.user.avatar.id = Integer.parseInt(sql.getResultSet().get(i).get("avatars.id"));
+            blogObj.user.avatar.path = sql.getResultSet().get(i).get("avatars.path");
             SQLite commentSql = new SQLite(SQL.COMMENT + Integer.parseInt(sql.getResultSet().get(i).get("blog_posts.id")));
             commentSql.select();
             int x = 0;
@@ -50,6 +55,11 @@ public class Get extends Default {
                 commentObj.modify_timestamp = Long.parseLong(commentSql.getResultSet().get(x).get("blog_posts_comments.modify_timestamp"));
                 commentObj.user.id = Integer.parseInt(commentSql.getResultSet().get(x).get("accounts.id"));
                 commentObj.user.username = commentSql.getResultSet().get(x).get("accounts.username");
+                commentObj.user.group.id = Integer.parseInt(commentSql.getResultSet().get(x).get("groups.id"));
+                commentObj.user.group.name = commentSql.getResultSet().get(x).get("groups.name");
+                commentObj.user.group.parent_id = Integer.parseInt(commentSql.getResultSet().get(x).get("groups.parent_id"));
+                commentObj.user.avatar.id = Integer.parseInt(commentSql.getResultSet().get(x).get("avatars.id"));
+                commentObj.user.avatar.path = commentSql.getResultSet().get(x).get("avatars.path");
                 blogObj.comments.add(commentObj);
                 x++;
             }

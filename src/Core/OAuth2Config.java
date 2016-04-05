@@ -41,11 +41,11 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         Login login = new Login();
         login.sqlgetUsers();
-        for (int i = 0; i < login.getUser().length; i++) {
-            clients.inMemory().withClient(login.getUser()[i].username)
+        for (int i = 0; i < login.getUser().size(); i++) {
+            clients.inMemory().withClient(login.getUser().get(i).username)
                     .authorizedGrantTypes("client_credentials", "password", "refresh_token", "implicit")
                     .accessTokenValiditySeconds(60 * 60 * 24).refreshTokenValiditySeconds(60 * 60 * 24 * 5)
-                    .authorities("USER").scopes("read").resourceIds(Global.RESOURCE_ID).secret(login.getUser()[i].password);
+                    .authorities("USER").scopes("read").resourceIds(Global.RESOURCE_ID).secret(login.getUser().get(i).password);
         }
     }
 
