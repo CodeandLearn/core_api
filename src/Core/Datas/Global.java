@@ -1,4 +1,4 @@
-package Core.Tool;
+package Core.Datas;
 
 /**
  * Created by teddy on 03/04/2016.

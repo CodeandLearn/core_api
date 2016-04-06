@@ -1,13 +1,10 @@
-package Core.Tool;
+package Core.Tools;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by teddy on 03/04/2016.
@@ -31,11 +28,9 @@ public class SQLite {
             result = sql.selectDB(request);
             ResultSetMetaData metaData = result.getMetaData();
             while (result.next()) {
-                int i = 1;
                 HashMap<String, String> data = new HashMap<>();
-                while (i <= metaData.getColumnCount()) {
+                for (int i = 1; i <= metaData.getColumnCount(); i++) {
                     data.put(metaData.getColumnName(i), result.getString(i));
-                    i++;
                 }
                 entities.add(data);
             }

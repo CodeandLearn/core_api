@@ -1,19 +1,19 @@
 package Core;
 
-import Core.Tool.SQL;
+import Core.Datas.SQLGet;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
-
-import javax.xml.bind.annotation.XmlElementDecl;
-import java.util.Arrays;
 
 @SpringBootApplication
 public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
-        System.out.println("DEBUG : " + SQL.BLOG);
-        System.out.println("DEBUG : " + SQL.COMMENT);
-        System.out.println("DEBUG : " + SQL.USER);
+        System.out.println("\nDEBUG GET BLOG : " + SQLGet.BLOG);
+        System.out.println("\nDEBUG GET BLOG_POST : " + SQLGet.BLOG_POST);
+        System.out.println("\nDEBUG GET BLOG_COMMENT : " + SQLGet.BLOG_COMMENT);
+        System.out.println("\nDEBUG GET BLOG_CATEGORY : " + SQLGet.BLOG_CATEGORY);
+        System.out.println("\nDEBUG GET ACCOUNT : " + SQLGet.ACCOUNT);
+        System.out.println("\nDEBUG GET ACCOUNT_AVATAR : " + SQLGet.ACCOUNT_AVATAR);
+        System.out.println("\nDEBUG GET ACCOUNT_GROUP : " + SQLGet.ACCOUNT_GROUP);
     }
 }

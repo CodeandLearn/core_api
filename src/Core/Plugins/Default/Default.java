@@ -1,4 +1,4 @@
-package Core.Plugin.Default;
+package Core.Plugins.Default;
 
 import org.springframework.web.servlet.HandlerMapping;
 

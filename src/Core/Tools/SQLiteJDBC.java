@@ -1,4 +1,4 @@
-package Core.Tool;
+package Core.Tools;
 
 import java.sql.*;
 
