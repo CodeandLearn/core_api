@@ -12,9 +12,7 @@ public class SQLiteJDBC {
             c = DriverManager.getConnection("jdbc:sqlite:./db/" + dbName + ".db");
             stmt = c.createStatement();
             c.setAutoCommit(false);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
     }

@@ -39,4 +39,22 @@ public class SQLite {
         }
         sql.closeDB();
     }
+
+    public void insert() {
+        SQLiteJDBC sql = new SQLiteJDBC("db_SQLlite");
+        System.out.println("DEBUG INSERT " + request);
+        sql.insertDB(request);
+    }
+
+    public void update() {
+        SQLiteJDBC sql = new SQLiteJDBC("db_SQLlite");
+        System.out.println("DEBUG UPDATE " + request);
+        sql.updateDB(request);
+    }
+
+    public void delete() {
+        SQLiteJDBC sql = new SQLiteJDBC("db_SQLlite");
+        System.out.println("DEBUG DELETE " + request);
+        sql.deleteDB(request);
+    }
 }

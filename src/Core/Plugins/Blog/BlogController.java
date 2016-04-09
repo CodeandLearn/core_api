@@ -1,9 +1,14 @@
 package Core.Plugins.Blog;
 
+import Core.Objs.BlogCategoryObj;
+import Core.Objs.BlogCommentObj;
+import Core.Objs.BlogPostObj;
+import Core.Plugins.Default.Default;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.sql.SQLException;
 
 @RestController
@@ -76,5 +81,50 @@ public class BlogController {
     @RequestMapping(value = "/blog/comment/author/id/{author_id}", method = RequestMethod.GET)
     public GetBlogComments getBlogComments(HttpServletRequest request, HttpServletResponse reply, @PathVariable int author_id) throws SQLException {
         return new GetBlogComments(request, reply, "accounts.id=" + author_id);
+    }
+
+    @RequestMapping(value = "/blog", method = RequestMethod.POST)
+    public PostBlog postBlog(@Valid @RequestBody BlogPostObj blogPostObj, HttpServletRequest request, HttpServletResponse reply) {
+        return new PostBlog(request, reply, blogPostObj);
+    }
+
+    @RequestMapping(value = "/blog/category", method = RequestMethod.POST)
+    public PostBlogCategory postBlogCategory(@Valid @RequestBody BlogCategoryObj blogCategoryObj, HttpServletRequest request, HttpServletResponse reply) {
+        return new PostBlogCategory(request, reply, blogCategoryObj);
+    }
+
+    @RequestMapping(value = "/blog/comment", method = RequestMethod.POST)
+    public PostBlogComment postBlogComment(@Valid @RequestBody BlogCommentObj blogCommentObj, HttpServletRequest request, HttpServletResponse reply) {
+        return new PostBlogComment(request, reply, blogCommentObj);
+    }
+
+    @RequestMapping(value = "/blog/{id}", method = RequestMethod.PUT)
+    public PutBlog putBlog(@PathVariable int id, @Valid @RequestBody BlogPostObj blogPostObj, HttpServletRequest request, HttpServletResponse reply) {
+        return new PutBlog(request, reply, id, blogPostObj);
+    }
+
+    @RequestMapping(value = "/blog/category/{id}", method = RequestMethod.PUT)
+    public PutBlogCategory putBlogCategory(@PathVariable int id, @Valid @RequestBody BlogCategoryObj blogCategoryObj, HttpServletRequest request, HttpServletResponse reply) {
+        return new PutBlogCategory(request, reply, id, blogCategoryObj);
+    }
+
+    @RequestMapping(value = "/blog/comment/{id}", method = RequestMethod.PUT)
+    public PutBlogComment putBlogComment(@PathVariable int id, @Valid @RequestBody BlogCommentObj blogCommentObj, HttpServletRequest request, HttpServletResponse reply) {
+        return new PutBlogComment(request, reply, id, blogCommentObj);
+    }
+
+    @RequestMapping(value = "/blog/{id}", method = RequestMethod.DELETE)
+    public DeleteBlog deleteBlog(@PathVariable int id, HttpServletRequest request, HttpServletResponse reply) {
+        return new DeleteBlog(request, reply, id);
+    }
+
+    @RequestMapping(value = "/blog/category/{id}", method = RequestMethod.DELETE)
+    public DeleteBlogCategory deleteBlogCategory(@PathVariable int id, HttpServletRequest request, HttpServletResponse reply) {
+        return new DeleteBlogCategory(request, reply, id);
+    }
+
+    @RequestMapping(value = "/blog/comment/{id}", method = RequestMethod.DELETE)
+    public DeleteBlogComment deleteBlogComment(@PathVariable int id, HttpServletRequest request, HttpServletResponse reply) {
+        return new DeleteBlogComment(request, reply, id);
     }
 }
