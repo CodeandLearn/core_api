@@ -32,33 +32,30 @@ public class AccountController {
         return new GetAccount(request, reply, "accounts.id=" + id);
     }
 
-    // TODO: 09/04/2016 - Implement
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public Default register(HttpServletRequest request, HttpServletResponse reply, @Valid @RequestBody AccountObj accountObj) {
-        return new Default(request, reply);
+    public PostAccount register(HttpServletRequest request, HttpServletResponse reply, @Valid @RequestBody AccountObj accountObj) {
+        return new PostAccount(request, reply, accountObj);
     }
 
-    // TODO: 09/04/2016 - Implement
+    // TODO: 09/04/2016 - Fix Oauth2.0 token sharing with api
     @RequestMapping(value = "/account", method = RequestMethod.PUT)
-    public Default putAccount(HttpServletRequest request, HttpServletResponse reply, @Valid @RequestBody AccountObj accountObj) {
-        return new Default(request, reply);
+    public PutAccount putAccount(HttpServletRequest request, HttpServletResponse reply, @Valid @RequestBody AccountObj accountObj) {
+        return new PutAccount(request, reply, 1, accountObj);
     }
 
-    // TODO: 09/04/2016 - Implement
     @RequestMapping(value = "/account/{id}", method = RequestMethod.PUT)
-    public Default putAccountById(HttpServletRequest request, HttpServletResponse reply, @PathVariable int id, @Valid @RequestBody AccountObj accountObj) {
-        return new Default(request, reply);
+    public PutAccount putAccountById(HttpServletRequest request, HttpServletResponse reply, @PathVariable int id, @Valid @RequestBody AccountObj accountObj) {
+        return new PutAccount(request, reply, id, accountObj);
     }
 
-    // TODO: 09/04/2016 - Implement
+    // TODO: 09/04/2016 - Fix Oauth2.0 token sharing with api
     @RequestMapping(value = "/account", method = RequestMethod.DELETE)
-    public Default deleteAccount(HttpServletRequest request, HttpServletResponse reply) {
-        return new Default(request, reply);
+    public DeleteAccount deleteAccount(HttpServletRequest request, HttpServletResponse reply) {
+        return new DeleteAccount(request, reply, 1);
     }
 
-    // TODO: 09/04/2016 - Implement
     @RequestMapping(value = "/account/{id}", method = RequestMethod.DELETE)
-    public Default deleteAccountById(HttpServletRequest request, HttpServletResponse reply, @PathVariable int id) {
-        return new Default(request, reply);
+    public DeleteAccount deleteAccountById(HttpServletRequest request, HttpServletResponse reply, @PathVariable int id) {
+        return new DeleteAccount(request, reply, id);
     }
 }
