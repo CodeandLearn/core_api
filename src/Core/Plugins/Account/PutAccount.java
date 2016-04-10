@@ -1,6 +1,6 @@
 package Core.Plugins.Account;
 
-import Core.Datas.SQLPost;
+import Core.Datas.SQLPut;
 import Core.Objs.AccountObj;
 import Core.Plugins.Default.Default;
 import Core.Tools.SQLite;
@@ -18,7 +18,7 @@ public class PutAccount extends Default {
     }
 
     private void updateData(int id, AccountObj accountObj) {
-        SQLite sql = new SQLite(SQLPost.ACCOUNT
+        SQLite sql = new SQLite(SQLPut.ACCOUNT
                 + "username=\"" + accountObj.username + "\", "
                 + "password=\"" + accountObj.password + "\", "
                 + "email=\"" + accountObj.email + "\", "
