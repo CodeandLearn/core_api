@@ -1,29 +1,27 @@
 # Core API RESTful
-## Importation du projet sous Eclipse
-//TODO
 ## Lancement de l'API
-Fonctionne mieux sous linux.
+Il existe deux scripts `launcher.bat` pour Windows et `launcher.sh` pour Linux/Mac
 ```
-	java -jar server.jar
-```
-Adresse de requ�te voir la doc
-```
-	http://127.0.0.1:8080/[requ�te...]
+	java -jar CL_SpringMVC_APIRestFul_Core-0.0.1.jar
 ```
 
-I - username:password en base64 example test:secret donne dGVzdDpzZWNyZXQ=
-POST http://127.0.0.1:8080/oauth/token
-Header: Authorization: Basic dGVzdDpzZWNyZXQ=
-Payload: grant_type=client_credentials
+### I - Récupération du token
+`username:password` ex : `test:secret` encodé en base64 donne `dGVzdDpzZWNyZXQ=`
+```
+	POST http://127.0.0.1:8080/oauth/token?grant_type=client_credentials
+    Header: Authorization: Basic dGVzdDpzZWNyZXQ=
+```
+```
+    {
+        "access_token": "18ad7851-b3ea-482e-9e5d-73a8dcfcbd86",
+        "token_type": "bearer",
+        "expires_in": 43059,
+        "scope": "read"
+    }
+```
 
-result : 
-{
-  "access_token": "18ad7851-b3ea-482e-9e5d-73a8dcfcbd86",
-  "token_type": "bearer",
-  "expires_in": 43059,
-  "scope": "read"
-}
-
-II -
-GET http://localhost:8080/[path...]
-Header : Authorization: Bearer 18ad7851-b3ea-482e-9e5d-73a8dcfcbd86
+### II - Utilisation du token
+```
+    GET http://127.0.0.1:8080/[path...]
+    Header : Authorization: Bearer 18ad7851-b3ea-482e-9e5d-73a8dcfcbd86
+```

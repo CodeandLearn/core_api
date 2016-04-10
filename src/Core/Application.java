@@ -1,21 +1,19 @@
 package Core;
 
+import Core.Datas.SQLGet;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
-
-import java.util.Arrays;
 
 @SpringBootApplication
 public class Application {
     public static void main(String[] args) {
-        /*ApplicationContext app = SpringApplication.run(Application.class, args);
-        System.out.println("Loaded :");
-        String[] beanNames = app.getBeanDefinitionNames();
-        Arrays.sort(beanNames);
-        for (String beanName : beanNames) {
-            System.out.println(beanName);
-        }*/
         SpringApplication.run(Application.class, args);
+        System.out.println("\nDEBUG GET BLOG : " + SQLGet.BLOG);
+        System.out.println("\nDEBUG GET BLOG_POST : " + SQLGet.BLOG_POST);
+        System.out.println("\nDEBUG GET BLOG_COMMENT : " + SQLGet.BLOG_COMMENT);
+        System.out.println("\nDEBUG GET BLOG_CATEGORY : " + SQLGet.BLOG_CATEGORY);
+        System.out.println("\nDEBUG GET ACCOUNT : " + SQLGet.ACCOUNT);
+        System.out.println("\nDEBUG GET ACCOUNT_AVATAR : " + SQLGet.ACCOUNT_AVATAR);
+        System.out.println("\nDEBUG GET ACCOUNT_GROUP : " + SQLGet.ACCOUNT_GROUP);
     }
 }
