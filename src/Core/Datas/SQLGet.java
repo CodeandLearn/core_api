@@ -90,7 +90,9 @@ public class SQLGet {
             "AND accounts.group_id=groups.id";
     public static String ACCOUNT_LOGIN = "SELECT accounts.id'accounts.id',\n" +
             "accounts.username'accounts.username',\n" +
-            "accounts.password'accounts.password'\n" +
+            "accounts.password'accounts.password',\n" +
+            "accounts.email'accounts.email',\n" +
+            "accounts.group_id'accounts.group_id'\n" +
             "FROM accounts";
     public static String ACCOUNT_GROUP = "SELECT groups.id'groups.id',\n" +
             "groups.name'groups.name',\n" +

@@ -33,6 +33,9 @@ public class AccountObj {
     public int nb_courses_done;
     @NumberFormat
     public int nb_exercices_done;
+    public String authorities;
+    public String scopes;
+    public int resourceIds;
     public GroupObj group = new GroupObj();
     public AvatarObj avatar = new AvatarObj();
 }

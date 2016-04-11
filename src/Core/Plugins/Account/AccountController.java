@@ -1,8 +1,6 @@
 package Core.Plugins.Account;
 
 import Core.Objs.AccountObj;
-import Core.Objs.BlogCategoryObj;
-import Core.Plugins.Default.Default;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,10 +19,10 @@ public class AccountController {
         return new GetAccount(request, reply, "", limit);
     }
 
-    // TODO: 09/04/2016 - Fix Oauth2.0 token sharing with api
     @RequestMapping(value = "/account", method = RequestMethod.GET)
     public GetAccount getAccount(HttpServletRequest request, HttpServletResponse reply) {
-        return new GetAccount(request, reply, "accounts.id=1");
+        System.out.println("get id : " + request.getAttribute("accounts.id"));
+        return new GetAccount(request, reply, "accounts.id=" + request.getAttribute("accounts.id"));
     }
 
     @RequestMapping(value = "/account/{id}", method = RequestMethod.GET)
@@ -32,15 +30,15 @@ public class AccountController {
         return new GetAccount(request, reply, "accounts.id=" + id);
     }
 
+    // TODO: 11/04/2016 - Go fix add account to inMemory data 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public PostAccount register(HttpServletRequest request, HttpServletResponse reply, @Valid @RequestBody AccountObj accountObj) {
         return new PostAccount(request, reply, accountObj);
     }
 
-    // TODO: 09/04/2016 - Fix Oauth2.0 token sharing with api
     @RequestMapping(value = "/account", method = RequestMethod.PUT)
     public PutAccount putAccount(HttpServletRequest request, HttpServletResponse reply, @Valid @RequestBody AccountObj accountObj) {
-        return new PutAccount(request, reply, 1, accountObj);
+        return new PutAccount(request, reply, Integer.parseInt(request.getAttribute("accounts.id").toString()), accountObj);
     }
 
     @RequestMapping(value = "/account/{id}", method = RequestMethod.PUT)
@@ -48,10 +46,9 @@ public class AccountController {
         return new PutAccount(request, reply, id, accountObj);
     }
 
-    // TODO: 09/04/2016 - Fix Oauth2.0 token sharing with api
     @RequestMapping(value = "/account", method = RequestMethod.DELETE)
     public DeleteAccount deleteAccount(HttpServletRequest request, HttpServletResponse reply) {
-        return new DeleteAccount(request, reply, 1);
+        return new DeleteAccount(request, reply, Integer.parseInt(request.getAttribute("accounts.id").toString()));
     }
 
     @RequestMapping(value = "/account/{id}", method = RequestMethod.DELETE)
