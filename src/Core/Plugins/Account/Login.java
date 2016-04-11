@@ -24,6 +24,9 @@ public class Login {
         result = sql.selectDB(SQLGet.ACCOUNT_LOGIN);
         while (result.next()) {
             AccountObj accountObj = new AccountObj();
+            accountObj.id = result.getInt("accounts.id");
+            accountObj.group_id = result.getInt("accounts.group_id");
+            accountObj.email = result.getString("accounts.email");
             accountObj.username = result.getString("accounts.username");
             accountObj.password = result.getString("accounts.password");
             accountObjs.add(accountObj);
