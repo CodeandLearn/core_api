@@ -1,9 +1,10 @@
 package Core.Singleton;
 
+import Core.Database.SQLite;
 import Core.Http.Oauth2;
+import Data.SQLGet;
+import Obj.AccountObj;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -16,9 +17,14 @@ public class UserSecuritySingleton {
     private int nbUsers = 0;
 
     private UserSecuritySingleton() {
-        addUser(1, "Sheol", hashString("test"), PermsSingleton.MEMBER);
-        addUser(2, "Admin", hashString("admin"), PermsSingleton.ADMIN);
-        addUser(3, "Modo", hashString("modo"), PermsSingleton.MODO);
+        SQLite sql = new SQLite(SQLGet.ACCOUNT_LOGIN);
+        sql.select();
+        for (int i = 0; i < sql.getResultSet().size(); i++) {
+            addUser((int) sql.getResultSet().get(i).get("accounts.id"),
+                    (String) sql.getResultSet().get(i).get("accounts.username"),
+                    (String) sql.getResultSet().get(i).get("accounts.password"),
+                    (int) sql.getResultSet().get(i).get("groups.parent_id"));
+        }
         System.out.println("[SYSTEM] -> Nb users loaded: " + nbUsers);
     }
 
@@ -54,6 +60,15 @@ public class UserSecuritySingleton {
         for (HashMap<String, Object> user : users) {
             if (user.get("socket").equals(socket)) {
                 user.replace(key, value);
+            }
+        }
+    }
+
+    public void updateFullUser(String socket, String username, String password) {
+        for (HashMap<String, Object> user : users) {
+            if (user.get("socket").equals(socket)) {
+                user.replace("username", username);
+                user.replace("password", password);
             }
         }
     }

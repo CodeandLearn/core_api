@@ -92,8 +92,12 @@ public class SQLGet {
             "accounts.username'accounts.username',\n" +
             "accounts.password'accounts.password',\n" +
             "accounts.email'accounts.email',\n" +
-            "accounts.group_id'accounts.group_id'\n" +
-            "FROM accounts";
+            "accounts.group_id'accounts.group_id',\n" +
+            "groups.id'groups.id',\n" +
+            "groups.name'groups.name',\n" +
+            "groups.parent_id'groups.parent_id'\n" +
+            "FROM accounts, groups\n" +
+            "WHERE accounts.group_id=groups.id";
     public static String ACCOUNT_GROUP = "SELECT groups.id'groups.id',\n" +
             "groups.name'groups.name',\n" +
             "groups.parent_id'groups.parent_id'\n" +

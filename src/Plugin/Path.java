@@ -12,7 +12,6 @@ import Plugin.Account.GetAccount;
 import Plugin.Account.PostAccount;
 import Plugin.Account.PutAccount;
 import Plugin.Server.Model.Server;
-import Plugin.Test.Model.TestModel;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -38,40 +37,32 @@ public class Path {
     @Methode("GET")
     @Route("/server")
     public Server getServer(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
-        return new Server();
-    }
-
-    @Methode("GET")
-    @Route("/test/{limit}/{id}")
-    public TestModel getTest(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
-        System.out.println("[DEBUG] -> " + args.get("limit") + " " + args.get("id"));
-        return new TestModel();
+        return new Server(socket);
     }
 
     /* ACCOUNT */
     @Methode("GET")
     @Route("/accounts")
     public GetAccount getAccounts(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
-        return new GetAccount();
+        return new GetAccount(socket);
     }
 
     @Methode("GET")
     @Route("/accounts/limit/{limit}")
     public GetAccount getAccountWithLimit(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
-        return new GetAccount("", (int) args.get("limit"));
+        return new GetAccount(socket, "", (int) args.get("limit"));
     }
 
     @Methode("GET")
     @Route("/account")
     public GetAccount getAccount(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
-        System.out.println("get id : " + UserSecuritySingleton.getInstance().getUserId(socket));
-        return new GetAccount("accounts.id=" + UserSecuritySingleton.getInstance().getUserId(socket));
+        return new GetAccount(socket, "accounts.id=" + UserSecuritySingleton.getInstance().getUserId(socket));
     }
 
     @Methode("GET")
     @Route("/account/{id}")
     public GetAccount getAccountById(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
-        return new GetAccount("accounts.id=" + (int) args.get("id"));
+        return new GetAccount(socket, "accounts.id=" + (int) args.get("id"));
     }
 
     @Methode("POST")

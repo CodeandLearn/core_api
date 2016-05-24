@@ -11,13 +11,9 @@ import Data.SQLDelete;
  */
 public class DeleteAccount extends Model {
     public DeleteAccount(String socket, int id) {
-        deleteData(id);
-        UserSecuritySingleton.getInstance().removeUser(socket);
-    }
-
-    private void deleteData(int id) {
         SQLite sql = new SQLite(SQLDelete.ACCOUNT + "id=" + id);
         sql.delete();
-        setCode(Code.OK);
+        setCode(socket, Code.OK);
+        UserSecuritySingleton.getInstance().removeUser(socket);
     }
 }

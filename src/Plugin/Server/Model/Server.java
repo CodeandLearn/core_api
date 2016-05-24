@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * Created by teddy on 04/05/2016.
  */
 public class Server extends Model {
-    public Server() {
+    public Server(String socket) {
         ServerObj serverObj = new ServerObj();
         serverObj.clients = NbClientsSingleton.getInstance().getNbClients();
         serverObj.ip_host = ServerSingleton.getInstance().getHostIp();
@@ -24,6 +24,6 @@ public class Server extends Model {
         data.add(serverObj);
 
         // test error return
-        setCode(Code.OK);
+        setCode(socket, Code.OK);
     }
 }

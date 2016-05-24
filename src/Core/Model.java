@@ -1,6 +1,8 @@
 package Core;
 
 import Core.Http.Code;
+import Core.Singleton.PermsSingleton;
+import Core.Singleton.ServerSingleton;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -54,7 +56,7 @@ public class Model {
         this.error = error;
     }
 
-    public void setCode(int code) {
+    public void setCode(String socket, int code) {
         if (code == Code.BAD_REQUEST ||
                 code == Code.FORBIDDEN ||
                 code == Code.INTERNAL_SERVER_ERROR ||
@@ -67,6 +69,7 @@ public class Model {
         }
         error = capitalizeAllWords(getCodeName(code));
         this.code = code;
+        ServerSingleton.getInstance().setHttpCode(socket, code);
     }
 
     public static String capitalizeAllWords(String str) {

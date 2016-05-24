@@ -48,14 +48,14 @@ public class Router {
                 }
             } else {
                 ServerSingleton.getInstance().setHttpCode(socket, Code.UNAUTHORIZED);
-                String json = gson.toJson(new Error(Code.UNAUTHORIZED));
+                String json = gson.toJson(new Error(socket, Code.UNAUTHORIZED));
                 System.out.println("[SERVER] -> " + json);
                 return json;
             }
             UserSecuritySingleton.getInstance().setUserOffline(socket);
         }
         ServerSingleton.getInstance().setHttpCode(socket, Code.NOT_FOUND);
-        String json = gson.toJson(new Error(Code.NOT_FOUND));
+        String json = gson.toJson(new Error(socket, Code.NOT_FOUND));
         System.out.println("[SERVER] -> " + json);
         return json;
     }
