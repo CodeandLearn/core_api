@@ -12,9 +12,15 @@ import Plugin.Account.GetAccount;
 import Plugin.Account.PostAccount;
 import Plugin.Account.PutAccount;
 import Plugin.Blog.*;
+import Plugin.Course.*;
+import Plugin.Language.DeleteLanguage;
+import Plugin.Language.GetLanguage;
+import Plugin.Language.PostLanguage;
+import Plugin.Language.PutLanguage;
 import Plugin.Server.Model.Server;
 import org.json.JSONObject;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 
 /**
@@ -233,5 +239,115 @@ public class Path {
     @Route("/blog/comment/{id}")
     public DeleteBlogComment deleteBlogComment(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
         return new DeleteBlogComment(socket, (int) args.get("id"));
+    }
+
+    /* Cours */
+    @Methode("GET")
+    @Route("/course")
+    public GetCourse getCourse(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+        return new GetCourse(socket);
+    }
+
+    @Methode("GET")
+    @Route("/course/limit/{limit}")
+    public GetCourse getCourseWithLimit(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+        return new GetCourse(socket, "", (int) args.get("limit"));
+    }
+
+    @Methode("GET")
+    @Route("/course/author/id/{author_id}")
+    public GetCourse getCourseByAuthorId(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+        return new GetCourse(socket, "courses.account_id=" + args.get("author_id"));
+    }
+
+    @Methode("GET")
+    @Route("/course/language/id/{language_id}")
+    public GetCourse getCourseByLanguageId(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+        return new GetCourse(socket, "courses.language_id=" + args.get("language_id"));
+    }
+
+    @Methode("GET")
+    @Route("/course/locales/id/{locales_id}")
+    public GetCourse getCourseByLocalesId(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+        return new GetCourse(socket, "courses.locales_id=" + args.get("locales_id"));
+    }
+
+    @Methode("GET")
+    @Route("/course/title/{title}")
+    public GetCourse getCourseByTitle(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+        return new GetCourse(socket, "courses.title=" + args.get("title"));
+    }
+
+    @Methode("POST")
+    @Route("/course")
+    public PostCourse postCourse(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+        return new PostCourse(socket, jsonObject, (int) UserSecuritySingleton.getInstance().getUserId(socket));
+    }
+
+    @Methode("POST")
+    @Route("/course/comment")
+    public PostCourseComment postCourseComment(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+        return new PostCourseComment(socket, jsonObject, (int) UserSecuritySingleton.getInstance().getUserId(socket));
+    }
+
+    @Methode("PUT")
+    @Route("/course/{id}")
+    public PutCourse putCourse(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+        return new PutCourse(socket, (int) args.get("id"), jsonObject);
+    }
+
+    @Methode("PUT")
+    @Route("/course/comment/{id}")
+    public PutCourseComment putCourseComment(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+        return new PutCourseComment(socket, (int) args.get("id"), jsonObject);
+    }
+
+    @Methode("DELETE")
+    @Route("/course/{id}")
+    public DeleteCourse deleteCourse(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+        return new DeleteCourse(socket, (int) args.get("id"));
+    }
+
+    @Methode("DELETE")
+    @Route("/course/comment/{id}")
+    public DeleteCourseComment deleteCourseComment(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+        return new DeleteCourseComment(socket, (int) args.get("id"));
+    }
+
+    /* Language */
+    @Methode("GET")
+    @Route("/language")
+    public GetLanguage getLanguage(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+        return new GetLanguage(socket);
+    }
+
+    @Methode("GET")
+    @Route("/language/limit/{limit}")
+    public GetLanguage getLanguageWithLimit(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+        return new GetLanguage(socket, "", (int) args.get("limit"));
+    }
+
+    @Methode("GET")
+    @Route("/language/id/{id}")
+    public GetLanguage getLanguageById(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+        return new GetLanguage(socket, "languages.id=" + args.get("id"));
+    }
+
+    @Methode("DELETE")
+    @Route("/language/{id}")
+    public DeleteLanguage deleteLanguage(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+        return new DeleteLanguage(socket, (int) args.get("id"));
+    }
+
+    @Methode("POST")
+    @Route("/language")
+    public PostLanguage postLanguage(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+        return new PostLanguage(socket, jsonObject);
+    }
+
+    @Methode("PUT")
+    @Route("/language/{id}")
+    public PutLanguage putLanguage(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+        return new PutLanguage(socket, (int) args.get("id"), jsonObject);
     }
 }
