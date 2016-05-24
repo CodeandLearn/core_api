@@ -2,26 +2,34 @@
 ## Lancement de l'API
 Il existe deux scripts `launcher.bat` pour Windows et `launcher.sh` pour Linux/Mac
 ```
-	java -jar CL_SpringMVC_APIRestFul_Core-0.0.1.jar
+	java -jar CL_API_V2-0.0.2-jar-with-dependencies.jar
 ```
 
 ### I - Récupération du token
 `username:password` ex : `test:secret` encodé en base64 donne `dGVzdDpzZWNyZXQ=`
 ```
-	POST http://127.0.0.1:8080/oauth/token?grant_type=client_credentials
+	POST http://127.0.0.1:8080/oauth
     Header: Authorization: Basic dGVzdDpzZWNyZXQ=
+    Content-Type: application/json
 ```
 ```
     {
-        "access_token": "18ad7851-b3ea-482e-9e5d-73a8dcfcbd86",
+        "access_token": "bvsm6nu2uhhgh4hglkj11dd0es",
         "token_type": "bearer",
         "expires_in": 43059,
-        "scope": "read"
+        "scope": "read",
+        "group": 10,
+        "path": "/oauth",
+        "method": "POST",
+        "code": 200,
+        "error": "OK",
+        "timestamp": 1464088822719
     }
 ```
 
 ### II - Utilisation du token
 ```
     GET http://127.0.0.1:8080/[path...]
-    Header : Authorization: Bearer 18ad7851-b3ea-482e-9e5d-73a8dcfcbd86
+    Header : Authorization: Bearer bvsm6nu2uhhgh4hglkj11dd0es
+    Content-Type: application/json
 ```
