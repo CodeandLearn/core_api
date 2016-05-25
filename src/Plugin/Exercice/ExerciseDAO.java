@@ -1,4 +1,4 @@
-package Plugin.Exercice.dao;
+package Plugin.Exercice;
 
 import Core.Database.SQL;
 import Core.Database.SQLite;

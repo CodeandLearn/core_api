@@ -16,6 +16,7 @@ public class PermsSingleton {
     private ArrayList<HashMap<String, Object>> perms = new ArrayList<>();
     private Properties routes = new Properties();
     private File configFile = new File("route.properties");
+    private int permsNb = 0;
     public static int MEMBER = 10;
     public static int MODO = 30;
     public static int ADMIN = 50;
@@ -31,6 +32,7 @@ public class PermsSingleton {
                     addRoute(routeData[0], routeData[1], Integer.parseInt(e.getValue().toString()));
                 }
             }
+            System.out.println("[SYSTEM] -> Nb perms loaded: " + permsNb);
         } catch (IOException ex) {
             System.err.println("IOException : " + ex);
         }
@@ -47,6 +49,7 @@ public class PermsSingleton {
         perm.put("route", route);
         perm.put("group", minusGroup);
         perms.add(perm);
+        permsNb++;
     }
 
     public boolean checkRouteWithoutPerms(String method, String route) {
