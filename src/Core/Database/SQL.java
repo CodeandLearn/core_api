@@ -1,9 +1,15 @@
 package Core.Database;
 
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by teddy on 11/04/2016.
@@ -11,6 +17,21 @@ import java.sql.Statement;
 public class SQL {
     protected Connection c = null;
     protected Statement stmt = null;
+
+    public static String make(String subject, Object[] values) {
+        for (int i = 0; i < values.length; i++) {
+            if (values[i].getClass().getTypeName().equals("java.lang.String")) {
+                try {
+                    values[i] = "\"" + URLEncoder.encode(values[i].toString(), "UTF-8") + "\"";
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        String ret = String.format(subject.replace("%", "%%").replace("?", "%s"), values);
+        System.out.println(ret);
+        return ret;
+    }
 
     public void insertDB(String sql) {
         try {

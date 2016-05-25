@@ -73,7 +73,8 @@ public class Model {
 
     public void setNoReturnValue(String socket) {
         error = capitalizeAllWords(getCodeName(Code.OK));
-        this.code = Code.OK;
+        code = Code.OK;
+        data = null;
         ServerSingleton.getInstance().setHttpCode(socket, Code.OK);
     }
 

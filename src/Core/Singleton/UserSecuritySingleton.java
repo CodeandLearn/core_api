@@ -126,10 +126,10 @@ public class UserSecuritySingleton {
         return -1;
     }
 
-    public Object getUserId(String socket) {
+    public int getUserId(String socket) {
         for (HashMap<String, Object> user : users) {
             if (user.get("socket").equals(socket)) {
-                return user.get("id");
+                return (int) user.get("id");
             }
         }
         return -1;
