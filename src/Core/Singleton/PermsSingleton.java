@@ -26,7 +26,10 @@ public class PermsSingleton {
             routes.load(reader);
             reader.close();
             for (Map.Entry<Object, Object> e : routes.entrySet()) {
-                addRoute(e.getKey().toString(), Integer.parseInt(e.getValue().toString()));
+                String[] routeData = getDataRouting(e.getKey().toString());
+                if (routeData != null) {
+                    addRoute(routeData[0], routeData[1], Integer.parseInt(e.getValue().toString()));
+                }
             }
         } catch (IOException ex) {
             System.err.println("IOException : " + ex);
@@ -37,29 +40,37 @@ public class PermsSingleton {
         return instance;
     }
 
-    public void addRoute(String route, int minusGroup) {
-        System.out.println("[SYSTEM] -> Load route: " + route + " - perm min level power: " + minusGroup);
+    public void addRoute(String method, String route, int minusGroup) {
+        System.out.println("[PERM] -> method: " + method + " - route: " + route + " - minimum power: " + minusGroup);
         HashMap<String, Object> perm = new HashMap<>();
+        perm.put("method", method);
         perm.put("route", route);
         perm.put("group", minusGroup);
         perms.add(perm);
     }
 
-    public boolean checkRouteWithoutPerms(String route) {
+    public boolean checkRouteWithoutPerms(String method, String route) {
         for (HashMap<String, Object> perm : perms) {
-            if (perm.get("route").equals(route)) {
+            if (perm.get("route").equals(route) && perm.get("method").equals(method)) {
                 return false;
             }
         }
         return true;
     }
 
-    public boolean checkRouteWithPerms(String route, int group) {
+    public boolean checkRouteWithPerms(String method, String route, int group) {
         for (HashMap<String, Object> perm : perms) {
-            if (perm.get("route").equals(route) && (int) perm.get("group") <= group) {
+            if ((perm.get("route").equals(route) && perm.get("method").equals(method)) && (int) perm.get("group") <= group) {
                 return true;
             }
         }
-        return checkRouteWithoutPerms(route);
+        return checkRouteWithoutPerms(method, route);
+    }
+
+    private String[] getDataRouting(String routeData) {
+        if (routeData.matches("\\[(.*?)\\](.*?)")) {
+            return routeData.replaceAll("\\[", "").split("]");
+        }
+        return null;
     }
 }

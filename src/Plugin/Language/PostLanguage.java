@@ -1,7 +1,6 @@
 package Plugin.Language;
 
 import Core.Database.SQLite;
-import Core.Http.Code;
 import Core.Model;
 import Data.SQLPost;
 import org.json.JSONObject;
@@ -14,6 +13,6 @@ public class PostLanguage extends Model {
         SQLite sql = new SQLite(SQLPost.LANGUAGE + "(name) VALUES ("
                 + jsonObject.getString("name").replace("\"", "\\\"") + ")");
         sql.insert();
-        setCode(socket, Code.OK);
+        setNoReturnValue(socket);
     }
 }

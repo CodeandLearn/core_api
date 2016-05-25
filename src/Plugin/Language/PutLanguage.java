@@ -1,7 +1,6 @@
 package Plugin.Language;
 
 import Core.Database.SQLite;
-import Core.Http.Code;
 import Core.Model;
 import Data.SQLPut;
 import org.json.JSONObject;
@@ -15,6 +14,6 @@ public class PutLanguage extends Model {
                 + ", name=\"" + jsonObject.getString("name").replace("\"", "\\\"") + "\""
                 + " WHERE id=" + id);
         sql.update();
-        setCode(socket, Code.OK);
+        setNoReturnValue(socket);
     }
 }

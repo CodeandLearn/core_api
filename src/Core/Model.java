@@ -1,7 +1,6 @@
 package Core;
 
 import Core.Http.Code;
-import Core.Singleton.PermsSingleton;
 import Core.Singleton.ServerSingleton;
 
 import java.lang.reflect.Method;
@@ -70,6 +69,12 @@ public class Model {
         error = capitalizeAllWords(getCodeName(code));
         this.code = code;
         ServerSingleton.getInstance().setHttpCode(socket, code);
+    }
+
+    public void setNoReturnValue(String socket) {
+        error = capitalizeAllWords(getCodeName(Code.OK));
+        this.code = Code.OK;
+        ServerSingleton.getInstance().setHttpCode(socket, Code.OK);
     }
 
     public static String capitalizeAllWords(String str) {

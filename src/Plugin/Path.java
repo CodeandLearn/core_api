@@ -241,6 +241,8 @@ public class Path {
         return new DeleteBlogComment(socket, (int) args.get("id"));
     }
 
+    // TODO: 25/05/2016 Ajouter une route pour qu'un utilisateur puisse supprimer un de ses commentaire !
+
     /* Cours */
     @Methode("GET")
     @Route("/course")
@@ -316,7 +318,7 @@ public class Path {
 
     /* Language */
     @Methode("GET")
-    @Route("/language")
+    @Route("/languages")
     public GetLanguage getLanguage(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
         return new GetLanguage(socket);
     }
@@ -328,7 +330,7 @@ public class Path {
     }
 
     @Methode("GET")
-    @Route("/language/id/{id}")
+    @Route("/language/{id}")
     public GetLanguage getLanguageById(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
         return new GetLanguage(socket, "languages.id=" + args.get("id"));
     }

@@ -15,6 +15,6 @@ public class PutBlogCategory extends Model {
                 + "name=\"" + jsonObject.getString("name").replace("\"", "\\\"") + "\""
                 + " WHERE id=" + id);
         sql.update();
-        setCode(socket, Code.OK);
+        setNoReturnValue(socket);
     }
 }

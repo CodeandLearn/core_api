@@ -28,7 +28,7 @@ public class PostAccount extends Model {
                     + 0 + ", "
                     + 0 + ")");
             sql.insert();
-            setCode(socket, Code.OK);
+            setNoReturnValue(socket);
             SQLite userId = new SQLite(SQLGet.ACCOUNT_LOGIN + " ORDER BY accounts.id DESC LIMIT 1");
             userId.select();
             for (int i = 0; i < userId.getResultSet().size(); i++) {

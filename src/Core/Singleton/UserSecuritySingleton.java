@@ -3,7 +3,6 @@ package Core.Singleton;
 import Core.Database.SQLite;
 import Core.Http.Oauth2;
 import Data.SQLGet;
-import Obj.AccountObj;
 
 import java.util.ArrayList;
 import java.util.HashMap;

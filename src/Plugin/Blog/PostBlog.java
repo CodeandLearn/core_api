@@ -1,7 +1,6 @@
 package Plugin.Blog;
 
 import Core.Database.SQLite;
-import Core.Http.Code;
 import Core.Model;
 import Data.SQLPost;
 import org.json.JSONObject;
@@ -21,6 +20,6 @@ public class PostBlog extends Model {
                 + timestamp + ", "
                 + timestamp + ")");
         sql.insert();
-        setCode(socket, Code.OK);
+        setNoReturnValue(socket);
     }
 }

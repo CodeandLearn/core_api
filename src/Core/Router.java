@@ -27,8 +27,8 @@ public class Router {
         Gson gson = new Gson();
         Oauth2 oauth2 = new Oauth2((headerField.containsKey("Authorization")) ? headerField.get("Authorization") : null);
         Oauth2Permissions oauth2Permissions = new Oauth2Permissions();
-        if ((!route.equals("/oauth")) || (oauth2.getType() != null && oauth2.getType().equals(Oauth2.BASIC) && route.equals("/oauth"))) {
-            if (oauth2Permissions.checkPermsRoute(socket, oauth2, route, obj, oauth2.getType())) {
+        if ((!route.equals("/oauth")) || (oauth2.getType() != null && oauth2.getType().equals(Oauth2.BASIC) && route.equals("/oauth") && method.equals("POST"))) {
+            if (oauth2Permissions.checkPermsRoute(socket, oauth2, method, route, obj, oauth2.getType())) {
                 for (Method methods : obj.getDeclaredMethods()) {
                     if (methods.isAnnotationPresent(Route.class) && methods.isAnnotationPresent(Methode.class)) {
                         if (parseRouteParameters(methods.getAnnotation(Route.class).value(), route) && methods.getAnnotation(Methode.class).value().equals(method)) {

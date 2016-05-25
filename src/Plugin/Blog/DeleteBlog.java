@@ -13,5 +13,6 @@ public class DeleteBlog extends Model {
         SQLite sql_post = new SQLite(SQLDelete.BLOG_POST + "id=" + id);
         sql_com.delete();
         sql_post.delete();
+        setNoReturnValue(socket);
     }
 }

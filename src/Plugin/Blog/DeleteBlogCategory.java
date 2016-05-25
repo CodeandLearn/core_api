@@ -11,5 +11,6 @@ public class DeleteBlogCategory extends Model {
     public DeleteBlogCategory(String socket, int id) {
         SQLite sql = new SQLite(SQLDelete.BLOG_CATEGORY + "id=" + id);
         sql.delete();
+        setNoReturnValue(socket);
     }
 }

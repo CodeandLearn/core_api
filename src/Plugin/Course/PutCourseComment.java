@@ -1,7 +1,6 @@
 package Plugin.Course;
 
 import Core.Database.SQLite;
-import Core.Http.Code;
 import Core.Model;
 import Data.SQLPut;
 import org.json.JSONObject;
@@ -14,6 +13,6 @@ public class PutCourseComment extends Model {
                 + "modify_timestamp=" + timestamp
                 + " WHERE id=" + id);
         sql.update();
-        setCode(socket, Code.OK);
+        setNoReturnValue(socket);
     }
 }

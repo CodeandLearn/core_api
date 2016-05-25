@@ -1,7 +1,6 @@
 package Plugin.Language;
 
 import Core.Database.SQLite;
-import Core.Http.Code;
 import Core.Model;
 import Data.SQLDelete;
 
@@ -12,6 +11,6 @@ public class DeleteLanguage extends Model {
     public DeleteLanguage(String socket, int id) {
         SQLite sql_post = new SQLite(SQLDelete.LANGUAGE + "id=" + id);
         sql_post.delete();
-        setCode(socket, Code.OK);
+        setNoReturnValue(socket);
     }
 }

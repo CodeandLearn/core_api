@@ -20,7 +20,7 @@ public class PutAccount extends Model {
                 + ", avatar_id=" + jsonObject.getInt("avatar_id")
                 + " WHERE id=" + id);
         sql.update();
-        setCode(socket, Code.OK);
+        setNoReturnValue(socket);
         UserSecuritySingleton.getInstance().updateFullUser(socket, jsonObject.getString("username"),
                 UserSecuritySingleton.hashString(jsonObject.getString("password")));
         UserSecuritySingleton.getInstance().revokUserToken(socket);

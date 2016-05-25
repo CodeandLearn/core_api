@@ -1,7 +1,6 @@
 package Plugin.Course;
 
 import Core.Database.SQLite;
-import Core.Http.Code;
 import Core.Model;
 import Data.SQLPost;
 import org.json.JSONObject;
@@ -18,6 +17,6 @@ public class PostCourse extends Model {
                 + timestamp + ", "
                 + timestamp + ")");
         sql.insert();
-        setCode(socket, Code.OK);
+        setNoReturnValue(socket);
     }
 }
