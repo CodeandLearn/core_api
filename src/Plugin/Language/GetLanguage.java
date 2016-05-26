@@ -14,18 +14,19 @@ public class GetLanguage extends Model {
     }
 
     public GetLanguage(String socket, String extra) {
-        setData(socket, " AND " + extra, "");
+        setData(socket, " WHERE " + extra, "");
     }
 
     public GetLanguage(String socket, String extra, int limit) {
         if (!extra.equals("")) {
-            setData(socket, " AND " + extra, " LIMIT " + limit);
+            setData(socket, " WHERE " + extra, " LIMIT " + limit);
         } else {
             setData(socket, "", " LIMIT " + limit);
         }
     }
 
     private void setData(String socket, String extra, String limit) {
+        System.out.println(SQLGet.LANGUAGE + " " + extra + " ORDER BY languages.id DESC " + limit);
         SQLite sql = new SQLite(SQLGet.LANGUAGE + " " + extra + " ORDER BY languages.id DESC " + limit);
         sql.select();
         if (sql.getResultSet().size() == 0) {

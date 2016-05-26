@@ -11,7 +11,7 @@ import org.json.JSONObject;
 public class PostLanguage extends Model {
     public PostLanguage(String socket, JSONObject jsonObject) {
         SQLite sql = new SQLite(SQLPost.LANGUAGE + "(name) VALUES ("
-                + jsonObject.getString("name").replace("\"", "\\\"") + ")");
+                + "\"" + jsonObject.getString("name").replace("\"", "\\\"") + "\"" + ")");
         sql.insert();
         setNoReturnValue(socket);
     }

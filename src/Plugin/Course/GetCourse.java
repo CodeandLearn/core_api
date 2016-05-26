@@ -12,18 +12,19 @@ public class GetCourse extends Model {
     }
 
     public GetCourse(String socket, String extra) {
-        setData(socket, " AND " + extra, "");
+        setData(socket, " WHERE " + extra, "");
     }
 
     public GetCourse(String socket, String extra, int limit) {
         if (!extra.equals("")) {
-            setData(socket, " AND " + extra, " LIMIT " + limit);
+            setData(socket, " WHERE " + extra, " LIMIT " + limit);
         } else {
             setData(socket, "", " LIMIT " + limit);
         }
     }
 
     private void setData(String socket, String extra, String limit) {
+        System.out.println(SQLGet.COURSE + " " + extra + " ORDER BY courses.id DESC " + limit);
         SQLite sql = new SQLite(SQLGet.COURSE + " " + extra + " ORDER BY courses.id DESC " + limit);
         sql.select();
         if (sql.getResultSet().size() == 0) {
