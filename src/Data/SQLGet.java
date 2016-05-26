@@ -124,7 +124,7 @@ public class SQLGet {
             "courses_comments.create_timestamp'courses_comments.create_timestamp',\n" +
             "courses_comments.modify_timestamp'courses_comments.modify_timestamp'\n" +
             "FROM courses_comments WHERE courses_comments.id = courses_comments.id";
-    public static String LANGUAGE = "SELECT languages.id'languages.id,\n" +
+    public static String LANGUAGE = "SELECT languages.id'languages.id',\n" +
             "languages.name'languages.name'\n" +
             "FROM languages";
 }

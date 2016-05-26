@@ -51,7 +51,7 @@ public class GetCourse extends Model {
                     // DEBUG
                     CourseCommentObj courseCommentObj = new CourseCommentObj();
                     courseCommentObj.account_id = (int) commentSql.getResultSet().get(x).get("courses_comments.account_id");
-                    courseCommentObj.content = (String) commentSql.getResultSet().get(x).get("blog_posts_comments.content");
+                    courseCommentObj.content = (String) commentSql.getResultSet().get(x).get("courses_comments.content");
                     courseCommentObj.course_id = (int) commentSql.getResultSet().get(x).get("courses_comments.course_id");
                     courseCommentObj.create_timestamp = (long) commentSql.getResultSet().get(x).get("courses_comments.create_timestamp");
                     courseCommentObj.id = (int) commentSql.getResultSet().get(x).get("courses_comments.id");

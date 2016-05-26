@@ -54,8 +54,8 @@ public class Router {
             }
             UserSecuritySingleton.getInstance().setUserOffline(socket);
         }
-        ServerSingleton.getInstance().setHttpCode(socket, Code.NOT_FOUND);
-        String json = gson.toJson(new Error(socket, Code.NOT_FOUND));
+        ServerSingleton.getInstance().setHttpCode(socket, Code.METHOD_NOT_ALLOWED);
+        String json = gson.toJson(new Error(socket, Code.METHOD_NOT_ALLOWED));
         System.out.println("[SERVER] -> " + json);
         return json;
     }
