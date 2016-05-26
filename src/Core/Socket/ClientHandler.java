@@ -40,23 +40,28 @@ public class ClientHandler implements Runnable {
             setInitialData(userInput.readLine());
             if (!checkInitialData()) {
                 String buffer;
-                while ((buffer = userInput.readLine()).length() > 2) {
-                    headerField.put(buffer.split(": ")[0], buffer.split(": ")[1]);
-                }
-                if (headerField.containsKey("Content-Type") && headerField.get("Content-Type").equals("application/json")) {
-                    if (headerField.containsKey("Content-Length")) {
-                        while ((jsonClient.length() != Integer.parseInt(headerField.get("Content-Length")))) {
-                            jsonClient = jsonClient + (char) userInput.read();
+                if (!method.equals("OPTIONS")) {
+                    while ((buffer = userInput.readLine()).length() > 2) {
+                        headerField.put(buffer.split(": ")[0], buffer.split(": ")[1]);
+                    }
+                    if (headerField.containsKey("Content-Type") && headerField.get("Content-Type").equals("application/json")) {
+                        if (headerField.containsKey("Content-Length")) {
+                            while ((jsonClient.length() != Integer.parseInt(headerField.get("Content-Length")))) {
+                                jsonClient = jsonClient + (char) userInput.read();
+                            }
                         }
+                        Router router = new Router();
+                        System.out.println("[USER] -> " + clientId + " " + method + " " + route);
+                        JSONObject jsonObject = new JSONObject();
+                        if (Router.isJSONValid(jsonClient)) {
+                            jsonObject = new JSONObject(jsonClient);
+                        }
+                        String jsonReturn = router.find(clientId, method, route, headerField, jsonObject);
+                        userOutput.write(makeResult(clientId, jsonReturn).getBytes("UTF8"));
+                        userOutput.flush();
                     }
-                    Router router = new Router();
-                    System.out.println("[USER] -> " + clientId + " " + method + " " + route);
-                    JSONObject jsonObject = new JSONObject();
-                    if (Router.isJSONValid(jsonClient)) {
-                        jsonObject = new JSONObject(jsonClient);
-                    }
-                    String jsonReturn = router.find(clientId, method, route, headerField, jsonObject);
-                    userOutput.write(makeResult(clientId, jsonReturn).getBytes("UTF8"));
+                } else {
+                    userOutput.write(makeOptionsResult().getBytes("UTF8"));
                     userOutput.flush();
                 }
             }
@@ -80,7 +85,7 @@ public class ClientHandler implements Runnable {
     }
 
     private boolean checkInitialData() {
-        return route.isEmpty() || (!method.equals("POST") && !method.equals("GET") && !method.equals("PUT") && !method.equals("DELETE")) || !protocolVersion.equals("HTTP/1.1");
+        return route.isEmpty() || (!method.equals("OPTIONS") && !method.equals("POST") && !method.equals("GET") && !method.equals("PUT") && !method.equals("DELETE")) || !protocolVersion.equals("HTTP/1.1");
     }
 
     private String makeResult(String clientId, String json) throws UnsupportedEncodingException {
@@ -96,5 +101,9 @@ public class ClientHandler implements Runnable {
                 "Expires: " + currentDate + "\r\n" +
                 "Last-modified: " + currentDate + "\r\n" +
                 "\r\n" + json + EOF;
+    }
+
+    private String makeOptionsResult() {
+        return "HTTP/1.1 200 OK\n Allow: GET, PUT, DELETE";
     }
 }
