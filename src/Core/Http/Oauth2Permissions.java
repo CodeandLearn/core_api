@@ -11,10 +11,6 @@ import java.lang.reflect.Method;
  * Created by teddy on 21/05/2016.
  */
 public class Oauth2Permissions {
-    public Oauth2Permissions() {
-
-    }
-
     public boolean checkPermsRoute(String socket, Oauth2 oauth2, String method, String userRoute, Class<Path> obj, String oauth2Type) {
         String route = getGenericRoute(userRoute, obj);
         if (oauth2.getType() != null) {

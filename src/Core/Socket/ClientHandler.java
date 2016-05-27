@@ -68,7 +68,7 @@ public class ClientHandler implements Runnable {
             userInput.close();
             userOutput.close();
             UserSecuritySingleton.getInstance().setUserOffline(clientId);
-            System.err.println("[SERVER] -> Close connection to " + clientId);
+            System.out.println("[SERVER] -> Close connection to " + clientId);
             ServerSingleton.getInstance().removeHttpRequest(clientId);
             clientSock.close();
             NbClientsSingleton.getInstance().delClient();
@@ -104,6 +104,6 @@ public class ClientHandler implements Runnable {
     }
 
     private String makeOptionsResult() {
-        return "HTTP/1.1 200 OK\n Allow: GET, PUT, DELETE";
+        return "HTTP/1.1 200 OK\n Allow: GET, PUT, POST, DELETE";
     }
 }

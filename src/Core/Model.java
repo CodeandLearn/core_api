@@ -14,6 +14,7 @@ public class Model {
     private String method;
     private int code = Code.OK;
     private String error = "OK";
+    private String errorMsg;
     private long timestamp = System.currentTimeMillis();
     protected ArrayList<Object> data = new ArrayList<>();
 
@@ -53,6 +54,14 @@ public class Model {
 
     public void setError(String error) {
         this.error = error;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public void setMethod(String method) {
+        this.method = method;
     }
 
     public void setCode(String socket, int code) {
