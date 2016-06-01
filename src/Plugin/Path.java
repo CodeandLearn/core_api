@@ -251,6 +251,12 @@ public class Path {
     }
 
     @Methode("GET")
+    @Route("/course/id/{id}")
+    public GetCourse getCourseWithId(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+        return new GetCourse(socket, "courses.id=" + args.get("id"));
+    }
+
+    @Methode("GET")
     @Route("/course/limit/{limit}")
     public GetCourse getCourseWithLimit(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
         return new GetCourse(socket, "", Integer.parseInt(args.get("limit").toString()));
