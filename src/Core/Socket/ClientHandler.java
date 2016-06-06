@@ -78,10 +78,12 @@ public class ClientHandler implements Runnable {
     }
 
     private void setInitialData(String data) {
-        String[] tmp = data.split(" ");
-        method = tmp[0];
-        route = tmp[1];
-        protocolVersion = tmp[2];
+        if (data != null) {
+            String[] tmp = data.split(" ");
+            method = tmp[0];
+            route = tmp[1];
+            protocolVersion = tmp[2];
+        }
     }
 
     private boolean checkInitialData() {
@@ -97,6 +99,10 @@ public class ClientHandler implements Runnable {
                 "Date: " + currentDate + "\r\n" +
                 "Server: " + ConfigSingleton.getInstance().getName() + "/" + ConfigSingleton.getInstance().getVersion() + "\r\n" +
                 "Content-Type: application/json\r\n" +
+                "Access-Control-Allow-Origin: *\r\n" +
+                "Access-Control-Allow-Credentials: true\r\n" +
+                "Access-Control-Allow-Headers: origin, content-type, accept, Authorization\r\n" +
+                "Access-Control-Allow-Methods: OPTIONS, GET, PUT, POST, DELETE\r\n" +
                 "Content-Length: " + utf8Bytes.length + "\r\n" +
                 "Expires: " + currentDate + "\r\n" +
                 "Last-modified: " + currentDate + "\r\n" +
@@ -104,6 +110,11 @@ public class ClientHandler implements Runnable {
     }
 
     private String makeOptionsResult() {
-        return "HTTP/1.1 200 OK\n Allow: GET, PUT, POST, DELETE";
+        return "HTTP/1.1 200 OK\r\n" +
+                "Access-Control-Allow-Origin: *\r\n" +
+                "Access-Control-Allow-Credentials: true\r\n" +
+                "Access-Control-Allow-Headers: origin, content-type, accept, Authorization\r\n" +
+                "Access-Control-Allow-Methods: OPTIONS, GET, PUT, POST, DELETE\r\n"
+                + "\r\n" + EOF;
     }
 }
