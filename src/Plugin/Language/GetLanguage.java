@@ -26,8 +26,8 @@ public class GetLanguage extends Model {
     }
 
     private void setData(String socket, String extra, String limit) {
-        System.out.println(SQLGet.LANGUAGE + " " + extra + " ORDER BY languages.id DESC " + limit);
-        SQLite sql = new SQLite(SQLGet.LANGUAGE + " " + extra + " ORDER BY languages.id DESC " + limit);
+        System.out.println(SQLGet.LANGUAGE + " " + extra + " ORDER BY languages.name ASC " + limit);
+        SQLite sql = new SQLite(SQLGet.LANGUAGE + " " + extra + " ORDER BY languages.name ASC " + limit);
         sql.select();
         if (sql.getResultSet().size() == 0) {
             setCode(socket, Code.NOT_FOUND);

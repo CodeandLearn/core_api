@@ -24,8 +24,8 @@ public class GetCourse extends Model {
     }
 
     private void setData(String socket, String extra, String limit) {
-        System.out.println(SQLGet.COURSE + " " + extra + " ORDER BY courses.id DESC " + limit);
-        SQLite sql = new SQLite(SQLGet.COURSE + " " + extra + " ORDER BY courses.id DESC " + limit);
+        System.out.println(SQLGet.COURSE + " " + extra + " ORDER BY courses.id ASC " + limit);
+        SQLite sql = new SQLite(SQLGet.COURSE + " " + extra + " ORDER BY courses.id ASC " + limit);
         sql.select();
         if (sql.getResultSet().size() == 0) {
             setCode(socket, Code.NOT_FOUND);
