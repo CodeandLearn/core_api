@@ -16,8 +16,8 @@ import java.util.HashMap;
 public class GradeDAO extends Model {
     private final static String SQL_get = "SELECT id, user_exercice_id, grades.value, grades.timestamp FROM 'grades' where user_exercice_id = ?";
     private final static String SQL_del = "DELETE * FROM 'grades' WHERE id = ?";
-    private final static String SQL_ins = "INSERT INTO 'grades' (user_exercice_id, grade.value, grade.timestamp) VALUES (?,?,?)";
-    private final static String SQL_upd = "UPDATE 'grades' set user_exercice_id=?, grade.value=?, grade.timestamp=? WHERE id=?";
+    private final static String SQL_ins = "INSERT INTO 'grades' (user_exercice_id, grades.value, grades.timestamp) VALUES (?,?,?)";
+    private final static String SQL_upd = "UPDATE 'grades' set user_exercice_id=?, grades.value=?, grades.timestamp=? WHERE id=?";
 
     public GradeDAO post(String socket, JSONObject jsonObject) {
         ArrayList<Object> values = new ArrayList<>();

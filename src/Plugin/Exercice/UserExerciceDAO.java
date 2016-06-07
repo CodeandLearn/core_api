@@ -17,8 +17,8 @@ public class UserExerciceDAO extends Model {
     private final static String SQL_get = "SELECT user_exercises.id, user_exercises.account_id, user_exercises.exercice_id  FROM 'user_exercises' where account_id = ? AND exercice_id = ?";
     private final static String SQL_lst = "SELECT user_exercises.id, user_exercises.account_id, user_exercises.exercice_id  FROM 'user_exercises' where account_id = ?";
     private final static String SQL_del = "DELETE * FROM 'user_exercises' WHERE id = ?";
-    private final static String SQL_ins = "INSERT INTO 'user_exercices' (account_id, exercice_id) VALUES (?,?)";
-    private final static String SQL_upd = "UPDATE 'user_exercices' set account_id=?, exercice_id=? WHERE id=?";
+    private final static String SQL_ins = "INSERT INTO 'user_exercises' (account_id, exercice_id) VALUES (?,?)";
+    private final static String SQL_upd = "UPDATE 'user_exercises' set account_id=?, exercice_id=? WHERE id=?";
 
     public UserExerciceDAO post(String socket, JSONObject jsonObject) {
         ArrayList<Object> values = new ArrayList<>();
@@ -49,7 +49,7 @@ public class UserExerciceDAO extends Model {
     }
 
     public UserExerciceDAO getUserExercices(String socket, int account_id) {
-        SQLite sql = new SQLite(SQL_get.replace("?", String.valueOf(account_id)));
+        SQLite sql = new SQLite(SQL_lst.replace("?", String.valueOf(account_id)));
         sql.delete();
         setUserExercisesData(socket, sql.getResultSet());
         return this;
@@ -59,7 +59,7 @@ public class UserExerciceDAO extends Model {
         ArrayList<Object> values = new ArrayList<>();
         values.add(account_id);
         values.add(exercice_id);
-        SQLite sql = new SQLite(SQL.make(SQL_ins, values.toArray()));
+        SQLite sql = new SQLite(SQL.make(SQL_get, values.toArray()));
         sql.delete();
         setUserExercisesData(socket, sql.getResultSet());
         return this;
