@@ -51,7 +51,7 @@ public class GradeDAO extends Model {
 
     public GradeDAO getGrade(String socket, int user_exercice_id) {
         SQLite sql = new SQLite(SQL_get.replace("?", String.valueOf(user_exercice_id)));
-        sql.delete();
+        sql.select();
         if (sql.getResultSet().size() == 0) {
             setCode(socket, Code.NOT_FOUND);
         } else {

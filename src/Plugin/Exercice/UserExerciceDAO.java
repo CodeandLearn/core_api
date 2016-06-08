@@ -50,7 +50,7 @@ public class UserExerciceDAO extends Model {
 
     public UserExerciceDAO getUserExercices(String socket, int account_id) {
         SQLite sql = new SQLite(SQL_lst.replace("?", String.valueOf(account_id)));
-        sql.delete();
+        sql.select();
         setUserExercisesData(socket, sql.getResultSet());
         return this;
     }
@@ -60,7 +60,7 @@ public class UserExerciceDAO extends Model {
         values.add(account_id);
         values.add(exercice_id);
         SQLite sql = new SQLite(SQL.make(SQL_get, values.toArray()));
-        sql.delete();
+        sql.select();
         setUserExercisesData(socket, sql.getResultSet());
         return this;
     }

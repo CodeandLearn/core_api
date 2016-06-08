@@ -51,7 +51,7 @@ public class ExerciceModerationDAO extends Model {
 
     public ExerciceModerationDAO getExerciceModeration(String socket, int exercice_id) {
         SQLite sql = new SQLite(SQL_get.replace("?", String.valueOf(exercice_id)));
-        sql.delete();
+        sql.select();
         if (sql.getResultSet().size() == 0) {
             setCode(socket, Code.NOT_FOUND);
         } else {
