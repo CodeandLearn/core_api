@@ -19,7 +19,7 @@ public class PostAccount extends Model {
             long timestamp = System.currentTimeMillis();
             SQLite sql = new SQLite(SQLPost.ACCOUNT + "(username, password, email, group_id, avatar_id, create_timestamp, last_connect_timestamp, nb_courses_done, nb_exercices_done) VALUES ("
                     + "\"" + jsonObject.getString("username") + "\", "
-                    + "\"" + UserSecuritySingleton.hashString(jsonObject.getString("password")) + "\", "
+                    + "\"" + UserSecuritySingleton.hashSHA1(jsonObject.getString("password")) + "\", "
                     + "\"" + jsonObject.getString("email") + "\", "
                     + 1 + ", "
                     + 1 + ", "
@@ -28,7 +28,6 @@ public class PostAccount extends Model {
                     + 0 + ", "
                     + 0 + ")");
             sql.insert();
-            setNoReturnValue(socket);
             SQLite userId = new SQLite(SQLGet.ACCOUNT_LOGIN + " ORDER BY accounts.id DESC LIMIT 1");
             userId.select();
             for (int i = 0; i < userId.getResultSet().size(); i++) {

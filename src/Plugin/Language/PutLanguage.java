@@ -14,6 +14,5 @@ public class PutLanguage extends Model {
                 + ", name=\"" + jsonObject.getString("name").replace("\"", "\\\"") + "\""
                 + " WHERE id=" + id);
         sql.update();
-        setNoReturnValue(socket);
     }
 }

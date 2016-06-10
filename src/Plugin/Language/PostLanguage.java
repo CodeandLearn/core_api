@@ -13,6 +13,5 @@ public class PostLanguage extends Model {
         SQLite sql = new SQLite(SQLPost.LANGUAGE + "(name) VALUES ("
                 + "\"" + jsonObject.getString("name").replace("\"", "\\\"") + "\"" + ")");
         sql.insert();
-        setNoReturnValue(socket);
     }
 }

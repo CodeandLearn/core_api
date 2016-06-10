@@ -2,8 +2,10 @@ package Core.Singleton;
 
 import Core.Database.SQLite;
 import Core.Http.Oauth2;
-import Data.SQLGet;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -15,30 +17,40 @@ public class UserSecuritySingleton {
     private ArrayList<HashMap<String, Object>> users = new ArrayList<>();
     private int nbUsers = 0;
 
-    private UserSecuritySingleton() {
-        SQLite sql = new SQLite(SQLGet.ACCOUNT_LOGIN);
-        sql.select();
-        for (int i = 0; i < sql.getResultSet().size(); i++) {
-            addUser((int) sql.getResultSet().get(i).get("accounts.id"),
-                    (String) sql.getResultSet().get(i).get("accounts.username"),
-                    (String) sql.getResultSet().get(i).get("accounts.password"),
-                    (int) sql.getResultSet().get(i).get("groups.parent_id"));
-        }
-        System.out.println("[SYSTEM] -> Nb users loaded: " + nbUsers);
-    }
-
     public static UserSecuritySingleton getInstance() {
         return instance;
     }
 
-    public static String hashString(String str) {
-        String ret = "";
-        int hash = ConfigSingleton.getInstance().getSalt();
-        for (int i = 0; i < str.length(); i++) {
-            hash = hash * 31 + str.charAt(i);
-            ret = ret.concat(Integer.toString(hash));
+    public static String hashSHA1(String text) {
+        MessageDigest md;
+        try {
+            md = MessageDigest.getInstance("SHA-1");
+            md.update(text.concat(ConfigSingleton.getInstance().getSalt()).getBytes(ConfigSingleton.getInstance().getCharset()), 0, text.length());
+            return toHex(md.digest());
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
-        return ret;
+        return null;
+    }
+
+    private static String toHex(byte[] data) {
+        StringBuffer buf = new StringBuffer();
+        for (int i = 0; i < data.length; i++) {
+            int halfbyte = (data[i] >>> 4) & 0x0F;
+            int two_halfs = 0;
+            do {
+                if ((0 <= halfbyte) && (halfbyte <= 9))
+                    buf.append((char) ('0' + halfbyte));
+                else
+                    buf.append((char) ('a' + (halfbyte - 10)));
+                halfbyte = data[i] & 0x0F;
+            } while (two_halfs++ < 1);
+        }
+        return buf.toString();
+    }
+
+    public int getNbUsers() {
+        return nbUsers;
     }
 
     public void addUser(int id, String username, String password, int group) {
@@ -74,11 +86,11 @@ public class UserSecuritySingleton {
 
     public boolean checkUser(String socket, String username, String password) {
         for (HashMap<String, Object> user : users) {
-            if (user.get("username").equals(username) && user.get("password").equals(hashString(password))) {
+            if (user.get("username").equals(username) && user.get("password").equals(hashSHA1(password))) {
                 user.replace("socket", socket);
                 user.replace("online", 1);
                 user.replace("token", Oauth2.generateToken());
-                user.replace("expires_in", System.currentTimeMillis());
+                user.replace("expires_in", System.currentTimeMillis() + (ConfigSingleton.getInstance().getTokenExpires() * 1000));
                 return true;
             }
         }
@@ -99,8 +111,8 @@ public class UserSecuritySingleton {
     public void autoRevokeToken() {
         for (HashMap<String, Object> user : users) {
             if (user.get("token") != "") {
-                if (((long) user.get("expires_in") + (ConfigSingleton.getInstance().getTokenExpires() * 1000)) < System.currentTimeMillis()) {
-                    System.out.println("[SYSTEM] -> User: " + user.get("username") + " token's revoked");
+                if ((long) user.get("expires_in") < System.currentTimeMillis()) {
+                    ServerSingleton.getInstance().log("[SYSTEM] -> User: " + user.get("username") + " token's revoked");
                     user.replace("token", "");
                     user.replace("expires_in", 0);
                 }
@@ -133,6 +145,15 @@ public class UserSecuritySingleton {
             }
         }
         return -1;
+    }
+
+    public String getUserName(String socket) {
+        for (HashMap<String, Object> user : users) {
+            if (user.get("socket").equals(socket)) {
+                return (String) user.get("username");
+            }
+        }
+        return "";
     }
 
     public Object getTokenExpires(String socket) {

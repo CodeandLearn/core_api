@@ -1,17 +1,18 @@
 package Core.Socket;
 
+import Core.Http.Header;
 import Core.Model;
 import Core.Router;
 import Core.Singleton.ConfigSingleton;
 import Core.Singleton.NbClientsSingleton;
 import Core.Singleton.ServerSingleton;
 import Core.Singleton.UserSecuritySingleton;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.*;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
 
 /**
  * Created by teddy on 04/05/2016.
@@ -20,7 +21,7 @@ public class ClientHandler implements Runnable {
     private final Socket clientSock;
     private static String EOF = "\u0000";
     private String jsonClient = "";
-    private HashMap<String, String> headerField = new HashMap<>();
+    private Header headerField = new Header();
     private String method = "";
     private String route = "";
     private String protocolVersion = "";
@@ -37,53 +38,60 @@ public class ClientHandler implements Runnable {
         try {
             userInput = new BufferedReader(new InputStreamReader(clientSock.getInputStream()));
             userOutput = new DataOutputStream(clientSock.getOutputStream());
-            setInitialData(userInput.readLine());
-            if (!checkInitialData()) {
-                String buffer;
-                if (!method.equals("OPTIONS")) {
-                    while ((buffer = userInput.readLine()).length() > 2) {
-                        headerField.put(buffer.split(": ")[0], buffer.split(": ")[1]);
-                    }
-                    if (headerField.containsKey("Content-Type") && headerField.get("Content-Type").equals("application/json")) {
-                        if (headerField.containsKey("Content-Length")) {
-                            while ((jsonClient.length() != Integer.parseInt(headerField.get("Content-Length")))) {
-                                jsonClient = jsonClient + (char) userInput.read();
+            if (!setInitialData(clientId, userInput.readLine())) {
+                if (!checkInitialData()) {
+                    String buffer;
+                    if (!method.equals("OPTIONS")) {
+                        while ((buffer = userInput.readLine()).length() > 2) {
+                            ServerSingleton.getInstance().log(clientId, "[HEADER] -> " + buffer);
+                            headerField.put(buffer.split(": ")[0], buffer.split(": ")[1]);
+                        }
+                        if (headerField.containsKey("Content-Type") && headerField.getString("Content-Type").equals("application/json")) {
+                            if (headerField.containsKey("Content-Length")) {
+                                while ((jsonClient.length() != headerField.getInt("Content-Length"))) {
+                                    jsonClient = jsonClient + (char) userInput.read();
+                                }
                             }
+                            Router router = new Router();
+                            ServerSingleton.getInstance().log(clientId, "[USER] -> " + method + " " + route);
+                            JSONObject jsonObject = new JSONObject();
+                            if (Router.isJSONValid(jsonClient)) {
+                                jsonObject = new JSONObject(jsonClient);
+                            }
+                            String jsonReturn = router.find(clientId, method, route, headerField, jsonObject);
+                            userOutput.write(makeResult(clientId, jsonReturn).getBytes(ConfigSingleton.getInstance().getCharset()));
+                            userOutput.flush();
                         }
-                        Router router = new Router();
-                        System.out.println("[USER] -> " + clientId + " " + method + " " + route);
-                        JSONObject jsonObject = new JSONObject();
-                        if (Router.isJSONValid(jsonClient)) {
-                            jsonObject = new JSONObject(jsonClient);
-                        }
-                        String jsonReturn = router.find(clientId, method, route, headerField, jsonObject);
-                        userOutput.write(makeResult(clientId, jsonReturn).getBytes("UTF8"));
+                    } else {
+                        ServerSingleton.getInstance().log(clientId, "[USER] -> " + method + " " + route);
+                        userOutput.write(makeOptionsResult().getBytes(ConfigSingleton.getInstance().getCharset()));
                         userOutput.flush();
                     }
-                } else {
-                    userOutput.write(makeOptionsResult().getBytes("UTF8"));
-                    userOutput.flush();
                 }
             }
             userInput.close();
             userOutput.close();
             UserSecuritySingleton.getInstance().setUserOffline(clientId);
-            System.out.println("[SERVER] -> Close connection to " + clientId);
+            ServerSingleton.getInstance().log("[SERVER] -> Close connection to " + clientId);
             ServerSingleton.getInstance().removeHttpRequest(clientId);
             clientSock.close();
             NbClientsSingleton.getInstance().delClient();
-        } catch (IOException ioe) {
-            System.err.print("IOException : " + ioe);
+        } catch (IOException | JSONException ioe) {
+            ServerSingleton.getInstance().log("IOException : " + ioe, true);
         }
     }
 
-    private void setInitialData(String data) {
+    private boolean setInitialData(String clientId, String data) {
         if (data != null) {
+            ServerSingleton.getInstance().log(clientId, "[REQUEST] -> " + data);
             String[] tmp = data.split(" ");
             method = tmp[0];
             route = tmp[1];
             protocolVersion = tmp[2];
+        } else {
+            return true;
         }
+        return false;
     }
 
     private boolean checkInitialData() {
@@ -91,7 +99,7 @@ public class ClientHandler implements Runnable {
     }
 
     private String makeResult(String clientId, String json) throws UnsupportedEncodingException {
-        final byte[] utf8Bytes = json.getBytes("UTF-8");
+        final byte[] utf8Bytes = json.getBytes(ConfigSingleton.getInstance().getCharset());
         SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z");
         String currentDate = dateFormat.format(System.currentTimeMillis());
         int code = (int) ServerSingleton.getInstance().getHttpCode(clientId);
@@ -99,7 +107,7 @@ public class ClientHandler implements Runnable {
                 "Date: " + currentDate + "\r\n" +
                 "Server: " + ConfigSingleton.getInstance().getName() + "/" + ConfigSingleton.getInstance().getVersion() + "\r\n" +
                 "Content-Type: application/json\r\n" +
-                "Access-Control-Allow-Origin: *\r\n" +
+                "Access-Control-Allow-Origin: " + ConfigSingleton.getInstance().getPropertie("Access-Control-Allow-Origin") + "\r\n" +
                 "Access-Control-Allow-Credentials: true\r\n" +
                 "Access-Control-Allow-Headers: origin, content-type, accept, Authorization\r\n" +
                 "Access-Control-Allow-Methods: OPTIONS, GET, PUT, POST, DELETE\r\n" +
@@ -111,7 +119,7 @@ public class ClientHandler implements Runnable {
 
     private String makeOptionsResult() {
         return "HTTP/1.1 200 OK\r\n" +
-                "Access-Control-Allow-Origin: *\r\n" +
+                "Access-Control-Allow-Origin: " + ConfigSingleton.getInstance().getPropertie("Access-Control-Allow-Origin") + "\r\n" +
                 "Access-Control-Allow-Credentials: true\r\n" +
                 "Access-Control-Allow-Headers: origin, content-type, accept, Authorization\r\n" +
                 "Access-Control-Allow-Methods: OPTIONS, GET, PUT, POST, DELETE\r\n"

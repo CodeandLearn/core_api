@@ -31,7 +31,6 @@ public class ExerciseDAO extends Model {
         values.add(jsonObject.getInt("grade_max"));
         SQLite sql = new SQLite(SQL.make(SQL_ins, values.toArray()));
         sql.insert();
-        setNoReturnValue(socket);
         return this;
     }
 
@@ -45,7 +44,6 @@ public class ExerciseDAO extends Model {
         values.add(id);
         SQLite sql = new SQLite(SQL.make(SQL_upd, values.toArray()));
         sql.update();
-        setNoReturnValue(socket);
         return this;
     }
 

@@ -10,6 +10,5 @@ public class DeleteCourse extends Model {
         SQLite sql_post = new SQLite(SQLDelete.COURSE + "id=" + id);
         sql_com.delete();
         sql_post.delete();
-        setNoReturnValue(socket);
     }
 }

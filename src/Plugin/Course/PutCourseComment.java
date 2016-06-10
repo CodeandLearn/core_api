@@ -13,6 +13,5 @@ public class PutCourseComment extends Model {
                 + "modify_timestamp=" + timestamp
                 + " WHERE id=" + id);
         sql.update();
-        setNoReturnValue(socket);
     }
 }

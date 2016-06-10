@@ -17,6 +17,5 @@ public class PostCourse extends Model {
                 + timestamp + ", "
                 + timestamp + ")");
         sql.insert();
-        setNoReturnValue(socket);
     }
 }

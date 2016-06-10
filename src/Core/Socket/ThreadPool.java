@@ -29,14 +29,14 @@ public class ThreadPool extends Thread {
 
         try {
             listenSocket = new ServerSocket(port);
-            ServerSingleton.getInstance().setHostIp(String.valueOf(listenSocket.getLocalSocketAddress()));
             ConfigSingleton.getInstance();
             NbClientsSingleton.getInstance();
             PermsSingleton.getInstance();
             UserSecuritySingleton.getInstance();
-            new Thread(new Oauth2TokenService()).start();
+            new Oauth2TokenService().start();
+            ServerSingleton.getInstance().setHostIp(String.valueOf(listenSocket.getLocalSocketAddress()));
         } catch (IOException e) {
-            System.err.println("[SERVER] -> An exception occurred while creating the listen socket: " + e.getMessage());
+            ServerSingleton.getInstance().log("[SERVER] -> An exception occurred while creating the listen socket: " + e.getMessage(), true);
             System.exit(1);
         }
     }
@@ -46,41 +46,44 @@ public class ThreadPool extends Thread {
         try {
             listenSocket.setSoTimeout(ConfigSingleton.getInstance().getSocketTimeout());
         } catch (SocketException e1) {
-            System.err.println("[SERVER] -> Unable to set acceptor timeout value. The server may not shutdown gracefully.");
+            ServerSingleton.getInstance().log("[SERVER] -> Unable to set acceptor timeout value. The server may not shutdown gracefully.", true);
         }
-        System.out.println("[SERVER] -> Accepting incoming connections on port " + listenSocket.getLocalPort());
+        ServerSingleton.getInstance().log("[SERVER] -> Accepting incoming connections on port " + listenSocket.getLocalPort());
         while (keepRunning) {
             try {
                 final Socket clientSocket = listenSocket.accept();
-                System.out.println("[SERVER] -> Accepted connection from " + clientSocket.getRemoteSocketAddress());
-                ServerSingleton.getInstance().addHttpRequest(clientSocket.getRemoteSocketAddress().toString());
-                NbClientsSingleton.getInstance().addClient();
-                ClientHandler handler = new ClientHandler(clientSocket);
-                workers.execute(handler);
+                if (!IpSingleton.getInstance().isBanned(clientSocket.getRemoteSocketAddress().toString().split(":")[0].replace("/", ""))) {
+                    ServerSingleton.getInstance().log("[SERVER] -> Accepted connection from " + clientSocket.getRemoteSocketAddress());
+                    ServerSingleton.getInstance().addHttpRequest(clientSocket.getRemoteSocketAddress().toString());
+                    NbClientsSingleton.getInstance().addClient();
+                    ClientHandler handler = new ClientHandler(clientSocket);
+                    workers.execute(handler);
+                }
             } catch (SocketTimeoutException te) {
                 System.err.print("");
             } catch (IOException ioe) {
-                System.err.println("[SERVER] -> Exception occurred while handling client request: " + ioe.getMessage());
+                ServerSingleton.getInstance().log("[SERVER] -> Exception occurred while handling client request: " + ioe.getMessage(), true);
                 Thread.yield();
             }
         }
         try {
             listenSocket.close();
         } catch (IOException ioe) {
-            System.err.println("[SERVER] -> IOException : " + ioe);
+            ServerSingleton.getInstance().log("[SERVER] -> IOException : " + ioe, true);
         }
-        System.out.println("[SERVER] -> Stopped accepting incoming connections.");
+        ServerSingleton.getInstance().log("[SERVER] -> Stopped accepting incoming connections.");
     }
 
     public void shutdown() {
-        System.out.println("[SERVER] -> Shutting down the server.");
+        ServerSingleton.getInstance().log("[SERVER] -> Shutting down the server.");
+        ServerSingleton.getInstance().closeLogger();
         NbClientsSingleton.getInstance().razClient();
         keepRunning = false;
         workers.shutdownNow();
         try {
             join();
         } catch (InterruptedException e) {
-            System.err.println("[SERVER] -> Shutdown : " + e);
+            ServerSingleton.getInstance().log("[SERVER] -> Shutdown : " + e, true);
         }
     }
 }

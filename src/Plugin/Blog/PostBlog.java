@@ -20,6 +20,5 @@ public class PostBlog extends Model {
                 + timestamp + ", "
                 + timestamp + ")");
         sql.insert();
-        setNoReturnValue(socket);
     }
 }

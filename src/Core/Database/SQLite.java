@@ -1,5 +1,10 @@
 package Core.Database;
 
+import Core.Singleton.ConfigSingleton;
+import Core.Singleton.ServerSingleton;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -10,7 +15,7 @@ import java.util.HashMap;
  * Created by teddy on 03/04/2016.
  */
 public class SQLite {
-    public static String database = "db_SQLlite";
+    public static String database = ConfigSingleton.getInstance().getPropertie("db_name");
     private ArrayList<HashMap<String, Object>> entities = new ArrayList<>();
     private String request;
 
@@ -31,31 +36,36 @@ public class SQLite {
             while (result.next()) {
                 HashMap<String, Object> data = new HashMap<>();
                 for (int i = 1; i <= metaData.getColumnCount(); i++) {
-                    data.put(metaData.getColumnName(i), result.getObject(i));
+                    if (result.getObject(i).getClass().getTypeName().equals("java.lang.String")) {
+                        try {
+                            data.put(metaData.getColumnName(i), URLDecoder.decode(result.getObject(i).toString(), ConfigSingleton.getInstance().getCharset()));
+                        } catch (UnsupportedEncodingException e) {
+                            ServerSingleton.getInstance().log("URLDecode : " + e, true);
+                        }
+                    } else {
+                        data.put(metaData.getColumnName(i), result.getObject(i));
+                    }
                 }
                 entities.add(data);
             }
         } catch (SQLException e) {
-            System.err.println("SELECT : " + e);
+            ServerSingleton.getInstance().log("SELECT : " + e, true);
         }
         sql.closeDB();
     }
 
     public void insert() {
         SQLiteJDBC sql = new SQLiteJDBC(database);
-        System.out.println("DEBUG INSERT " + request);
         sql.insertDB(request);
     }
 
     public void update() {
         SQLiteJDBC sql = new SQLiteJDBC(database);
-        System.out.println("DEBUG UPDATE " + request);
         sql.updateDB(request);
     }
 
     public void delete() {
         SQLiteJDBC sql = new SQLiteJDBC(database);
-        System.out.println("DEBUG DELETE " + request);
         sql.deleteDB(request);
     }
 }

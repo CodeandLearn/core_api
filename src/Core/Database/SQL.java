@@ -1,5 +1,8 @@
 package Core.Database;
 
+import Core.Singleton.ConfigSingleton;
+import Core.Singleton.ServerSingleton;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.sql.Connection;
@@ -18,15 +21,13 @@ public class SQL {
         for (int i = 0; i < values.length; i++) {
             if (values[i].getClass().getTypeName().equals("java.lang.String")) {
                 try {
-                    values[i] = "\"" + URLEncoder.encode(values[i].toString(), "UTF-8") + "\"";
+                    values[i] = "\"" + URLEncoder.encode(values[i].toString(), ConfigSingleton.getInstance().getCharset()) + "\"";
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
             }
         }
-        String ret = String.format(subject.replace("%", "%%").replace("?", "%s"), values);
-        System.out.println(ret);
-        return ret;
+        return String.format(subject.replace("%", "%%").replace("?", "%s"), values);
     }
 
     public void insertDB(String sql) {
@@ -34,7 +35,7 @@ public class SQL {
             stmt.executeUpdate(sql);
             c.commit();
         } catch (SQLException e) {
-            System.err.println("SQLException: " + e.getMessage());
+            ServerSingleton.getInstance().log("SQLException: " + e.getMessage(), true);
         }
     }
 
@@ -43,7 +44,7 @@ public class SQL {
             stmt.executeUpdate(sql);
             c.commit();
         } catch (SQLException e) {
-            System.err.println("SQLException: " + e.getMessage());
+            ServerSingleton.getInstance().log("SQLException: " + e.getMessage(), true);
         }
     }
 
@@ -52,7 +53,7 @@ public class SQL {
             stmt.executeUpdate(sql);
             c.commit();
         } catch (SQLException e) {
-            System.err.println("SQLException: " + e.getMessage());
+            ServerSingleton.getInstance().log("SQLException: " + e.getMessage(), true);
         }
     }
 
@@ -62,7 +63,7 @@ public class SQL {
             c.commit();
             return result;
         } catch (SQLException e) {
-            System.err.println("SQLException: " + e.getMessage());
+            ServerSingleton.getInstance().log("SQLException: " + e.getMessage(), true);
         }
         return null;
     }
@@ -72,7 +73,7 @@ public class SQL {
             stmt.close();
             c.close();
         } catch (SQLException e) {
-            System.err.println("SQLException: " + e.getMessage());
+            ServerSingleton.getInstance().log("SQLException: " + e.getMessage(), true);
         }
     }
 }

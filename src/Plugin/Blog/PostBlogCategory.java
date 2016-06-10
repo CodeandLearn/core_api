@@ -13,6 +13,5 @@ public class PostBlogCategory extends Model {
     public PostBlogCategory(String socket, JSONObject jsonObject) {
         SQLite sql = new SQLite(SQLPost.BLOG_CATEGORY + "(name) VALUES ('" + jsonObject.getString("name").replace("\"", "\\\"") + "'");
         sql.insert();
-        setNoReturnValue(socket);
     }
 }

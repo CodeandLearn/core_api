@@ -1,6 +1,8 @@
 package Plugin;
 
 import Core.Controller;
+import Core.Http.Header;
+import Core.Http.Map;
 import Core.Http.Oauth2;
 import Core.Http.Oauth2Model;
 import Core.Methode;
@@ -30,214 +32,214 @@ import java.util.HashMap;
 public class Path {
     @Methode("POST")
     @Route("/oauth")
-    public Oauth2Model getToken(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public Oauth2Model getToken(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new Oauth2Model(socket, oauth2);
     }
 
     @Methode("DELETE")
     @Route("/revoke")
-    public Model revokeToken(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public Model revokeToken(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         UserSecuritySingleton.getInstance().revokUserToken(socket);
         return new Model();
     }
 
     @Methode("GET")
     @Route("/server")
-    public Server getServer(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public Server getServer(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new Server(socket);
     }
 
     /* ACCOUNT */
     @Methode("GET")
     @Route("/accounts")
-    public GetAccount getAccounts(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public GetAccount getAccounts(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new GetAccount(socket);
     }
 
     @Methode("GET")
     @Route("/accounts/limit/{limit}")
-    public GetAccount getAccountWithLimit(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public GetAccount getAccountWithLimit(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new GetAccount(socket, "", Integer.parseInt(args.get("limit").toString()));
     }
 
     @Methode("GET")
     @Route("/account")
-    public GetAccount getAccount(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public GetAccount getAccount(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new GetAccount(socket, "accounts.id=" + UserSecuritySingleton.getInstance().getUserId(socket));
     }
 
     @Methode("GET")
     @Route("/account/{id}")
-    public GetAccount getAccountById(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public GetAccount getAccountById(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new GetAccount(socket, "accounts.id=" + args.get("id").toString());
     }
 
     @Methode("POST")
     @Route("/register")
-    public PostAccount register(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public PostAccount register(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new PostAccount(socket, jsonObject);
     }
 
     @Methode("PUT")
     @Route("/account")
-    public PutAccount putAccount(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public PutAccount putAccount(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new PutAccount(socket, UserSecuritySingleton.getInstance().getUserId(socket), jsonObject);
     }
 
     @Methode("PUT")
     @Route("/account/{id}")
-    public PutAccount putAccountById(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public PutAccount putAccountById(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new PutAccount(socket, Integer.parseInt(args.get("id").toString()), jsonObject);
     }
 
     @Methode("DELETE")
     @Route("/account")
-    public DeleteAccount deleteAccount(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public DeleteAccount deleteAccount(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new DeleteAccount(socket, UserSecuritySingleton.getInstance().getUserId(socket));
     }
 
     @Methode("DELETE")
     @Route("/account/{id}")
-    public DeleteAccount deleteAccountById(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public DeleteAccount deleteAccountById(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new DeleteAccount(socket, Integer.parseInt(args.get("id").toString()));
     }
 
     /* BLOG */
     @Methode("GET")
     @Route("/blog")
-    public GetBlog getBlog(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public GetBlog getBlog(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new GetBlog(socket);
     }
 
     @Methode("GET")
     @Route("/blog/limit/{limit}")
-    public GetBlog getBlogWithLimit(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public GetBlog getBlogWithLimit(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new GetBlog(socket, "", Integer.parseInt(args.get("limit").toString()));
     }
 
     @Methode("GET")
     @Route("/blog/author/{author_name}")
-    public GetBlog getBlogByAuthor(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public GetBlog getBlogByAuthor(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new GetBlog(socket, "accounts.username='" + args.get("author_name") + "'");
     }
 
     @Methode("GET")
     @Route("/blog/author/id/{author_id}")
-    public GetBlog getBlogByAuthorId(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public GetBlog getBlogByAuthorId(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new GetBlog(socket, "accounts.id=" + args.get("author_id"));
     }
 
     @Methode("GET")
     @Route("/blog/category/{category_name}")
-    public GetBlog getBlogByCategory(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public GetBlog getBlogByCategory(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new GetBlog(socket, "blog_posts_category.name='" + args.get("category_name") + "'");
     }
 
     @Methode("GET")
     @Route("/blog/category/id/{category_id}")
-    public GetBlog getBlogByCategoryId(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public GetBlog getBlogByCategoryId(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new GetBlog(socket, "blog_posts_category.id=" + args.get("category_id"));
     }
 
     @Methode("GET")
     @Route("/blog/{post_id}")
-    public GetBlog getBlogById(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public GetBlog getBlogById(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new GetBlog(socket, "blog_posts.id=" + args.get("post_id"));
     }
 
     @Methode("GET")
     @Route("/blog/categories")
-    public GetBlogCategories getBlogCategories(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public GetBlogCategories getBlogCategories(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new GetBlogCategories(socket);
     }
 
     @Methode("GET")
     @Route("/blog/comments")
-    public GetBlogComments getBlogComments(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public GetBlogComments getBlogComments(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new GetBlogComments(socket);
     }
 
     @Methode("GET")
     @Route("/blog/comments/limit/{limit}")
-    public GetBlogComments getBlogCommentsWithLimit(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public GetBlogComments getBlogCommentsWithLimit(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new GetBlogComments(socket, "", Integer.parseInt(args.get("limit").toString()));
     }
 
     @Methode("GET")
     @Route("/blog/comment/{id}")
-    public GetBlogComments getBlogComment(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public GetBlogComments getBlogComment(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new GetBlogComments(socket, "blog_posts_comments.id=" + args.get("id"));
     }
 
     @Methode("GET")
     @Route("/blog/comment/post/{post_id}")
-    public GetBlogComments getBlogCommentByPostId(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public GetBlogComments getBlogCommentByPostId(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new GetBlogComments(socket, "blog_posts_comments.blog_post_id=" + args.get("post_id"));
     }
 
     @Methode("GET")
     @Route("/blog/comment/author/{author_name}")
-    public GetBlogComments getBlogCommentByAuthorName(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public GetBlogComments getBlogCommentByAuthorName(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new GetBlogComments(socket, "accounts.username='" + args.get("author_name") + "'");
     }
 
     @Methode("GET")
     @Route("/blog/comment/author/id/{author_id}")
-    public GetBlogComments getBlogCommentByAuthorId(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public GetBlogComments getBlogCommentByAuthorId(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new GetBlogComments(socket, "accounts.id=" + args.get("author_id"));
     }
 
     @Methode("POST")
     @Route("/blog")
-    public PostBlog postBlog(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public PostBlog postBlog(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new PostBlog(socket, jsonObject, UserSecuritySingleton.getInstance().getUserId(socket));
     }
 
     @Methode("POST")
     @Route("/blog/category")
-    public PostBlogCategory postBlogCategory(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public PostBlogCategory postBlogCategory(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new PostBlogCategory(socket, jsonObject);
     }
 
     @Methode("POST")
     @Route("/blog/comment")
-    public PostBlogComment postBlogComment(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public PostBlogComment postBlogComment(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new PostBlogComment(socket, jsonObject, UserSecuritySingleton.getInstance().getUserId(socket));
     }
 
     @Methode("PUT")
     @Route("/blog/{id}")
-    public PutBlog putBlog(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public PutBlog putBlog(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new PutBlog(socket, Integer.parseInt(args.get("id").toString()), jsonObject);
     }
 
     @Methode("PUT")
     @Route("/blog/category/{id}")
-    public PutBlogCategory putBlogCategory(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public PutBlogCategory putBlogCategory(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new PutBlogCategory(socket, Integer.parseInt(args.get("id").toString()), jsonObject);
     }
 
     @Methode("PUT")
     @Route("/blog/comment/{id}")
-    public PutBlogComment putBlogComment(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public PutBlogComment putBlogComment(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new PutBlogComment(socket, Integer.parseInt(args.get("id").toString()), jsonObject);
     }
 
     @Methode("DELETE")
     @Route("/blog/{id}")
-    public DeleteBlog deleteBlog(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public DeleteBlog deleteBlog(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new DeleteBlog(socket, Integer.parseInt(args.get("id").toString()));
     }
 
     @Methode("DELETE")
     @Route("/blog/category/{id}")
-    public DeleteBlogCategory deleteBlogCategory(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public DeleteBlogCategory deleteBlogCategory(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new DeleteBlogCategory(socket, Integer.parseInt(args.get("id").toString()));
     }
 
     @Methode("DELETE")
     @Route("/blog/comment/{id}")
-    public DeleteBlogComment deleteBlogComment(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public DeleteBlogComment deleteBlogComment(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new DeleteBlogComment(socket, Integer.parseInt(args.get("id").toString()));
     }
 
@@ -246,351 +248,351 @@ public class Path {
     /* Cours */
     @Methode("GET")
     @Route("/course")
-    public GetCourse getCourse(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public GetCourse getCourse(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new GetCourse(socket);
     }
 
     @Methode("GET")
     @Route("/course/id/{id}")
-    public GetCourse getCourseWithId(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public GetCourse getCourseWithId(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new GetCourse(socket, "courses.id=" + args.get("id"));
     }
 
     @Methode("GET")
     @Route("/course/limit/{limit}")
-    public GetCourse getCourseWithLimit(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public GetCourse getCourseWithLimit(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new GetCourse(socket, "", Integer.parseInt(args.get("limit").toString()));
     }
 
     @Methode("GET")
     @Route("/course/author/id/{author_id}")
-    public GetCourse getCourseByAuthorId(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public GetCourse getCourseByAuthorId(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new GetCourse(socket, "courses.account_id=" + args.get("author_id"));
     }
 
     @Methode("GET")
     @Route("/course/language/id/{language_id}")
-    public GetCourse getCourseByLanguageId(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public GetCourse getCourseByLanguageId(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new GetCourse(socket, "courses.language_id=" + args.get("language_id"));
     }
 
     @Methode("GET")
     @Route("/course/locales/id/{locales_id}")
-    public GetCourse getCourseByLocalesId(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public GetCourse getCourseByLocalesId(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new GetCourse(socket, "courses.locales_id=" + args.get("locales_id"));
     }
 
     @Methode("GET")
     @Route("/course/title/{title}")
-    public GetCourse getCourseByTitle(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public GetCourse getCourseByTitle(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new GetCourse(socket, "courses.title=" + args.get("title"));
     }
 
     @Methode("POST")
     @Route("/course")
-    public PostCourse postCourse(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public PostCourse postCourse(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new PostCourse(socket, jsonObject, UserSecuritySingleton.getInstance().getUserId(socket));
     }
 
     @Methode("POST")
     @Route("/course/comment")
-    public PostCourseComment postCourseComment(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public PostCourseComment postCourseComment(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new PostCourseComment(socket, jsonObject, UserSecuritySingleton.getInstance().getUserId(socket));
     }
 
     @Methode("PUT")
     @Route("/course/{id}")
-    public PutCourse putCourse(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public PutCourse putCourse(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new PutCourse(socket, Integer.parseInt(args.get("id").toString()), jsonObject);
     }
 
     @Methode("PUT")
     @Route("/course/comment/{id}")
-    public PutCourseComment putCourseComment(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public PutCourseComment putCourseComment(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new PutCourseComment(socket, Integer.parseInt(args.get("id").toString()), jsonObject);
     }
 
     @Methode("DELETE")
     @Route("/course/{id}")
-    public DeleteCourse deleteCourse(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public DeleteCourse deleteCourse(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new DeleteCourse(socket, Integer.parseInt(args.get("id").toString()));
     }
 
     @Methode("DELETE")
     @Route("/course/comment/{id}")
-    public DeleteCourseComment deleteCourseComment(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public DeleteCourseComment deleteCourseComment(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new DeleteCourseComment(socket, Integer.parseInt(args.get("id").toString()));
     }
 
     /* Language */
     @Methode("GET")
     @Route("/languages")
-    public GetLanguage getLanguage(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public GetLanguage getLanguage(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new GetLanguage(socket);
     }
 
     @Methode("GET")
     @Route("/language/limit/{limit}")
-    public GetLanguage getLanguageWithLimit(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public GetLanguage getLanguageWithLimit(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new GetLanguage(socket, "", Integer.parseInt(args.get("limit").toString()));
     }
 
     @Methode("GET")
     @Route("/language/{id}")
-    public GetLanguage getLanguageById(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public GetLanguage getLanguageById(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new GetLanguage(socket, "languages.id=" + args.get("id"));
     }
 
     @Methode("DELETE")
     @Route("/language/{id}")
-    public DeleteLanguage deleteLanguage(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public DeleteLanguage deleteLanguage(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new DeleteLanguage(socket, Integer.parseInt(args.get("id").toString()));
     }
 
     @Methode("POST")
     @Route("/language")
-    public PostLanguage postLanguage(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public PostLanguage postLanguage(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new PostLanguage(socket, jsonObject);
     }
 
     @Methode("PUT")
     @Route("/language/{id}")
-    public PutLanguage putLanguage(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public PutLanguage putLanguage(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new PutLanguage(socket, Integer.parseInt(args.get("id").toString()), jsonObject);
     }
 
     /* Exercises */
     @Methode("GET")
     @Route("/exercises")
-    public ExerciseDAO getExercises(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public ExerciseDAO getExercises(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new ExerciseDAO().getExercises(socket);
     }
 
     @Methode("GET")
     @Route("/exercise/{id}")
-    public ExerciseDAO getExerciseById(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public ExerciseDAO getExerciseById(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new ExerciseDAO().getExerciseById(socket, Integer.parseInt(args.get("id").toString()));
     }
 
     @Methode("GET")
     @Route("/exercise/course/{course_id}")
-    public ExerciseDAO getExercisesByCourseId(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public ExerciseDAO getExercisesByCourseId(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new ExerciseDAO().getCourseExercise(socket, Integer.parseInt(args.get("course_id").toString()));
     }
 
     @Methode("GET")
     @Route("/exercise/{exercise_id}/script")
-    public ScriptDAO getExerciseScript(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public ScriptDAO getExerciseScript(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new ScriptDAO().getExerciceScript(socket, Integer.parseInt(args.get("exercise_id").toString()));
     }
 
     @Methode("GET")
     @Route("/exercise/{exercise_id}/correction")
-    public ExerciceCorrectionDAO getExerciseCorrection(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public ExerciceCorrectionDAO getExerciseCorrection(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new ExerciceCorrectionDAO().getExerciceCorrection(socket, Integer.parseInt(args.get("exercise_id").toString()));
     }
 
     @Methode("GET")
     @Route("/exercise/{exercise_id}/comments")
-    public ExerciceCommentDAO getExerciseComments(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public ExerciceCommentDAO getExerciseComments(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new ExerciceCommentDAO().getExerciceComments(socket, Integer.parseInt(args.get("exercise_id").toString()));
     }
 
     @Methode("GET")
     @Route("/exercise/{exercise_id}/moderation")
-    public ExerciceModerationDAO getExerciseModeration(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public ExerciceModerationDAO getExerciseModeration(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new ExerciceModerationDAO().getExerciceModeration(socket, Integer.parseInt(args.get("exercise_id").toString()));
     }
 
     @Methode("POST")
     @Route("/exercise")
-    public ExerciseDAO postExercise(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public ExerciseDAO postExercise(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new ExerciseDAO().post(socket, jsonObject);
     }
 
     @Methode("POST")
     @Route("/exercise/script")
-    public ScriptDAO postExerciseScript(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public ScriptDAO postExerciseScript(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new ScriptDAO().post(socket, jsonObject);
     }
 
     @Methode("POST")
     @Route("/exercise/correction")
-    public ExerciceCorrectionDAO postExerciseCorrection(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public ExerciceCorrectionDAO postExerciseCorrection(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new ExerciceCorrectionDAO().post(socket, jsonObject);
     }
 
     @Methode("POST")
     @Route("/exercise/comment")
-    public ExerciceCommentDAO postExerciseComment(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public ExerciceCommentDAO postExerciseComment(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new ExerciceCommentDAO().post(socket, jsonObject);
     }
 
     @Methode("POST")
     @Route("/exercise/moderation")
-    public ExerciceModerationDAO postExerciseModeration(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public ExerciceModerationDAO postExerciseModeration(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new ExerciceModerationDAO().post(socket, jsonObject);
     }
 
     @Methode("PUT")
     @Route("/exercise/{id}")
-    public ExerciseDAO putExercise(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public ExerciseDAO putExercise(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new ExerciseDAO().update(socket, Integer.parseInt(args.get("id").toString()), jsonObject);
     }
 
     @Methode("PUT")
     @Route("/exercise/script/{script_id}")
-    public ScriptDAO putExerciseScript(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public ScriptDAO putExerciseScript(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new ScriptDAO().update(socket, Integer.parseInt(args.get("script_id").toString()), jsonObject);
     }
 
     @Methode("PUT")
     @Route("/exercise/correction/{correction_id}")
-    public ExerciceCorrectionDAO putExerciseCorrection(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public ExerciceCorrectionDAO putExerciseCorrection(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new ExerciceCorrectionDAO().update(socket, Integer.parseInt(args.get("correction_id").toString()), jsonObject);
     }
 
     @Methode("PUT")
     @Route("/exercise/comment/{comment_id}")
-    public ExerciceCommentDAO putExerciseComment(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public ExerciceCommentDAO putExerciseComment(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new ExerciceCommentDAO().update(socket, Integer.parseInt(args.get("comment_id").toString()), jsonObject);
     }
 
     @Methode("PUT")
     @Route("/exercise/moderation/{moderation_id}")
-    public ExerciceModerationDAO putExerciseModeration(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public ExerciceModerationDAO putExerciseModeration(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new ExerciceModerationDAO().update(socket, Integer.parseInt(args.get("moderation_id").toString()), jsonObject);
     }
 
     @Methode("DELETE")
     @Route("/exercise/{id}")
-    public ExerciseDAO deleteExercise(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public ExerciseDAO deleteExercise(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new ExerciseDAO().delete(socket, Integer.parseInt(args.get("id").toString()));
     }
 
     @Methode("DELETE")
     @Route("/exercise/script/{script_id}")
-    public ScriptDAO deleteExerciseScript(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public ScriptDAO deleteExerciseScript(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new ScriptDAO().delete(socket, Integer.parseInt(args.get("script_id").toString()));
     }
 
     @Methode("DELETE")
     @Route("/exercise/correction/{correction_id}")
-    public ExerciceCorrectionDAO deleteExerciseCorrection(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public ExerciceCorrectionDAO deleteExerciseCorrection(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new ExerciceCorrectionDAO().delete(socket, Integer.parseInt(args.get("correction_id").toString()));
     }
 
     @Methode("DELETE")
     @Route("/exercise/comments/{comment_id}")
-    public ExerciceCommentDAO deleteExerciseComment(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public ExerciceCommentDAO deleteExerciseComment(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new ExerciceCommentDAO().delete(socket, Integer.parseInt(args.get("comment_id").toString()));
     }
 
     @Methode("DELETE")
     @Route("/exercise/moderation/{moderation_id}")
-    public ExerciceModerationDAO deleteExerciseModeration(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public ExerciceModerationDAO deleteExerciseModeration(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new ExerciceModerationDAO().delete(socket, Integer.parseInt(args.get("moderation_id").toString()));
     }
 
     @Methode("GET")
     @Route("/user_exercises")
-    public UserExerciceDAO getUserExercises(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public UserExerciceDAO getUserExercises(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new UserExerciceDAO().getUserExercices(socket, UserSecuritySingleton.getInstance().getUserId(socket));
     }
 
     @Methode("GET")
     @Route("/user_exercise/{id}")
-    public UserExerciceDAO getUserExerciseEntry(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public UserExerciceDAO getUserExerciseEntry(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new UserExerciceDAO().getUserExercice(socket, UserSecuritySingleton.getInstance().getUserId(socket), Integer.parseInt(args.get("id").toString()));
     }
 
     @Methode("GET")
     @Route("/user_exercise/{user_exercise_id}/grade")
-    public GradeDAO getUserExerciceGrade(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public GradeDAO getUserExerciceGrade(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new GradeDAO().getGrade(socket, Integer.parseInt(args.get("user_exercise_id").toString()));
     }
 
     @Methode("GET")
     @Route("/user_exercise/{user_exercise_id}/log")
-    public LogDAO getUserExerciceLog(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public LogDAO getUserExerciceLog(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new LogDAO().getLog(socket, Integer.parseInt(args.get("user_exercise_id").toString()));
     }
 
     @Methode("GET")
     @Route("/user_exercise/{user_exercise_id}/codes")
-    public CodeDAO getUserExerciceCodes(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public CodeDAO getUserExerciceCodes(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new CodeDAO().getCodes(socket, Integer.parseInt(args.get("user_exercise_id").toString()));
     }
 
     @Methode("POST")
     @Route("/user_exercise")
-    public UserExerciceDAO postUserExercice(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public UserExerciceDAO postUserExercice(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new UserExerciceDAO().post(socket, jsonObject);
     }
 
     @Methode("POST")
     @Route("/user_exercise/grade")
-    public GradeDAO postUserExerciceGrade(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public GradeDAO postUserExerciceGrade(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new GradeDAO().post(socket, jsonObject);
     }
 
     @Methode("POST")
     @Route("/user_exercise/code")
-    public CodeDAO postUserExerciceCode(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public CodeDAO postUserExerciceCode(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new CodeDAO().post(socket, jsonObject);
     }
 
     @Methode("POST")
     @Route("/user_exercise/log")
-    public LogDAO postUserExerciceLog(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public LogDAO postUserExerciceLog(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new LogDAO().post(socket, jsonObject);
     }
 
     @Methode("PUT")
     @Route("/user_exercise/{id}")
-    public UserExerciceDAO putUserExercice(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public UserExerciceDAO putUserExercice(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new UserExerciceDAO().update(socket, Integer.parseInt(args.get("id").toString()), jsonObject);
     }
 
     @Methode("PUT")
     @Route("/user_exercise/grade/{id}")
-    public GradeDAO putUserExerciceGrade(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public GradeDAO putUserExerciceGrade(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new GradeDAO().update(socket, Integer.parseInt(args.get("id").toString()), jsonObject);
     }
 
     @Methode("PUT")
     @Route("/user_exercise/code/{id}")
-    public CodeDAO putUserExerciceCode(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public CodeDAO putUserExerciceCode(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new CodeDAO().update(socket, Integer.parseInt(args.get("id").toString()), jsonObject);
     }
 
     @Methode("PUT")
     @Route("/user_exercise/log/{id}")
-    public LogDAO putUserExerciceLog(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public LogDAO putUserExerciceLog(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new LogDAO().update(socket, Integer.parseInt(args.get("id").toString()), jsonObject);
     }
 
     @Methode("DELETE")
     @Route("/user_exercise/{id}")
-    public UserExerciceDAO deleteUserExercice(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public UserExerciceDAO deleteUserExercice(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new UserExerciceDAO().delete(socket, Integer.parseInt(args.get("id").toString()));
     }
 
     @Methode("DELETE")
     @Route("/user_exercise/grade/{id}")
-    public GradeDAO deleteUserExerciceGrade(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public GradeDAO deleteUserExerciceGrade(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new GradeDAO().delete(socket, Integer.parseInt(args.get("id").toString()));
     }
 
     @Methode("DELETE")
     @Route("/user_exercise/code/{id}")
-    public CodeDAO deleteUserExerciceCode(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public CodeDAO deleteUserExerciceCode(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new CodeDAO().delete(socket, Integer.parseInt(args.get("id").toString()));
     }
 
     @Methode("DELETE")
     @Route("/user_exercise/log/{id}")
-    public LogDAO deleteUserExerciceLog(String socket, Oauth2 oauth2, HashMap<String, String> headerField, JSONObject jsonObject, HashMap<String, Object> args) {
+    public LogDAO deleteUserExerciceLog(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new LogDAO().delete(socket, Integer.parseInt(args.get("id").toString()));
     }
 }

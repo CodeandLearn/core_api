@@ -8,6 +8,5 @@ public class DeleteCourseComment extends Model {
     public DeleteCourseComment(String socket, int id) {
         SQLite sql = new SQLite(SQLDelete.COURSE_COMMENT + "id=" + id);
         sql.delete();
-        setNoReturnValue(socket);
     }
 }

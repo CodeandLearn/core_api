@@ -11,6 +11,5 @@ public class DeleteBlogComment extends Model {
     public DeleteBlogComment(String socket, int id) {
         SQLite sql = new SQLite(SQLDelete.BLOG_COMMENT + "id=" + id);
         sql.delete();
-        setNoReturnValue(socket);
     }
 }

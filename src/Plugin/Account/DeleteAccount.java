@@ -13,7 +13,6 @@ public class DeleteAccount extends Model {
     public DeleteAccount(String socket, int id) {
         SQLite sql = new SQLite(SQLDelete.ACCOUNT + "id=" + id);
         sql.delete();
-        setNoReturnValue(socket);
         UserSecuritySingleton.getInstance().removeUser(socket);
     }
 }

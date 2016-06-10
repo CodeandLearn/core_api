@@ -29,7 +29,6 @@ public class ScriptDAO extends Model {
         values.add(jsonObject.getLong("modify_timestamp"));
         SQLite sql = new SQLite(SQL.make(SQL_ins, values.toArray()));
         sql.insert();
-        setNoReturnValue(socket);
         return this;
     }
 
@@ -42,14 +41,12 @@ public class ScriptDAO extends Model {
         values.add(id);
         SQLite sql = new SQLite(SQL.make(SQL_upd, values.toArray()));
         sql.update();
-        setNoReturnValue(socket);
         return this;
     }
 
     public ScriptDAO delete(String socket, int id) {
         SQLite sql = new SQLite(SQL_del.replace("?", String.valueOf(id)));
         sql.delete();
-        setNoReturnValue(socket);
         return this;
     }
 

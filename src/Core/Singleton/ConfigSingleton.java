@@ -1,9 +1,6 @@
 package Core.Singleton;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Properties;
 
 /**
@@ -20,7 +17,7 @@ public class ConfigSingleton {
             props.load(reader);
             reader.close();
         } catch (IOException ex) {
-            System.err.println("IOException : " + ex);
+            ServerSingleton.getInstance().log("IOException : " + ex, true);
         }
     }
 
@@ -56,8 +53,16 @@ public class ConfigSingleton {
         return Long.valueOf(props.getProperty("token_expires"));
     }
 
-    public int getSalt() {
-        return Integer.parseInt(props.getProperty("salt"));
+    public String getSalt() {
+        return props.getProperty("salt");
+    }
+
+    public String getMaxAttempt() {
+        return props.getProperty("max_attempt");
+    }
+
+    public String getCharset() {
+        return props.getProperty("charset");
     }
 
     public void setProps(String key, String value, String store) {
