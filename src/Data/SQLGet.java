@@ -30,21 +30,6 @@ public class SQLGet {
             "AND accounts.id=blog_posts.account_id\n" +
             "AND avatars.id=accounts.avatar_id\n" +
             "AND groups.id=accounts.group_id";
-    public static String BLOG_POST = "SELECT blog_posts.account_id'blog_posts.account_id',\n" +
-            "blog_posts.blog_category_id'blog_posts.blog_category_id',\n" +
-            "blog_posts.content'blog_posts.content',\n" +
-            "blog_posts.create_timestamp'blog_posts.create_timestamp',\n" +
-            "blog_posts.id'blog_posts.id',\n" +
-            "blog_posts.locales_id'blog_posts.locales_id',\n" +
-            "blog_posts.modify_timestamp'blog_posts.modify_timestamp',\n" +
-            "blog_posts.title'blog_posts.title',\n" +
-            "locales.id'locales.id',\n" +
-            "locales.name'locales.name',\n" +
-            "blog_posts_category.id'blog_posts_category.id',\n" +
-            "blog_posts_category.name'blog_posts_category.name'\n" +
-            "FROM blog_posts, locales, blog_posts_category\n" +
-            "WHERE blog_posts.blog_category_id=blog_posts_category.id\n" +
-            "AND blog_posts.locales_id=locales.id";
     public static String BLOG_CATEGORY = "SELECT blog_posts_category.id'blog_posts_category.id',\n" +
             "blog_posts_category.name'blog_posts_category.name'\n" +
             "FROM blog_posts_category";
@@ -71,43 +56,6 @@ public class SQLGet {
             "WHERE blog_posts_comments.account_id=accounts.id\n" +
             "AND groups.id=accounts.id\n" +
             "AND avatars.id=accounts.avatar_id";
-    public static String ACCOUNT = "SELECT accounts.username'accounts.username',\n" +
-            "accounts.id'accounts.id',\n" +
-            "accounts.email'accounts.email',\n" +
-            "accounts.avatar_id'accounts.avatar_id',\n" +
-            "accounts.group_id'accounts.group_id',\n" +
-            "accounts.create_timestamp'accounts.create_timestamp',\n" +
-            "accounts.last_connect_timestamp'accounts.last_connect_timestamp',\n" +
-            "accounts.nb_courses_done'accounts.nb_courses_done',\n" +
-            "accounts.nb_exercices_done'accounts.nb_exercices_done',\n" +
-            "groups.id'groups.id',\n" +
-            "groups.name'groups.name',\n" +
-            "groups.parent_id'groups.parent_id',\n" +
-            "avatars.id'avatars.id',\n" +
-            "avatars.path'avatars.path'\n" +
-            "FROM accounts, groups, avatars\n" +
-            "WHERE accounts.avatar_id=avatars.id\n" +
-            "AND accounts.group_id=groups.id";
-    public static String ACCOUNT_LOGIN = "SELECT accounts.id'accounts.id',\n" +
-            "accounts.username'accounts.username',\n" +
-            "accounts.password'accounts.password',\n" +
-            "accounts.email'accounts.email',\n" +
-            "accounts.group_id'accounts.group_id',\n" +
-            "groups.id'groups.id',\n" +
-            "groups.name'groups.name',\n" +
-            "groups.parent_id'groups.parent_id'\n" +
-            "FROM accounts, groups\n" +
-            "WHERE accounts.group_id=groups.id";
-    public static String ACCOUNT_GROUP = "SELECT groups.id'groups.id',\n" +
-            "groups.name'groups.name',\n" +
-            "groups.parent_id'groups.parent_id'\n" +
-            "FROM groups";
-    public static String ACCOUNT_AVATAR = "SELECT avatars.id'avatars.id',\n" +
-            "avatars.path'avatars.path'\n" +
-            "FROM avatars";
-    public static String LOCALE = "SELECT locales.id'locales.id',\n" +
-            "locales.name'locales.name'\n" +
-            "FROM locales";
     public static String COURSE = "SELECT courses.id'courses.id',\n" +
             "courses.account_id'courses.account_id',\n" +
             "courses.locales_id'courses.locales_id',\n" +

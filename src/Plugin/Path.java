@@ -9,10 +9,10 @@ import Core.Methode;
 import Core.Model;
 import Core.Route;
 import Core.Singleton.UserSecuritySingleton;
-import Plugin.Account.DeleteAccount;
-import Plugin.Account.GetAccount;
-import Plugin.Account.PostAccount;
-import Plugin.Account.PutAccount;
+import Plugin.Account.Model.DeleteAccount;
+import Plugin.Account.Model.GetAccount;
+import Plugin.Account.Model.PostAccount;
+import Plugin.Account.Model.PutAccount;
 import Plugin.Blog.*;
 import Plugin.Course.*;
 import Plugin.Exercice.*;
@@ -23,86 +23,11 @@ import Plugin.Language.PutLanguage;
 import Plugin.Server.Model.Server;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-
 /**
  * Created by teddy on 04/05/2016.
  */
 @Controller
 public class Path {
-    @Methode("POST")
-    @Route("/oauth")
-    public Oauth2Model getToken(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new Oauth2Model(socket, oauth2);
-    }
-
-    @Methode("DELETE")
-    @Route("/revoke")
-    public Model revokeToken(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        UserSecuritySingleton.getInstance().revokUserToken(socket);
-        return new Model();
-    }
-
-    @Methode("GET")
-    @Route("/server")
-    public Server getServer(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new Server(socket);
-    }
-
-    /* ACCOUNT */
-    @Methode("GET")
-    @Route("/accounts")
-    public GetAccount getAccounts(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new GetAccount(socket);
-    }
-
-    @Methode("GET")
-    @Route("/accounts/limit/{limit}")
-    public GetAccount getAccountWithLimit(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new GetAccount(socket, "", Integer.parseInt(args.get("limit").toString()));
-    }
-
-    @Methode("GET")
-    @Route("/account")
-    public GetAccount getAccount(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new GetAccount(socket, "accounts.id=" + UserSecuritySingleton.getInstance().getUserId(socket));
-    }
-
-    @Methode("GET")
-    @Route("/account/{id}")
-    public GetAccount getAccountById(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new GetAccount(socket, "accounts.id=" + args.get("id").toString());
-    }
-
-    @Methode("POST")
-    @Route("/register")
-    public PostAccount register(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new PostAccount(socket, jsonObject);
-    }
-
-    @Methode("PUT")
-    @Route("/account")
-    public PutAccount putAccount(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new PutAccount(socket, UserSecuritySingleton.getInstance().getUserId(socket), jsonObject);
-    }
-
-    @Methode("PUT")
-    @Route("/account/{id}")
-    public PutAccount putAccountById(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new PutAccount(socket, Integer.parseInt(args.get("id").toString()), jsonObject);
-    }
-
-    @Methode("DELETE")
-    @Route("/account")
-    public DeleteAccount deleteAccount(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new DeleteAccount(socket, UserSecuritySingleton.getInstance().getUserId(socket));
-    }
-
-    @Methode("DELETE")
-    @Route("/account/{id}")
-    public DeleteAccount deleteAccountById(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new DeleteAccount(socket, Integer.parseInt(args.get("id").toString()));
-    }
 
     /* BLOG */
     @Methode("GET")

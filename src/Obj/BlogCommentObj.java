@@ -1,5 +1,7 @@
 package Obj;
 
+import Plugin.Account.Obj.AccountObj;
+
 /**
  * Created by teddy on 06/04/2016.
  */
