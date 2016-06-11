@@ -36,7 +36,7 @@ public class ClientHandler implements Runnable {
         DataOutputStream userOutput;
         String clientId = clientSock.getRemoteSocketAddress().toString();
         try {
-            userInput = new BufferedReader(new InputStreamReader(clientSock.getInputStream()));
+            userInput = new BufferedReader(new InputStreamReader(clientSock.getInputStream(), ConfigSingleton.getInstance().getCharset()));
             userOutput = new DataOutputStream(clientSock.getOutputStream());
             if (!setInitialData(clientId, userInput.readLine())) {
                 if (!checkInitialData()) {
@@ -47,9 +47,11 @@ public class ClientHandler implements Runnable {
                             headerField.put(buffer.split(": ")[0], buffer.split(": ")[1]);
                         }
                         if (headerField.containsKey("Content-Type") && headerField.getString("Content-Type").equals("application/json")) {
-                            if (headerField.containsKey("Content-Length")) {
-                                while ((jsonClient.length() != headerField.getInt("Content-Length"))) {
+                            if (headerField.containsKey("Content-Length") && headerField.getInt("Content-Length") > 0) {
+                                byte[] array = new byte[0];
+                                while ((array.length != headerField.getInt("Content-Length"))) {
                                     jsonClient = jsonClient + (char) userInput.read();
+                                    array = jsonClient.getBytes();
                                 }
                             }
                             Router router = new Router();

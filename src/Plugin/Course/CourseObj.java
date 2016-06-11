@@ -1,7 +1,7 @@
 package Plugin.Course;
 
-import Obj.CourseCommentObj;
-import Obj.CoursePostObj;
+import Plugin.Course.Obj.CourseCommentObj;
+import Plugin.Course.Obj.CoursePostObj;
 
 import java.util.ArrayList;
 public class CourseObj {

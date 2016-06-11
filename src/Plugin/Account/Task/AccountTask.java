@@ -2,6 +2,7 @@ package Plugin.Account.Task;
 
 import Core.Database.SQLite;
 import Core.Http.Job;
+import Core.Singleton.ServerSingleton;
 import Core.Singleton.UserSecuritySingleton;
 import Core.Task;
 
@@ -29,6 +30,6 @@ public class AccountTask extends Job {
                     (String) sql.getResultSet().get(i).get("accounts.password"),
                     (int) sql.getResultSet().get(i).get("groups.parent_id"));
         }
-        System.out.println("[SYSTEM] -> Nb users loaded: " + UserSecuritySingleton.getInstance().getNbUsers());
+        ServerSingleton.getInstance().log("[SYSTEM] -> Nb users loaded: " + UserSecuritySingleton.getInstance().getNbUsers());
     }
 }

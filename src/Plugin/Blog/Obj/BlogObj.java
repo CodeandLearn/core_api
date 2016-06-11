@@ -1,7 +1,4 @@
-package Plugin.Blog;
-
-import Obj.BlogCommentObj;
-import Obj.BlogPostObj;
+package Plugin.Blog.Obj;
 
 import java.util.ArrayList;
 

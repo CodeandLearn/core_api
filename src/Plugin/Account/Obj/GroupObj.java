@@ -1,4 +1,4 @@
-package Obj;
+package Plugin.Account.Obj;
 
 /**
  * Created by teddy on 05/04/2016.

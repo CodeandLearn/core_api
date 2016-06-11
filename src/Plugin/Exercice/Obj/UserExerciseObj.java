@@ -1,4 +1,4 @@
-package Obj;
+package Plugin.Exercice.Obj;
 
 /**
  * Created by HallElouia on 04/25/2016.

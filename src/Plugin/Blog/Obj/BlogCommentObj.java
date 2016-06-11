@@ -1,4 +1,4 @@
-package Obj;
+package Plugin.Blog.Obj;
 
 import Plugin.Account.Obj.AccountObj;
 

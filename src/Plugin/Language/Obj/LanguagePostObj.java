@@ -1,4 +1,4 @@
-package Obj;
+package Plugin.Language.Obj;
 
 /**
  * Created by Fabien on 06/05/2016.

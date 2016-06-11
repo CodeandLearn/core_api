@@ -4,7 +4,7 @@ import Core.Database.SQL;
 import Core.Database.SQLite;
 import Core.Http.Code;
 import Core.Model;
-import Obj.GradeObj;
+import Plugin.Exercice.Obj.GradeObj;
 import org.json.JSONObject;
 
 import java.util.ArrayList;

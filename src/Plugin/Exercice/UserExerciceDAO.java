@@ -4,7 +4,7 @@ import Core.Database.SQL;
 import Core.Database.SQLite;
 import Core.Http.Code;
 import Core.Model;
-import Obj.UserExerciseObj;
+import Plugin.Exercice.Obj.UserExerciseObj;
 import org.json.JSONObject;
 
 import java.util.ArrayList;

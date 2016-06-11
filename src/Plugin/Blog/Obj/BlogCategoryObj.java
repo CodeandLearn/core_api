@@ -1,4 +1,4 @@
-package Obj;
+package Plugin.Blog.Obj;
 
 /**
  * Created by teddy on 06/04/2016.

@@ -4,7 +4,7 @@ import Core.Database.SQLite;
 import Core.Http.Code;
 import Core.Model;
 import Data.SQLGet;
-import Obj.CourseCommentObj;
+import Plugin.Course.Obj.CourseCommentObj;
 
 public class GetCourseComments extends Model {
     public GetCourseComments(String socket) {

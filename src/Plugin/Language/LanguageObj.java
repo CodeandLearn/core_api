@@ -1,6 +1,6 @@
 package Plugin.Language;
 
-import Obj.LanguagePostObj;
+import Plugin.Language.Obj.LanguagePostObj;
 
 /**
  * Created by Fabien on 06/05/2016.

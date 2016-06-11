@@ -4,7 +4,7 @@ import Core.Database.SQL;
 import Core.Database.SQLite;
 import Core.Http.Code;
 import Core.Model;
-import Obj.ExerciseModerationObj;
+import Plugin.Exercice.Obj.ExerciseModerationObj;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
