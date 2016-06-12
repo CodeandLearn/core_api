@@ -1,4 +1,4 @@
-package Plugin.Course;
+package Plugin.Course.Model;
 
 import Core.Database.SQLite;
 import Core.Http.Code;

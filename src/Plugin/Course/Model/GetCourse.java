@@ -1,10 +1,11 @@
-package Plugin.Course;
+package Plugin.Course.Model;
 
 import Core.Database.SQLite;
 import Core.Http.Code;
 import Core.Model;
 import Data.SQLGet;
 import Plugin.Course.Obj.CourseCommentObj;
+import Plugin.Course.Obj.CourseObj;
 
 public class GetCourse extends Model {
     public GetCourse(String socket) {

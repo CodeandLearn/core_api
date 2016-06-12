@@ -1,4 +1,4 @@
-package Plugin.Course;
+package Plugin.Course.Obj;
 
 import Plugin.Course.Obj.CourseCommentObj;
 import Plugin.Course.Obj.CoursePostObj;

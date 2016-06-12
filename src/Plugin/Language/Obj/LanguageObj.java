@@ -1,4 +1,4 @@
-package Plugin.Language;
+package Plugin.Language.Obj;
 
 import Plugin.Language.Obj.LanguagePostObj;
 

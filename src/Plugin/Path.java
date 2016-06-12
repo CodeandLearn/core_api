@@ -7,13 +7,12 @@ import Core.Http.Oauth2;
 import Core.Methode;
 import Core.Route;
 import Core.Singleton.UserSecuritySingleton;
-import Plugin.Blog.Model.*;
-import Plugin.Course.*;
+import Plugin.Course.Model.*;
 import Plugin.Exercice.*;
-import Plugin.Language.DeleteLanguage;
-import Plugin.Language.GetLanguage;
-import Plugin.Language.PostLanguage;
-import Plugin.Language.PutLanguage;
+import Plugin.Language.Model.DeleteLanguage;
+import Plugin.Language.Model.GetLanguage;
+import Plugin.Language.Model.PostLanguage;
+import Plugin.Language.Model.PutLanguage;
 import org.json.JSONObject;
 
 /**
@@ -98,43 +97,6 @@ public class Path {
     @Route("/course/comment/{id}")
     public DeleteCourseComment deleteCourseComment(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new DeleteCourseComment(socket, Integer.parseInt(args.get("id").toString()));
-    }
-
-    /* Language */
-    @Methode("GET")
-    @Route("/languages")
-    public GetLanguage getLanguage(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new GetLanguage(socket);
-    }
-
-    @Methode("GET")
-    @Route("/language/limit/{limit}")
-    public GetLanguage getLanguageWithLimit(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new GetLanguage(socket, "", Integer.parseInt(args.get("limit").toString()));
-    }
-
-    @Methode("GET")
-    @Route("/language/{id}")
-    public GetLanguage getLanguageById(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new GetLanguage(socket, "languages.id=" + args.get("id"));
-    }
-
-    @Methode("DELETE")
-    @Route("/language/{id}")
-    public DeleteLanguage deleteLanguage(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new DeleteLanguage(socket, Integer.parseInt(args.get("id").toString()));
-    }
-
-    @Methode("POST")
-    @Route("/language")
-    public PostLanguage postLanguage(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new PostLanguage(socket, jsonObject);
-    }
-
-    @Methode("PUT")
-    @Route("/language/{id}")
-    public PutLanguage putLanguage(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new PutLanguage(socket, Integer.parseInt(args.get("id").toString()), jsonObject);
     }
 
     /* Exercises */
