@@ -1,4 +1,9 @@
 # Core API RESTful
+## Liens utiles
+* Les derniers builds sont ici : [Last Builds](./pipelines?scope=branches)
+* Quand vous avez un un problème avec l'api c'est par ici : [Issues](./issues)
+* Pour plus d'informations sur les routes et les capacité de l'api : [Wiki & Doc](./wikis/home) ou [depot doc](https://gitlab.com/CodeandLearn/Doc) 
+
 ## Lancement de l'API
 Il existe deux scripts `launcher.bat` pour Windows et `launcher.sh` pour Linux/Mac
 ```
@@ -6,10 +11,10 @@ Il existe deux scripts `launcher.bat` pour Windows et `launcher.sh` pour Linux/M
 ```
 
 ### I - Récupération du token
-`username:password` ex : `test:secret` encodé en base64 donne `dGVzdDpzZWNyZXQ=`
+`username:password` ex : `Admin:password` encodé en base64 donne `QWRtaW46cGFzc3dvcmQ=`
 ```
-	POST http://127.0.0.1:8080/oauth
-    Header: Authorization: Basic dGVzdDpzZWNyZXQ=
+	POST http://127.0.0.1:3000/oauth
+    Header: Authorization: Basic QWRtaW46cGFzc3dvcmQ=
     Content-Type: application/json
 ```
 ```
@@ -29,7 +34,7 @@ Il existe deux scripts `launcher.bat` pour Windows et `launcher.sh` pour Linux/M
 
 ### II - Utilisation du token
 ```
-    GET http://127.0.0.1:8080/[path...]
+    GET http://127.0.0.1:3000/[path...]
     Header : Authorization: Bearer bvsm6nu2uhhgh4hglkj11dd0es
     Content-Type: application/json
 ```
