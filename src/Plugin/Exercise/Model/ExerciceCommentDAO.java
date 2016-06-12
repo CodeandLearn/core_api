@@ -3,6 +3,7 @@ package Plugin.Exercise.Model;
 import Core.Database.SQL;
 import Core.Database.SQLite;
 import Core.Model;
+import Plugin.Exercise.Obj.ExerciseCommentObj;
 import Plugin.Exercise.Obj.ExerciseObj;
 import org.json.JSONObject;
 
@@ -16,14 +17,14 @@ public class ExerciceCommentDAO extends Model {
         SQLite sql = new SQLite(request);
         sql.select();
         for (HashMap<String, Object> aResult : sql.getResultSet()) {
-            ExerciseObj exerciseObj = new ExerciseObj();
-            exerciseObj.title = (String) aResult.get("title");
-            exerciseObj.instruction = (String) aResult.get("instruction");
-            exerciseObj.id = (int) aResult.get("id");
-            exerciseObj.grade_max = (int) aResult.get("grade_max");
-            exerciseObj.account_id = (int) aResult.get("account_id");
-            exerciseObj.course_id = (int) aResult.get("course_id");
-            data.add(exerciseObj);
+            ExerciseCommentObj exerciseCommentObj = new ExerciseCommentObj();
+            exerciseCommentObj.account_id = (Integer) aResult.get("account_id");
+            exerciseCommentObj.content = (String) aResult.get("content");
+            exerciseCommentObj.create_timestamp = (Long) aResult.get("create_timestamp");
+            exerciseCommentObj.exercise_id = (Integer) aResult.get("exercice_id");
+            exerciseCommentObj.id = (Integer) aResult.get("id");
+            exerciseCommentObj.modify_timestamp = (Long) aResult.get("modify_timestamp");
+            data.add(exerciseCommentObj);
         }
     }
 

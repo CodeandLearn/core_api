@@ -18,7 +18,7 @@ public class ExerciceModerationDAO extends Model {
         for (HashMap<String, Object> aResult : sql.getResultSet()) {
             ExerciseModerationObj exerciseModerationObj = new ExerciseModerationObj();
             exerciseModerationObj.commentary = (String) aResult.get("commentary");
-            exerciseModerationObj.exercise_id = (Integer) aResult.get("exercise_id");
+            exerciseModerationObj.exercise_id = (Integer) aResult.get("exercice_id");
             exerciseModerationObj.moderation_validate_id = (Integer) aResult.get("moderation_validate_id");
             data.add(exerciseModerationObj);
         }

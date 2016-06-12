@@ -19,7 +19,7 @@ public class ScriptDAO extends Model {
             ScriptObj scriptObj = new ScriptObj();
             scriptObj.content = (String) aResult.get("content");
             scriptObj.create_timestamp = (Long) aResult.get("create_timestamp");
-            scriptObj.exercise_id = (Integer) aResult.get("exercise_id");
+            scriptObj.exercise_id = (Integer) aResult.get("exercice_id");
             scriptObj.id = (Integer) aResult.get("id");
             scriptObj.modify_timestamp = (Long) aResult.get("modify_timestamp");
             data.add(scriptObj);
