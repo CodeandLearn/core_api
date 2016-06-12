@@ -1,1 +1,1 @@
-java -jar ./CL_SpringMVC_APIRestFul_Core-0.0.1.jar
+java -jar ./CL_API_V2-0.0.2-jar-with-dependencies.jar

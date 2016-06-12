@@ -2,27 +2,24 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>CL_SpringMVC_APIRestFul_Core</groupId>
-    <artifactId>CL_SpringMVC_APIRestFul_Core</artifactId>
-    <version>0.0.1</version>
-
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.3.2.RELEASE</version>
-    </parent>
+    <groupId>CL_API_V2</groupId>
+    <artifactId>CL_API_V2</artifactId>
+    <version>0.0.2</version>
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.6.2</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework.security.oauth</groupId>
-            <artifactId>spring-security-oauth2</artifactId>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+            <version>0.9.9-RC1</version>
         </dependency>
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
+            <version>20140107</version>
         </dependency>
         <dependency>
             <groupId>org.xerial</groupId>
@@ -37,11 +34,33 @@
         <sourceDirectory>src</sourceDirectory>
         <plugins>
             <plugin>
-                <artifactId>maven-jar-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>attached</goal>
+                        </goals>
+                        <phase>package</phase>
+                        <configuration>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                            <archive>
+                                <manifestFile>src/Resource/META-INF/MANIFEST.MF</manifestFile>
+                            </archive>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifestFile>src/Resource/META-INF/MANIFEST.MF</manifestFile>
+                    </archive>
+                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-antrun-plugin</artifactId>
@@ -54,37 +73,32 @@
                         </goals>
                         <configuration>
                             <tasks>
+                                <echo>Add Config file</echo>
+                                <copy file="./config.properties" tofile="${basedir}/target/config.properties"/>
+                                <echo>Add Routes file</echo>
+                                <copy file="./route.properties" tofile="${basedir}/target/route.properties"/>
+                                <echo>Add Ip file</echo>
+                                <copy file="./ip.properties" tofile="${basedir}/target/ip.properties"/>
                                 <echo>Add Database</echo>
                                 <copy file="./db/db_SQLlite.db" tofile="${basedir}/target/db/db_SQLlite.db"/>
-                                <copy file="./db/db_SQLlite_script.sql" tofile="${basedir}/target/db/db_SQLlite_script.sql"/>
                                 <echo>Add Launcher script</echo>
                                 <copy file="./scripts/launcher.bat" tofile="${basedir}/target/launcher.bat"/>
                                 <copy file="./scripts/launcher.sh" tofile="${basedir}/target/launcher.sh"/>
+                                <echo>Add codes examples</echo>
+                                <copy file="./Examples/AngularJS/oauth.html" tofile="${basedir}/target/Examples/AngularJS/oauth.html"/>
                             </tasks>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
-    <distributionManagement>
-        <site>
-            <id>static.springframework.org</id>
-            <url>
-                scp://static.springframework.org/var/www/domains/springframework.org/static/htdocs/spring-security/oauth/tests
-            </url>
-        </site>
-    </distributionManagement>
-    <repositories>
-        <repository>
-            <id>spring-releases</id>
-            <url>https://repo.spring.io/libs-release</url>
-        </repository>
-    </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>spring-releases</id>
-            <url>https://repo.spring.io/libs-release</url>
-        </pluginRepository>
-    </pluginRepositories>
 </project>

@@ -1,8 +1,8 @@
--- Creator:       MySQL Workbench 6.3.4/ExportSQLite Plugin 0.1.0
+-- Creator:       MySQL Workbench 6.3.5/ExportSQLite Plugin 0.1.0
 -- Author:        Fabien
 -- Caption:       New Model
 -- Project:       Name of the project
--- Changed:       2016-02-01 14:36
+-- Changed:       2016-04-25 13:31
 -- Created:       2015-12-04 17:37
 PRAGMA foreign_keys = OFF;
 
@@ -19,11 +19,6 @@ CREATE TABLE "badges"(
 CREATE TABLE "forum_category"(
   "id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
   "name" VARCHAR(45)
-);
-CREATE TABLE "exercices_corrections"(
-  "id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-  "content" TEXT,
-  "timestamp" TIMESTAMP
 );
 CREATE TABLE "languages"(
   "id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
@@ -48,12 +43,6 @@ CREATE TABLE "groups"(
   "name" VARCHAR(45),
   "parent_id" INTEGER
 );
-CREATE TABLE "scripts"(
-  "id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-  "content" TEXT,
-  "create_timestamp" TIMESTAMP,
-  "modify_timestamp" TIMESTAMP
-);
 CREATE TABLE "locales"(
   "id" INTEGER PRIMARY KEY NOT NULL,
   "name" VARCHAR(45)
@@ -66,16 +55,6 @@ CREATE TABLE "avatars"(
   "id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
   "path" VARCHAR(255) NOT NULL
 );
-CREATE TABLE "logs"(
-  "id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-  "content" TEXT,
-  "script_id" INTEGER,
-  "timestamp" TIMESTAMP,
-  CONSTRAINT "script_id"
-    FOREIGN KEY("script_id")
-    REFERENCES "scripts"("id")
-);
-CREATE INDEX "logs.script_id_idx" ON "logs" ("script_id");
 CREATE TABLE "accounts"(
   "id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
   "username" VARCHAR(45),
@@ -218,20 +197,25 @@ CREATE TABLE "user_exercises"(
   "id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
   "account_id" INTEGER,
   "exercice_id" INTEGER,
-  "grade_id" INTEGER,
   CONSTRAINT "account_id"
     FOREIGN KEY("account_id")
     REFERENCES "accounts"("id"),
   CONSTRAINT "exercice_id"
     FOREIGN KEY("exercice_id")
-    REFERENCES "exercices"("id"),
-  CONSTRAINT "grade_id"
-    FOREIGN KEY("grade_id")
-    REFERENCES "grades"("id")
+    REFERENCES "exercices"("id")
 );
 CREATE INDEX "user_exercises.account_id_idx" ON "user_exercises" ("account_id");
 CREATE INDEX "user_exercises.exercice_id_idx" ON "user_exercises" ("exercice_id");
-CREATE INDEX "user_exercises.grade_id_idx" ON "user_exercises" ("grade_id");
+CREATE TABLE "logs"(
+  "id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+  "user_exercice_id" INTEGER NOT NULL,
+  "content" TEXT,
+  "timestamp" TIMESTAMP,
+  CONSTRAINT "user_exercice_id"
+    FOREIGN KEY("user_exercice_id")
+    REFERENCES "user_exercises"("id")
+);
+CREATE INDEX "logs.user_exercice_id_idx" ON "logs" ("user_exercice_id");
 CREATE TABLE "course_moderation"(
   "course_id" INTEGER PRIMARY KEY NOT NULL,
   "moderation_validate_id" INTEGER,
@@ -246,27 +230,17 @@ CREATE TABLE "course_moderation"(
 CREATE INDEX "course_moderation.moderation_validate_id_idx" ON "course_moderation" ("moderation_validate_id");
 CREATE TABLE "grades"(
   "id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-  "account_id" INTEGER,
-  "exercice_id" INTEGER,
+  "user_exercice_id" INTEGER NOT NULL,
   "value" INTEGER,
-  "log_id" INTEGER,
   "timestamp" TIMESTAMP,
-  CONSTRAINT "account_id"
-    FOREIGN KEY("account_id")
-    REFERENCES "accounts"("id"),
-  CONSTRAINT "exercice_id"
-    FOREIGN KEY("exercice_id")
-    REFERENCES "exercices"("id"),
-  CONSTRAINT "log_id"
-    FOREIGN KEY("log_id")
-    REFERENCES "logs"("id")
+  CONSTRAINT "user_exercice_id"
+    FOREIGN KEY("user_exercice_id")
+    REFERENCES "user_exercises"("id")
 );
-CREATE INDEX "grades.exercice_id_idx" ON "grades" ("exercice_id");
-CREATE INDEX "grades.account_id_idx" ON "grades" ("account_id");
-CREATE INDEX "grades.log_id_idx" ON "grades" ("log_id");
+CREATE INDEX "grades.user_exercice_id_idx" ON "grades" ("user_exercice_id");
 CREATE TABLE "codes"(
   "id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-  "user_exercice_id" INTEGER,
+  "user_exercice_id" INTEGER NOT NULL,
   "content" TEXT,
   "create_timestamp" TIMESTAMP,
   "modify_timestamp" TIMESTAMP,
@@ -277,30 +251,30 @@ CREATE TABLE "codes"(
 CREATE INDEX "codes.user_exercice_id_idx" ON "codes" ("user_exercice_id");
 CREATE TABLE "exercices"(
   "id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-  "account_id" INTEGER,
-  "course_id" INTEGER,
+  "account_id" INTEGER NOT NULL,
+  "course_id" INTEGER NOT NULL,
   "title" VARCHAR(250),
   "instruction" TEXT,
-  "script_id" INTEGER,
   "grade_max" INTEGER,
-  "correction_id" INTEGER,
   CONSTRAINT "account_id"
     FOREIGN KEY("account_id")
     REFERENCES "accounts"("id"),
-  CONSTRAINT "script_id"
-    FOREIGN KEY("script_id")
-    REFERENCES "scripts"("id"),
-  CONSTRAINT "correction_id"
-    FOREIGN KEY("correction_id")
-    REFERENCES "exercices_corrections"("id"),
   CONSTRAINT "course_id"
     FOREIGN KEY("course_id")
     REFERENCES "courses"("id")
 );
 CREATE INDEX "exercices.account_id_idx" ON "exercices" ("account_id");
-CREATE INDEX "exercices.script_id_idx" ON "exercices" ("script_id");
-CREATE INDEX "exercices.correction_id_idx" ON "exercices" ("correction_id");
 CREATE INDEX "exercices.course_id_idx" ON "exercices" ("course_id");
+CREATE TABLE "exercices_corrections"(
+  "id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+  "exercice_id" INTEGER NOT NULL,
+  "content" TEXT,
+  "timestamp" TIMESTAMP,
+  CONSTRAINT "exercice_id"
+    FOREIGN KEY("exercice_id")
+    REFERENCES "exercices"("id")
+);
+CREATE INDEX "exercices_corrections.exercice_id_idx" ON "exercices_corrections" ("exercice_id");
 CREATE TABLE "courses_comments"(
   "id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
   "course_id" INTEGER,
@@ -329,10 +303,21 @@ CREATE TABLE "exercices_moderation"(
     REFERENCES "moderation_validate"("id")
 );
 CREATE INDEX "exercices_moderation.moderation_validate_id_idx" ON "exercices_moderation" ("moderation_validate_id");
+CREATE TABLE "scripts"(
+  "id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+  "exercice_id" INTEGER NOT NULL,
+  "content" TEXT,
+  "create_timestamp" TIMESTAMP,
+  "modify_timestamp" TIMESTAMP,
+  CONSTRAINT "exercice_id"
+    FOREIGN KEY("exercice_id")
+    REFERENCES "exercices"("id")
+);
+CREATE INDEX "scripts.exercice_id_idx" ON "scripts" ("exercice_id");
 CREATE TABLE "exercices_comments"(
   "id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-  "exercice_id" INTEGER,
-  "account_id" INTEGER,
+  "exercice_id" INTEGER NOT NULL,
+  "account_id" INTEGER NOT NULL,
   "content" TEXT,
   "create_timestamp" TIMESTAMP,
   "modify_timestamp" TIMESTAMP,

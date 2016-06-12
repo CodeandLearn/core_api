@@ -1,27 +1,40 @@
 # Core API RESTful
+## Liens utiles
+* Les derniers builds sont ici : [Last Builds](./pipelines?scope=branches)
+* Quand vous avez un un problème avec l'api c'est par ici : [Issues](./issues)
+* Pour plus d'informations sur les routes et les capacité de l'api : [Wiki & Doc](./wikis/home) ou [depot doc](https://gitlab.com/CodeandLearn/Doc) 
+
 ## Lancement de l'API
 Il existe deux scripts `launcher.bat` pour Windows et `launcher.sh` pour Linux/Mac
 ```
-	java -jar CL_SpringMVC_APIRestFul_Core-0.0.1.jar
+	java -jar CL_API_V2-0.0.2-jar-with-dependencies.jar
 ```
 
 ### I - Récupération du token
-`username:password` ex : `test:secret` encodé en base64 donne `dGVzdDpzZWNyZXQ=`
+`username:password` ex : `Admin:password` encodé en base64 donne `QWRtaW46cGFzc3dvcmQ=`
 ```
-	POST http://127.0.0.1:8080/oauth/token?grant_type=client_credentials
-    Header: Authorization: Basic dGVzdDpzZWNyZXQ=
+	POST http://127.0.0.1:3000/oauth
+    Header: Authorization: Basic QWRtaW46cGFzc3dvcmQ=
+    Content-Type: application/json
 ```
 ```
     {
-        "access_token": "18ad7851-b3ea-482e-9e5d-73a8dcfcbd86",
+        "access_token": "bvsm6nu2uhhgh4hglkj11dd0es",
         "token_type": "bearer",
         "expires_in": 43059,
-        "scope": "read"
+        "scope": "read",
+        "group": 10,
+        "path": "/oauth",
+        "method": "POST",
+        "code": 200,
+        "error": "OK",
+        "timestamp": 1464088822719
     }
 ```
 
 ### II - Utilisation du token
 ```
-    GET http://127.0.0.1:8080/[path...]
-    Header : Authorization: Bearer 18ad7851-b3ea-482e-9e5d-73a8dcfcbd86
+    GET http://127.0.0.1:3000/[path...]
+    Header : Authorization: Bearer bvsm6nu2uhhgh4hglkj11dd0es
+    Content-Type: application/json
 ```
