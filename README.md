@@ -1,6 +1,6 @@
 # Core API RESTful
 ## Liens utiles
-* Les dernière versions satble **[Release](https://gitlab.com/CodeandLearn/core_api/pipelines?scope=tags)** et le dernier changelog **[Changelog](https://gitlab.com/CodeandLearn/core_api/tags)**
+* Les dernière versions stable **[Release](https://gitlab.com/CodeandLearn/core_api/pipelines?scope=tags)** et le dernier changelog **[Changelog](https://gitlab.com/CodeandLearn/core_api/tags)**
 * Le calendrier des livrables **[Agenda](https://gitlab.com/CodeandLearn/core_api/milestones)**
 * Les derniers builds beta sont ici : [Last Builds](https://gitlab.com/CodeandLearn/core_api/pipelines)
 * Quand vous avez un un problème avec l'api c'est par ici : [Issues](https://gitlab.com/CodeandLearn/core_api/issues)
