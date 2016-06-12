@@ -1,9 +1,9 @@
 # Core API RESTful
 ## Liens utiles
-* Les dernière versions satble **[Release](./pipelines?scope=tags)** et le dernier changelog **[Changelog](./tags)**
-* Les derniers builds beta sont ici : [Last Builds](./pipelines)
-* Quand vous avez un un problème avec l'api c'est par ici : [Issues](./issues)
-* Pour plus d'informations sur les routes et les capacité de l'api : [Wiki & Doc](./wikis/home) ou [depot doc](https://gitlab.com/CodeandLearn/Doc) 
+* Les dernière versions satble **[Release](./core_api/pipelines?scope=tags)** et le dernier changelog **[Changelog](./core_api/tags)**
+* Les derniers builds beta sont ici : [Last Builds](./core_api/pipelines)
+* Quand vous avez un un problème avec l'api c'est par ici : [Issues](./core_api/issues)
+* Pour plus d'informations sur les routes et les capacité de l'api : [Wiki & Doc](./core_api/wikis/home) ou [depot doc](https://gitlab.com/CodeandLearn/Doc) 
 
 ## Lancement de l'API
 Il existe deux scripts `launcher.bat` pour Windows et `launcher.sh` pour Linux/Mac
