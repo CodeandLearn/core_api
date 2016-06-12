@@ -34,8 +34,13 @@ public class PostAccount extends Model {
 
     private boolean addUser(String username) {
         make.add(username);
-        SQLite user = new SQLite(SQL.make("SELECT accounts.id'accounts.id'\n" +
-                "WHERE accounts.username=?", make.toArray()));
+        SQLite user = new SQLite(SQL.make("SELECT accounts.id'accounts.id',\n" +
+                "accounts.username'accounts.username',\n" +
+                "accounts.password'accounts.password',\n" +
+                "groups.parent_id'groups.parent_id'\n" +
+                "FROM accounts, groups\n" +
+                "WHERE accounts.group_id=groups.id\n" +
+                "AND accounts.username=?", make.toArray()));
         user.select();
         make.clear();
         if (user.getResultSet().size() > 0) {
