@@ -18,8 +18,8 @@ public class GradeDAO extends Model {
         for (HashMap<String, Object> aResult : sql.getResultSet()) {
             GradeObj gradeObj = new GradeObj();
             gradeObj.id = (Integer) aResult.get("id");
-            gradeObj.timestamp = (Long) aResult.get("grade.timestamp");
-            gradeObj.user_exercise_id = (Integer) aResult.get("user_exercise_id");
+            gradeObj.timestamp = (Long) aResult.get("timestamp");
+            gradeObj.user_exercise_id = (Integer) aResult.get("user_exercice_id");
             data.add(gradeObj);
         }
     }

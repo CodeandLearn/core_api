@@ -19,8 +19,8 @@ public class LogDAO extends Model {
             LogObj logObj = new LogObj();
             logObj.content = (String) aResult.get("content");
             logObj.id = (Integer) aResult.get("id");
-            logObj.timestamp = (Long) aResult.get("logs.timestamp");
-            logObj.user_exercise_id = (Integer) aResult.get("user_exercise_id");
+            logObj.timestamp = (Long) aResult.get("timestamp");
+            logObj.user_exercise_id = (Integer) aResult.get("user_exercice_id");
             data.add(logObj);
         }
     }
