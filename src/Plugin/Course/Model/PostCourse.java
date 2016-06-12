@@ -1,21 +1,31 @@
 package Plugin.Course.Model;
 
-import Core.Database.SQLite;
+import Core.Database.SQL;
 import Core.Model;
-import Data.SQLPost;
 import org.json.JSONObject;
 
 public class PostCourse extends Model {
-    public PostCourse(String socket, JSONObject jsonObject, int account_id) {
+    public PostCourse postCourse(String socket, int account_id, JSONObject jsonObject) {
         long timestamp = System.currentTimeMillis();
-        SQLite sql = new SQLite(SQLPost.COURSE + "(account_id, locales_id, language_id, title, content, create_timestamp, modify_timestamp) VALUES ("
-                + account_id + ", "
-                + jsonObject.getInt("locales_id") + ", "
-                + jsonObject.getInt("language_id") + ", "
-                + "\"" + jsonObject.getString("title").replace("\"", "\\\"") + "\", "
-                + "\"" + jsonObject.getString("content").replace("\"", "\\\"") + "\", "
-                + timestamp + ", "
-                + timestamp + ")");
-        sql.insert();
+        make.add(account_id);
+        make.add(jsonObject.getInt("locales_id"));
+        make.add(jsonObject.getInt("language_id"));
+        make.add(jsonObject.getString("title"));
+        make.add(jsonObject.getString("content"));
+        make.add(timestamp);
+        make.add(timestamp);
+        setPost(socket, SQL.make("INSERT INTO courses (account_id, locales_id, language_id, title, content, create_timestamp, modify_timestamp) VALUES (?, ?, ?, ?, ?, ?, ?)", make.toArray()));
+        return this;
+    }
+
+    public PostCourse postCourseComment(String socket, int account_id, JSONObject jsonObject) {
+        long timestamp = System.currentTimeMillis();
+        make.add(jsonObject.getInt("course_id"));
+        make.add(account_id);
+        make.add(jsonObject.getString("content"));
+        make.add(timestamp);
+        make.add(timestamp);
+        setPost(socket, SQL.make("INSERT INTO courses_comments (course_id, account_id, content, create_timestamp, modify_timestamp) VALUES (?, ?, ?, ?, ?)", make.toArray()));
+        return this;
     }
 }
