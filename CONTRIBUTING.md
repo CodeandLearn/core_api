@@ -8,10 +8,11 @@ git ls-files -z | xargs -0n1 git blame -w | perl -n -e '/^.*?\((.*?)\s+[\d]{4}/;
 
 # Contribution users
 ## Raphael Morand (HallElouia)
-    * Exercises plugin
+    * Exercise plugin
 
 ## Fabien Casoni (Sithis)
-    * Courses plugin
+    * Course plugin
+    * Language plugin
 
 ## Teddy Fontaine (Sheol)
     * Core
