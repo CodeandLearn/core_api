@@ -1,6 +1,7 @@
 # Core API RESTful
 ## Liens utiles
-* Les derniers builds sont ici : [Last Builds](./pipelines?scope=branches)
+* Les dernière versions satble **[Release](./pipelines?scope=tags)** et le dernier changelog **[Changelog](./tags)**
+* Les derniers builds beta sont ici : [Last Builds](./pipelines)
 * Quand vous avez un un problème avec l'api c'est par ici : [Issues](./issues)
 * Pour plus d'informations sur les routes et les capacité de l'api : [Wiki & Doc](./wikis/home) ou [depot doc](https://gitlab.com/CodeandLearn/Doc) 
 
@@ -23,7 +24,7 @@ Il existe deux scripts `launcher.bat` pour Windows et `launcher.sh` pour Linux/M
         "token_type": "bearer",
         "expires_in": 43059,
         "scope": "read",
-        "group": 10,
+        "group": 50,
         "path": "/oauth",
         "method": "POST",
         "code": 200,
