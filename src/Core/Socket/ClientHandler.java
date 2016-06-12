@@ -46,7 +46,7 @@ public class ClientHandler implements Runnable {
                             ServerSingleton.getInstance().log(clientId, "[HEADER] -> " + buffer);
                             headerField.put(buffer.split(": ")[0], buffer.split(": ")[1]);
                         }
-                        if (headerField.containsKey("Content-Type") && headerField.getString("Content-Type").equals("application/json")) {
+                        if ((headerField.containsKey("Accept") && headerField.getString("Accept").equals("application/json")) || (headerField.containsKey("Content-Type") && headerField.getString("Content-Type").equals("application/json"))) {
                             if (headerField.containsKey("Content-Length") && headerField.getInt("Content-Length") > 0) {
                                 byte[] array = new byte[0];
                                 while ((array.length != headerField.getInt("Content-Length"))) {
