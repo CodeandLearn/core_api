@@ -35,8 +35,8 @@ public class ScriptDAO extends Model {
     public ScriptDAO post(String socket, JSONObject jsonObject) {
         make.add(jsonObject.getInt("exercice_id"));
         make.add(jsonObject.getString("content"));
-        make.add(jsonObject.getLong("create_timestamp"));
-        make.add(jsonObject.getLong("modify_timestamp"));
+        make.add(getTimestamp());
+        make.add(getTimestamp());
         setPost(socket, SQL.make("INSERT INTO scripts (exercice_id, content, create_timestamp, modify_timestamp) VALUES (?, ?, ?, ?)", make.toArray()));
         return this;
     }
@@ -44,10 +44,9 @@ public class ScriptDAO extends Model {
     public ScriptDAO update(String socket, int id, JSONObject jsonObject) {
         make.add(jsonObject.getInt("exercice_id"));
         make.add(jsonObject.getString("content"));
-        make.add(jsonObject.getLong("create_timestamp"));
-        make.add(jsonObject.getLong("modify_timestamp"));
+        make.add(getTimestamp());
         make.add(id);
-        setPut(socket, SQL.make("UPDATE scripts SET exercice_id=?, content=?, create_timestamp=?, modify_timestamp=? WHERE id=?", make.toArray()));
+        setPut(socket, SQL.make("UPDATE scripts SET exercice_id=?, content=?, modify_timestamp=? WHERE id=?", make.toArray()));
         return this;
     }
 

@@ -15,25 +15,23 @@ public class Post extends Model {
     }
 
     public Post postBlog(String socket, int accountId, JSONObject jsonObject) {
-        long timestamp = System.currentTimeMillis();
         make.add(accountId);
         make.add(jsonObject.getInt("locales_id"));
         make.add(jsonObject.getInt("blog_category_id"));
         make.add(jsonObject.getString("title"));
         make.add(jsonObject.getString("content"));
-        make.add(timestamp);
-        make.add(timestamp);
+        make.add(getTimestamp());
+        make.add(getTimestamp());
         setPost(socket, SQL.make("INSERT INTO blog_posts (account_id, locales_id, blog_category_id, title, content, create_timestamp, modify_timestamp) VALUES (?, ?, ?, ?, ?, ?, ?)", make.toArray()));
         return this;
     }
 
     public Post postBlogComment(String socket, int account_id, JSONObject jsonObject) {
-        long timestamp = System.currentTimeMillis();
         make.add(account_id);
         make.add(jsonObject.getInt("blog_post_id"));
         make.add(jsonObject.getString("content"));
-        make.add(timestamp);
-        make.add(timestamp);
+        make.add(getTimestamp());
+        make.add(getTimestamp());
         setPost(socket, SQL.make("INSERT INTO blog_posts_comments (account_id, blog_post_id, content, create_timestamp, modify_timestamp) VALUES (?, ?, ?, ?, ?)", make.toArray()));
         return this;
     }

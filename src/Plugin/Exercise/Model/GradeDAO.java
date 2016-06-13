@@ -33,7 +33,7 @@ public class GradeDAO extends Model {
     public GradeDAO post(String socket, JSONObject jsonObject) {
         make.add(jsonObject.getInt("user_exercice_id"));
         make.add(jsonObject.getString("grade.value"));
-        make.add(jsonObject.getLong("grade.timestamp"));
+        make.add(getTimestamp());
         setPost(socket, SQL.make("INSERT INTO grades (user_exercice_id, grades.value, grades.timestamp) VALUES (?, ?, ?)", make.toArray()));
         return this;
     }
@@ -41,7 +41,7 @@ public class GradeDAO extends Model {
     public GradeDAO update(String socket, int id, JSONObject jsonObject) {
         make.add(jsonObject.getInt("user_exercice_id"));
         make.add(jsonObject.getString("grade.value"));
-        make.add(jsonObject.getLong("grade.timestamp"));
+        make.add(getTimestamp());
         make.add(id);
         setPut(socket, SQL.make("UPDATE grades SET user_exercice_id=?, grades.value=?, grades.timestamp=? WHERE id=?", make.toArray()));
         return this;

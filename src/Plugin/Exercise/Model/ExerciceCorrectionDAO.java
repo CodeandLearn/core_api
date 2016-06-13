@@ -33,7 +33,7 @@ public class ExerciceCorrectionDAO extends Model {
     public ExerciceCorrectionDAO post(String socket, JSONObject jsonObject) {
         make.add(jsonObject.getInt("exercice_id"));
         make.add(jsonObject.getString("content"));
-        make.add(jsonObject.getLong("timestamp"));
+        make.add(getTimestamp());
         setPost(socket, SQL.make("INSERT INTO exercice_corrections (exercice_id, content, exercices_corrections.timestamp) VALUES (?, ?, ?)", make.toArray()));
         return this;
     }
@@ -41,7 +41,7 @@ public class ExerciceCorrectionDAO extends Model {
     public ExerciceCorrectionDAO update(String socket, int id, JSONObject jsonObject) {
         make.add(jsonObject.getInt("exercice_id"));
         make.add(jsonObject.getString("content"));
-        make.add(jsonObject.getLong("timestamp"));
+        make.add(getTimestamp());
         make.add(id);
         setPut(socket, SQL.make("UPDATE exercice_corrections SET exercice_id=?, content=?, exercices_corrections.timestamp=? WHERE id=?", make.toArray()));
         return this;

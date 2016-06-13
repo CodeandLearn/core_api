@@ -57,14 +57,13 @@ public class PostAccount extends Model {
 
     public PostAccount register(String socket, JSONObject jsonObject) {
         if (!isExist(jsonObject.getString("username"), jsonObject.getString("email"))) {
-            long timestamp = System.currentTimeMillis();
             make.add(jsonObject.getString("username"));
             make.add(UserSecuritySingleton.hashSHA1(jsonObject.getString("password")));
             make.add(jsonObject.getString("email"));
             make.add(1);
             make.add(1);
-            make.add(timestamp);
-            make.add(timestamp);
+            make.add(getTimestamp());
+            make.add(getTimestamp());
             make.add(0);
             make.add(0);
             setPost(socket, SQL.make("INSERT INTO accounts (username, password, email, group_id, avatar_id, create_timestamp, last_connect_timestamp, nb_courses_done, nb_exercices_done) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", make.toArray()));

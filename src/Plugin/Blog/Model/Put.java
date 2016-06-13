@@ -9,12 +9,11 @@ import org.json.JSONObject;
  */
 public class Put extends Model {
     public Put putBlog(String socket, int id, JSONObject jsonObject) {
-        long timestamp = System.currentTimeMillis();
         make.add(jsonObject.getInt("locales_id"));
         make.add(jsonObject.getInt("blog_category_id"));
         make.add(jsonObject.getString("title"));
         make.add(jsonObject.getString("content"));
-        make.add(timestamp);
+        make.add(getTimestamp());
         make.add(id);
         setPut(socket, SQL.make("UPDATE blog_posts SET locales_id=?, blog_category_id=?, title=?, content=?, modify_timestamp=? WHERE id=?", make.toArray()));
         return this;
@@ -28,10 +27,9 @@ public class Put extends Model {
     }
 
     public Put putBlogComment(String socket, int id, JSONObject jsonObject) {
-        long timestamp = System.currentTimeMillis();
         make.add(jsonObject.getInt("blog_post_id"));
         make.add(jsonObject.getString("content"));
-        make.add(timestamp);
+        make.add(getTimestamp());
         make.add(id);
         setPut(socket, SQL.make("UPDATE blog_posts_comments SET blog_post_id=?, content=?, modify_timestamp=? WHERE id=?", make.toArray()));
         return this;

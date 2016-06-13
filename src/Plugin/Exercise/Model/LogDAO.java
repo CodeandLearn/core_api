@@ -34,7 +34,7 @@ public class LogDAO extends Model {
     public LogDAO post(String socket, JSONObject jsonObject) {
         make.add(jsonObject.getInt("user_exercice_id"));
         make.add(jsonObject.getString("content"));
-        make.add(jsonObject.getLong("logs.timestamp"));
+        make.add(getTimestamp());
         setPost(socket, SQL.make("INSERT INTO logs (user_exercice_id, content, logs.timestamp) VALUES (?, ?, ?)", make.toArray()));
         return this;
     }
@@ -42,7 +42,7 @@ public class LogDAO extends Model {
     public LogDAO update(String socket, int id, JSONObject jsonObject) {
         make.add(jsonObject.getInt("user_exercice_id"));
         make.add(jsonObject.getString("content"));
-        make.add(jsonObject.getLong("logs.timestamp"));
+        make.add(getTimestamp());
         make.add(id);
         setPut(socket, SQL.make("UPDATE logs SET user_exercice_id=?, content=?, logs.timestamp=? WHERE id=?", make.toArray()));
         return this;

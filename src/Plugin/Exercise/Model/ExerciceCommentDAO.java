@@ -38,8 +38,8 @@ public class ExerciceCommentDAO extends Model {
         make.add(jsonObject.getInt("exercice_id"));
         make.add(jsonObject.getInt("account_id"));
         make.add(jsonObject.getString("content"));
-        make.add(jsonObject.getLong("create_timestamp"));
-        make.add(jsonObject.getLong("modify_timestamp"));
+        make.add(getTimestamp());
+        make.add(getTimestamp());
         setPost(socket, SQL.make("INSERT INTO exercices_comments (exercice_id, account_id, content, create_timestamp, modify_timestamp) VALUES (?, ?, ?, ?, ?)", make.toArray()));
         return this;
     }
@@ -48,10 +48,9 @@ public class ExerciceCommentDAO extends Model {
         make.add(jsonObject.getInt("exercice_id"));
         make.add(jsonObject.getInt("account_id"));
         make.add(jsonObject.getString("content"));
-        make.add(jsonObject.getLong("create_timestamp"));
-        make.add(jsonObject.getLong("modify_timestamp"));
+        make.add(getTimestamp());
         make.add(id);
-        setPut(socket, SQL.make("UPDATE exercices_comments SET user_exercice_id=?, account_id, content=?, create_timestamp=?, modifiy_timestamp=? WHERE id=?", make.toArray()));
+        setPut(socket, SQL.make("UPDATE exercices_comments SET user_exercice_id=?, account_id, content=?, modifiy_timestamp=? WHERE id=?", make.toArray()));
         return this;
     }
 
