@@ -7,10 +7,7 @@ import Core.Http.Oauth2;
 import Core.Methode;
 import Core.Route;
 import Core.Singleton.UserSecuritySingleton;
-import Plugin.Course.Model.DeleteCourse;
-import Plugin.Course.Model.GetCourse;
-import Plugin.Course.Model.PostCourse;
-import Plugin.Course.Model.PutCourse;
+import Plugin.Course.Model.*;
 import org.json.JSONObject;
 
 /**
@@ -58,6 +55,12 @@ public class CourseController {
     @Route("/course/title/{title}")
     public GetCourse getCourseByTitle(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new GetCourse().getCourseByTitle(socket, args.getString("title"));
+    }
+
+    @Methode("GET")
+    @Route("/course/comment/{id_course}")
+    public GetCourseComments getCommentByCourseId(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
+        return new GetCourseComments().getCourseComments(socket, args.getInt("id_course"));
     }
 
     @Methode("POST")
