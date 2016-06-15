@@ -39,13 +39,13 @@ public class UserExerciceDAO extends Model {
 
     public UserExerciceDAO post(String socket, int account_id, JSONObject jsonObject) {
         make.add(account_id);
-        make.add(jsonObject.getString("exercice_id"));
+        make.add(jsonObject.getInt("exercice_id"));
         setPost(socket, SQL.make("INSERT INTO user_exercises (account_id, exercice_id) VALUES (?, ?)", make.toArray()));
         return this;
     }
 
     public UserExerciceDAO update(String socket, int id, JSONObject jsonObject) {
-        make.add(jsonObject.getString("exercice_id"));
+        make.add(jsonObject.getInt("exercice_id"));
         make.add(id);
         setPut(socket, SQL.make("UPDATE user_exercises SET exercice_id=? WHERE id=?", make.toArray()));
         return this;

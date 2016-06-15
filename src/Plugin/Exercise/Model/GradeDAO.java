@@ -20,11 +20,12 @@ public class GradeDAO extends Model {
             gradeObj.id = (Integer) aResult.get("id");
             gradeObj.timestamp = (Long) aResult.get("timestamp");
             gradeObj.user_exercise_id = (Integer) aResult.get("user_exercice_id");
+            gradeObj.value = (Integer) aResult.get("value");
             data.add(gradeObj);
         }
     }
 
-    public GradeDAO getGrade(String socket, int user_exercice_id) {
+    public GradeDAO getGrade(String socket, int account_id, int user_exercice_id) {
         make.add(user_exercice_id);
         setGet(SQL.make("SELECT id, user_exercice_id, grades.value, grades.timestamp FROM grades WHERE user_exercice_id=?", make.toArray()));
         return this;
@@ -32,18 +33,18 @@ public class GradeDAO extends Model {
 
     public GradeDAO post(String socket, JSONObject jsonObject) {
         make.add(jsonObject.getInt("user_exercice_id"));
-        make.add(jsonObject.getString("grade.value"));
+        make.add(jsonObject.getInt("value"));
         make.add(getTimestamp());
-        setPost(socket, SQL.make("INSERT INTO grades (user_exercice_id, grades.value, grades.timestamp) VALUES (?, ?, ?)", make.toArray()));
+        setPost(socket, SQL.make("INSERT INTO grades (user_exercice_id, value, timestamp) VALUES (?, ?, ?)", make.toArray()));
         return this;
     }
 
     public GradeDAO update(String socket, int id, JSONObject jsonObject) {
         make.add(jsonObject.getInt("user_exercice_id"));
-        make.add(jsonObject.getString("grade.value"));
+        make.add(jsonObject.getInt("value"));
         make.add(getTimestamp());
         make.add(id);
-        setPut(socket, SQL.make("UPDATE grades SET user_exercice_id=?, grades.value=?, grades.timestamp=? WHERE id=?", make.toArray()));
+        setPut(socket, SQL.make("UPDATE grades SET user_exercice_id=?, value=?, timestamp=? WHERE id=?", make.toArray()));
         return this;
     }
 

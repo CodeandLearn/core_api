@@ -33,19 +33,19 @@ public class UserExerciseController {
     @Methode("GET")
     @Route("/user_exercise/{user_exercise_id}/grade")
     public GradeDAO getUserExerciceGrade(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new GradeDAO().getGrade(socket, args.getInt("user_exercise_id"));
+        return new GradeDAO().getGrade(socket, UserSecuritySingleton.getInstance().getUserId(socket), args.getInt("user_exercise_id"));
     }
 
     @Methode("GET")
     @Route("/user_exercise/{user_exercise_id}/log")
     public LogDAO getUserExerciceLog(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new LogDAO().getLog(socket, args.getInt("user_exercise_id"));
+        return new LogDAO().getLog(socket, UserSecuritySingleton.getInstance().getUserId(socket), args.getInt("user_exercise_id"));
     }
 
     @Methode("GET")
     @Route("/user_exercise/{user_exercise_id}/codes")
     public CodeDAO getUserExerciceCodes(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new CodeDAO().getCodes(socket, args.getInt("user_exercise_id"));
+        return new CodeDAO().getCodes(socket, UserSecuritySingleton.getInstance().getUserId(socket), args.getInt("user_exercise_id"));
     }
 
     @Methode("POST")

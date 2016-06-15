@@ -26,7 +26,7 @@ public class CodeDAO extends Model {
         }
     }
 
-    public CodeDAO getCodes(String socket, int user_exercice_id) {
+    public CodeDAO getCodes(String socket, int account_id, int user_exercice_id) {
         make.add(user_exercice_id);
         setGet(SQL.make("SELECT id, user_exercice_id, content, create_timestamp, modify_timestamp FROM codes WHERE user_exercice_id=?", make.toArray()));
         return this;

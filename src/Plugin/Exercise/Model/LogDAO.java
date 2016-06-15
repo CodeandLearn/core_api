@@ -25,7 +25,7 @@ public class LogDAO extends Model {
         }
     }
 
-    public LogDAO getLog(String socket, int user_exercice_id) {
+    public LogDAO getLog(String socket, int account_id, int user_exercice_id) {
         make.add(user_exercice_id);
         setGet(SQL.make("SELECT id, user_exercice_id, content, logs.timestamp FROM logs WHERE user_exercice_id=?", make.toArray()));
         return this;
@@ -35,7 +35,7 @@ public class LogDAO extends Model {
         make.add(jsonObject.getInt("user_exercice_id"));
         make.add(jsonObject.getString("content"));
         make.add(getTimestamp());
-        setPost(socket, SQL.make("INSERT INTO logs (user_exercice_id, content, logs.timestamp) VALUES (?, ?, ?)", make.toArray()));
+        setPost(socket, SQL.make("INSERT INTO logs (user_exercice_id, content, timestamp) VALUES (?, ?, ?)", make.toArray()));
         return this;
     }
 
@@ -44,11 +44,12 @@ public class LogDAO extends Model {
         make.add(jsonObject.getString("content"));
         make.add(getTimestamp());
         make.add(id);
-        setPut(socket, SQL.make("UPDATE logs SET user_exercice_id=?, content=?, logs.timestamp=? WHERE id=?", make.toArray()));
+        setPut(socket, SQL.make("UPDATE logs SET user_exercice_id=?, content=?, timestamp=? WHERE id=?", make.toArray()));
         return this;
     }
 
     public LogDAO delete(String socket, int id) {
+        make.add(id);
         setDelete(socket, SQL.make("DELETE FROM logs WHERE id=?", make.toArray()));
         return this;
     }
