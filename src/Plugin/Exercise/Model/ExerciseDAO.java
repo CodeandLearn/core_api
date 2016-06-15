@@ -44,8 +44,8 @@ public class ExerciseDAO extends Model {
         return this;
     }
 
-    public ExerciseDAO post(String socket, JSONObject jsonObject) {
-        make.add(jsonObject.getInt("account_id"));
+    public ExerciseDAO post(String socket, int account_id, JSONObject jsonObject) {
+        make.add(account_id);
         make.add(jsonObject.getInt("course_id"));
         make.add(jsonObject.getString("title"));
         make.add(jsonObject.getString("instruction"));
@@ -55,13 +55,12 @@ public class ExerciseDAO extends Model {
     }
 
     public ExerciseDAO update(String socket, int id, JSONObject jsonObject) {
-        make.add(jsonObject.getInt("account_id"));
         make.add(jsonObject.getInt("course_id"));
         make.add(jsonObject.getString("title"));
         make.add(jsonObject.getString("instruction"));
         make.add(jsonObject.getInt("grade_max"));
         make.add(id);
-        setPut(socket, SQL.make("UPDATE exercices SET account_id=?, course_id=?, title=?, instruction=?, grade_max=? WHERE id=?", make.toArray()));
+        setPut(socket, SQL.make("UPDATE exercices SET course_id=?, title=?, instruction=?, grade_max=? WHERE id=?", make.toArray()));
         return this;
     }
 

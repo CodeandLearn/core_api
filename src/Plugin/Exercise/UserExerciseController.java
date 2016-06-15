@@ -51,7 +51,7 @@ public class UserExerciseController {
     @Methode("POST")
     @Route("/user_exercise")
     public UserExerciceDAO postUserExercice(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new UserExerciceDAO().post(socket, jsonObject);
+        return new UserExerciceDAO().post(socket, UserSecuritySingleton.getInstance().getUserId(socket), jsonObject);
     }
 
     @Methode("POST")

@@ -34,9 +34,9 @@ public class ExerciceCommentDAO extends Model {
         return this;
     }
 
-    public ExerciceCommentDAO post(String socket, JSONObject jsonObject) {
+    public ExerciceCommentDAO post(String socket, int account_id, JSONObject jsonObject) {
         make.add(jsonObject.getInt("exercice_id"));
-        make.add(jsonObject.getInt("account_id"));
+        make.add(account_id);
         make.add(jsonObject.getString("content"));
         make.add(getTimestamp());
         make.add(getTimestamp());
@@ -46,11 +46,10 @@ public class ExerciceCommentDAO extends Model {
 
     public ExerciceCommentDAO update(String socket, int id, JSONObject jsonObject) {
         make.add(jsonObject.getInt("exercice_id"));
-        make.add(jsonObject.getInt("account_id"));
         make.add(jsonObject.getString("content"));
         make.add(getTimestamp());
         make.add(id);
-        setPut(socket, SQL.make("UPDATE exercices_comments SET user_exercice_id=?, account_id, content=?, modifiy_timestamp=? WHERE id=?", make.toArray()));
+        setPut(socket, SQL.make("UPDATE exercices_comments SET user_exercice_id=?, content=?, modifiy_timestamp=? WHERE id=?", make.toArray()));
         return this;
     }
 

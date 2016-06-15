@@ -6,6 +6,7 @@ import Core.Http.Map;
 import Core.Http.Oauth2;
 import Core.Methode;
 import Core.Route;
+import Core.Singleton.UserSecuritySingleton;
 import Plugin.Exercise.Model.*;
 import org.json.JSONObject;
 
@@ -59,7 +60,7 @@ public class ExerciseController {
     @Methode("POST")
     @Route("/exercise")
     public ExerciseDAO postExercise(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new ExerciseDAO().post(socket, jsonObject);
+        return new ExerciseDAO().post(socket, UserSecuritySingleton.getInstance().getUserId(socket), jsonObject);
     }
 
     @Methode("POST")
@@ -77,7 +78,7 @@ public class ExerciseController {
     @Methode("POST")
     @Route("/exercise/comment")
     public ExerciceCommentDAO postExerciseComment(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new ExerciceCommentDAO().post(socket, jsonObject);
+        return new ExerciceCommentDAO().post(socket, UserSecuritySingleton.getInstance().getUserId(socket), jsonObject);
     }
 
     @Methode("POST")
