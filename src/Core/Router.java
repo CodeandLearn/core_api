@@ -18,13 +18,17 @@ import java.util.ArrayList;
  * Created by teddy on 04/05/2016.
  */
 public class Router {
+    private Error error = new Error();
     private Map args = new Map();
     private ArrayList<String> genericRoutes = new ArrayList<>();
     private ArrayList<String> customRoutes = new ArrayList<>();
 
     public String find(String socket, String method, String querryRoute, Header headerField, JSONObject jsonObject) {
+        error.setMethod(method);
+        error.setPath(querryRoute);
         for (Class<?> obj : ServerSingleton.getInstance().getAnnotated()) {
             String route = getGenericRoute(method, querryRoute, obj);
+            error.setPath(route);
             Oauth2 oauth2 = new Oauth2((headerField.containsKey("Authorization")) ? headerField.getString("Authorization") : null);
             Oauth2Permissions oauth2Permissions = new Oauth2Permissions();
             if (route != null && (!route.equals("/oauth") || (oauth2.getType() != null && oauth2.getType().equals(Oauth2.BASIC) && route.equals("/oauth")))) {
@@ -38,24 +42,30 @@ public class Router {
                                     String json = cleanJson(methods.invoke(obj.newInstance(), params)).toString();
                                     ServerSingleton.getInstance().log(socket, "[SERVER] -> " + json);
                                     return json;
-                                } catch (IllegalAccessException | InvocationTargetException | InstantiationException | JSONException e) {
-                                    e.printStackTrace();
+                                } catch (IllegalAccessException | InstantiationException e) {
                                     ServerSingleton.getInstance().log(socket, "[SERVER] -> error on route finder : " + e, true);
+                                } catch (InvocationTargetException e) {
+                                    error.setErrorMsg(e.getTargetException().getMessage());
+                                    ServerSingleton.getInstance().log(socket, "[SERVER] -> " + e.getTargetException().getMessage(), true);
                                 }
                             }
                         }
                     }
                 } else {
                     ServerSingleton.getInstance().setHttpCode(socket, Code.UNAUTHORIZED);
-                    String json = cleanJson(new Error(socket, method, route, Code.UNAUTHORIZED)).toString();
+                    error.setCode(socket, Code.UNAUTHORIZED);
+                    String json = cleanJson(error).toString();
                     ServerSingleton.getInstance().log(socket, "[SERVER] -> " + json);
                     return json;
                 }
                 UserSecuritySingleton.getInstance().setUserOffline(socket);
+            } else {
+                error.setErrorMsg("Route not founded.");
             }
         }
         ServerSingleton.getInstance().setHttpCode(socket, Code.METHOD_NOT_ALLOWED);
-        String json = cleanJson(new Error(socket, method, querryRoute, Code.METHOD_NOT_ALLOWED)).toString();
+        error.setCode(socket, Code.METHOD_NOT_ALLOWED);
+        String json = cleanJson(error).toString();
         ServerSingleton.getInstance().log(socket, "[SERVER] -> " + json);
         IpSingleton.getInstance().setIpFail(socket.split(":")[0].replace("/", ""));
         return json;
