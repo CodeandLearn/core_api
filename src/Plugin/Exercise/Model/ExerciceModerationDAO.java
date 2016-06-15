@@ -32,16 +32,16 @@ public class ExerciceModerationDAO extends Model {
 
     public ExerciceModerationDAO post(String socket, JSONObject jsonObject) {
         make.add(jsonObject.getInt("exercice_id"));
-        make.add(jsonObject.getString("moderation_validate_id"));
-        make.add(jsonObject.getLong("commentary"));
+        make.add(jsonObject.getInt("moderation_validate_id"));
+        make.add(jsonObject.getString("commentary"));
         setPost(socket, SQL.make("INSERT INTO exercices_moderation (exercice_id, moderation_validate_id, commentary) VALUES (?, ?, ?)", make.toArray()));
         return this;
     }
 
     public ExerciceModerationDAO update(String socket, int id, JSONObject jsonObject) {
         make.add(jsonObject.getInt("exercice_id"));
-        make.add(jsonObject.getString("moderation_validate_id"));
-        make.add(jsonObject.getLong("commentary"));
+        make.add(jsonObject.getInt("moderation_validate_id"));
+        make.add(jsonObject.getString("commentary"));
         make.add(id);
         setPut(socket, SQL.make("UPDATE exercices_moderation SET moderation_validate_id=?, commentary=? WHERE exercice_id=?", make.toArray()));
         return this;

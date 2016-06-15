@@ -49,7 +49,7 @@ public class ExerciceCommentDAO extends Model {
         make.add(jsonObject.getString("content"));
         make.add(getTimestamp());
         make.add(id);
-        setPut(socket, SQL.make("UPDATE exercices_comments SET user_exercice_id=?, content=?, modifiy_timestamp=? WHERE id=?", make.toArray()));
+        setPut(socket, SQL.make("UPDATE exercices_comments SET exercice_id=?, content=?, modify_timestamp=? WHERE id=?", make.toArray()));
         return this;
     }
 
