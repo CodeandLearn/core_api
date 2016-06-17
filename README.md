@@ -9,7 +9,7 @@
 ## Lancement de l'API
 Il existe deux scripts `launcher.bat` pour Windows et `launcher.sh` pour Linux/Mac
 ```
-	java -jar CL_API_V2-0.0.3-jar-with-dependencies.jar
+	java -jar CL_API_V2-0.0.4-jar-with-dependencies.jar
 ```
 
 ### I - Récupération du token

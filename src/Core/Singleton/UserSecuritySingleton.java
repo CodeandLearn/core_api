@@ -102,6 +102,7 @@ public class UserSecuritySingleton {
             if (user.get("token").equals(token)) {
                 user.replace("socket", socket);
                 user.replace("online", 1);
+                user.replace("expires_in", System.currentTimeMillis() + (ConfigSingleton.getInstance().getTokenExpires() * 1000));
                 return true;
             }
         }

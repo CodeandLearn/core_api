@@ -49,7 +49,7 @@
                                 <descriptorRef>jar-with-dependencies</descriptorRef>
                             </descriptorRefs>
                             <archive>
-                                <manifestFile>src/Resource/META-INF/MANIFEST.MF</manifestFile>
+                                <manifestFile>src/Core/MANIFEST.MF</manifestFile>
                             </archive>
                         </configuration>
                     </execution>
@@ -60,7 +60,7 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
                     <archive>
-                        <manifestFile>src/Resource/META-INF/MANIFEST.MF</manifestFile>
+                        <manifestFile>src/Core/MANIFEST.MF</manifestFile>
                     </archive>
                 </configuration>
             </plugin>

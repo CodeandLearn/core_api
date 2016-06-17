@@ -54,13 +54,14 @@ public class Router {
                 } else {
                     ServerSingleton.getInstance().setHttpCode(socket, Code.UNAUTHORIZED);
                     error.setCode(socket, Code.UNAUTHORIZED);
+                    error.setErrorMsg("Full logging required or bad perms level");
                     String json = cleanJson(error).toString();
                     ServerSingleton.getInstance().log(socket, "[SERVER] -> " + json);
                     return json;
                 }
                 UserSecuritySingleton.getInstance().setUserOffline(socket);
             } else {
-                error.setErrorMsg("Route not founded.");
+                error.setErrorMsg("Route not founded");
             }
         }
         ServerSingleton.getInstance().setHttpCode(socket, Code.METHOD_NOT_ALLOWED);
