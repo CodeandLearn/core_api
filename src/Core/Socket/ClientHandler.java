@@ -87,9 +87,11 @@ public class ClientHandler implements Runnable {
         if (data != null) {
             ServerSingleton.getInstance().log(clientId, "[REQUEST] -> " + data);
             String[] tmp = data.split(" ");
-            method = tmp[0];
-            route = tmp[1];
-            protocolVersion = tmp[2];
+            if (tmp.length == 3) {
+                method = tmp[0];
+                route = tmp[1];
+                protocolVersion = tmp[2];
+            }
         } else {
             return true;
         }
