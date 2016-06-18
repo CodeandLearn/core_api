@@ -16,9 +16,14 @@ Il existe deux scripts `launcher.bat` pour Windows et `launcher.sh` pour Linux/M
 `username:password` ex : `Admin:password` encodé en base64 donne `QWRtaW46cGFzc3dvcmQ=`
 ```
 	POST http://127.0.0.1:3000/oauth
-    Header: Authorization: Basic QWRtaW46cGFzc3dvcmQ=
+```
+
+Header :
+```
+    Authorization: Basic QWRtaW46cGFzc3dvcmQ=
     Content-Type: application/json
 ```
+
 ```
     {
         "access_token": "bvsm6nu2uhhgh4hglkj11dd0es",
@@ -37,6 +42,10 @@ Il existe deux scripts `launcher.bat` pour Windows et `launcher.sh` pour Linux/M
 ### II - Utilisation du token
 ```
     GET http://127.0.0.1:3000/[path...]
-    Header : Authorization: Bearer bvsm6nu2uhhgh4hglkj11dd0es
+```
+
+Header :
+```
+    Authorization: Bearer bvsm6nu2uhhgh4hglkj11dd0es
     Content-Type: application/json
 ```
