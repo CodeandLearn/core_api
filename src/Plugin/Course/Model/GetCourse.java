@@ -1,7 +1,7 @@
 package Plugin.Course.Model;
 
 import Core.Database.SQL;
-import Core.Database.SQLite;
+import Core.Database.SQLRequest;
 import Core.Model;
 import Plugin.Course.Obj.CourseCommentObj;
 import Plugin.Course.Obj.CourseObj;
@@ -10,7 +10,7 @@ import java.util.HashMap;
 
 public class GetCourse extends Model {
     protected void setGet(String request) {
-        SQLite sql = new SQLite(request);
+        SQLRequest sql = new SQLRequest(request);
         sql.select();
         for (HashMap<String, Object> result : sql.getResultSet()) {
             CourseObj courseObj = new CourseObj();
@@ -22,7 +22,7 @@ public class GetCourse extends Model {
             courseObj.course.locales_id = (Integer) result.get("courses.locales_id");
             courseObj.course.modify_timestamp = (Long) result.get("courses.modify_timestamp");
             courseObj.course.title = (String) result.get("courses.title");
-            SQLite commentSql = new SQLite("SELECT courses_comments.id'courses_comments.id',\n" +
+            SQLRequest commentSql = new SQLRequest("SELECT courses_comments.id'courses_comments.id',\n" +
                     "courses_comments.course_id'courses_comments.course_id',\n" +
                     "courses_comments.account_id'courses_comments.account_id',\n" +
                     "courses_comments.content'courses_comments.content',\n" +

@@ -1,6 +1,6 @@
 package Plugin.Blog.Model;
 
-import Core.Database.SQLite;
+import Core.Database.SQLRequest;
 import Core.Model;
 import Plugin.Blog.Obj.BlogCategoryObj;
 
@@ -11,7 +11,7 @@ import java.util.HashMap;
  */
 public class GetCategories extends Model {
     protected void setGet(String request) {
-        SQLite sql = new SQLite(request);
+        SQLRequest sql = new SQLRequest(request);
         sql.select();
         for (HashMap<String, Object> result : sql.getResultSet()) {
             BlogCategoryObj blogCategoryObj = new BlogCategoryObj();

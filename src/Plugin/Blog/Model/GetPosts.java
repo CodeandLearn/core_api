@@ -1,7 +1,7 @@
 package Plugin.Blog.Model;
 
 import Core.Database.SQL;
-import Core.Database.SQLite;
+import Core.Database.SQLRequest;
 import Core.Model;
 import Plugin.Blog.Obj.BlogCommentObj;
 import Plugin.Blog.Obj.BlogObj;
@@ -13,7 +13,7 @@ import java.util.HashMap;
  */
 public class GetPosts extends Model {
     protected void setGet(String request) {
-        SQLite sql = new SQLite(request);
+        SQLRequest sql = new SQLRequest(request);
         sql.select();
         for (HashMap<String, Object> result : sql.getResultSet()) {
             BlogObj blogObj = new BlogObj();
@@ -36,7 +36,7 @@ public class GetPosts extends Model {
             blogObj.article.account.group.parent_id = (Integer) result.get("groups.parent_id");
             blogObj.article.account.avatar.id = (Integer) result.get("avatars.id");
             blogObj.article.account.avatar.path = (String) result.get("avatars.path");
-            SQLite commentSql = new SQLite("SELECT blog_posts_comments.content'blog_posts_comments.content',\n" +
+            SQLRequest commentSql = new SQLRequest("SELECT blog_posts_comments.content'blog_posts_comments.content',\n" +
                     "blog_posts_comments.id'blog_posts_comments.id',\n" +
                     "blog_posts_comments.create_timestamp'blog_posts_comments.create_timestamp',\n" +
                     "blog_posts_comments.modify_timestamp'blog_posts_comments.modify_timestamp',\n" +

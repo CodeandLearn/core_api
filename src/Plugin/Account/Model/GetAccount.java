@@ -1,7 +1,7 @@
 package Plugin.Account.Model;
 
 import Core.Database.SQL;
-import Core.Database.SQLite;
+import Core.Database.SQLRequest;
 import Core.Model;
 import Plugin.Account.Obj.AccountObj;
 
@@ -12,7 +12,7 @@ import java.util.HashMap;
  */
 public class GetAccount extends Model {
     protected void setGet(String request) {
-        SQLite sqLite = new SQLite(request);
+        SQLRequest sqLite = new SQLRequest(request);
         sqLite.select();
         for (HashMap<String, Object> result : sqLite.getResultSet()) {
             AccountObj accountObj = new AccountObj();

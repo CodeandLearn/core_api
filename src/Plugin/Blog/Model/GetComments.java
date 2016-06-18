@@ -1,7 +1,7 @@
 package Plugin.Blog.Model;
 
 import Core.Database.SQL;
-import Core.Database.SQLite;
+import Core.Database.SQLRequest;
 import Core.Model;
 import Plugin.Blog.Obj.BlogCommentObj;
 
@@ -12,7 +12,7 @@ import java.util.HashMap;
  */
 public class GetComments extends Model {
     protected void setGet(String request) {
-        SQLite sql = new SQLite(request);
+        SQLRequest sql = new SQLRequest(request);
         sql.select();
         for (HashMap<String, Object> result : sql.getResultSet()) {
             BlogCommentObj blogCommentObj = new BlogCommentObj();

@@ -1,6 +1,6 @@
 package Core;
 
-import Core.Database.SQLite;
+import Core.Database.SQLRequest;
 import Core.Http.Code;
 import Core.Singleton.ServerSingleton;
 import org.reflections.Reflections;
@@ -119,17 +119,17 @@ public class Model {
     }
 
     protected void setPost(String socket, String request) {
-        SQLite sqLite = new SQLite(request);
+        SQLRequest sqLite = new SQLRequest(request);
         sqLite.insert();
     }
 
     protected void setPut(String socket, String request) {
-        SQLite sqLite = new SQLite(request);
+        SQLRequest sqLite = new SQLRequest(request);
         sqLite.update();
     }
 
     protected void setDelete(String socket, String request) {
-        SQLite sqLite = new SQLite(request);
+        SQLRequest sqLite = new SQLRequest(request);
         sqLite.delete();
     }
 }

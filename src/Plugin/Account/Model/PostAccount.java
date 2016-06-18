@@ -1,7 +1,7 @@
 package Plugin.Account.Model;
 
 import Core.Database.SQL;
-import Core.Database.SQLite;
+import Core.Database.SQLRequest;
 import Core.Http.Code;
 import Core.Model;
 import Core.Singleton.UserSecuritySingleton;
@@ -16,7 +16,7 @@ public class PostAccount extends Model {
     private boolean isExist(String username, String email) {
         make.add(username);
         make.add(email);
-        SQLite user = new SQLite(SQL.make("SELECT accounts.id'accounts.id',\n" +
+        SQLRequest user = new SQLRequest(SQL.make("SELECT accounts.id'accounts.id',\n" +
                 "accounts.username'accounts.username',\n" +
                 "accounts.password'accounts.password',\n" +
                 "accounts.email'accounts.email',\n" +
@@ -34,7 +34,7 @@ public class PostAccount extends Model {
 
     private boolean addUser(String username) {
         make.add(username);
-        SQLite user = new SQLite(SQL.make("SELECT accounts.id'accounts.id',\n" +
+        SQLRequest user = new SQLRequest(SQL.make("SELECT accounts.id'accounts.id',\n" +
                 "accounts.username'accounts.username',\n" +
                 "accounts.password'accounts.password',\n" +
                 "groups.parent_id'groups.parent_id'\n" +

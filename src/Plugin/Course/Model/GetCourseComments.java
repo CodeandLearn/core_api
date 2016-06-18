@@ -1,7 +1,7 @@
 package Plugin.Course.Model;
 
 import Core.Database.SQL;
-import Core.Database.SQLite;
+import Core.Database.SQLRequest;
 import Core.Model;
 import Plugin.Course.Obj.CourseCommentObj;
 
@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 public class GetCourseComments extends Model {
     protected void setGet(String request) {
-        SQLite sql = new SQLite(request);
+        SQLRequest sql = new SQLRequest(request);
         sql.select();
         for (HashMap<String, Object> result : sql.getResultSet()) {
             CourseCommentObj courseCommentObj = new CourseCommentObj();

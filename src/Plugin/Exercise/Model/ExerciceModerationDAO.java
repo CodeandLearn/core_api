@@ -1,7 +1,7 @@
 package Plugin.Exercise.Model;
 
 import Core.Database.SQL;
-import Core.Database.SQLite;
+import Core.Database.SQLRequest;
 import Core.Model;
 import Plugin.Exercise.Obj.ExerciseModerationObj;
 import org.json.JSONObject;
@@ -13,7 +13,7 @@ import java.util.HashMap;
  */
 public class ExerciceModerationDAO extends Model {
     protected void setGet(String request) {
-        SQLite sql = new SQLite(request);
+        SQLRequest sql = new SQLRequest(request);
         sql.select();
         for (HashMap<String, Object> aResult : sql.getResultSet()) {
             ExerciseModerationObj exerciseModerationObj = new ExerciseModerationObj();

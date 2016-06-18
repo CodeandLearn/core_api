@@ -1,10 +1,9 @@
 package Plugin.Exercise.Model;
 
 import Core.Database.SQL;
-import Core.Database.SQLite;
+import Core.Database.SQLRequest;
 import Core.Model;
 import Plugin.Exercise.Obj.ExerciseCommentObj;
-import Plugin.Exercise.Obj.ExerciseObj;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -14,7 +13,7 @@ import java.util.HashMap;
  */
 public class ExerciceCommentDAO extends Model {
     protected void setGet(String request) {
-        SQLite sql = new SQLite(request);
+        SQLRequest sql = new SQLRequest(request);
         sql.select();
         for (HashMap<String, Object> aResult : sql.getResultSet()) {
             ExerciseCommentObj exerciseCommentObj = new ExerciseCommentObj();

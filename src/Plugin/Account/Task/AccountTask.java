@@ -1,6 +1,6 @@
 package Plugin.Account.Task;
 
-import Core.Database.SQLite;
+import Core.Database.SQLRequest;
 import Core.Http.Job;
 import Core.Singleton.ServerSingleton;
 import Core.Singleton.UserSecuritySingleton;
@@ -13,7 +13,7 @@ import Core.Task;
 public class AccountTask extends Job {
     @Override
     public void task() {
-        SQLite sql = new SQLite("SELECT accounts.id'accounts.id',\n" +
+        SQLRequest sql = new SQLRequest("SELECT accounts.id'accounts.id',\n" +
                 "accounts.username'accounts.username',\n" +
                 "accounts.password'accounts.password',\n" +
                 "accounts.email'accounts.email',\n" +
