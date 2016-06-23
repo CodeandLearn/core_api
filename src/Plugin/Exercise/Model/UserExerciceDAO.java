@@ -18,7 +18,7 @@ public class UserExerciceDAO extends Model {
         for (HashMap<String, Object> aResult : sql.getResultSet()) {
             UserExerciseObj userExerciseObj = new UserExerciseObj();
             userExerciseObj.account_id = (Integer) aResult.get("account_id");
-            userExerciseObj.exercise_id = (Integer) aResult.get("exercice_id");
+            userExerciseObj.exercice_id = (Integer) aResult.get("exercice_id");
             userExerciseObj.id = (Integer) aResult.get("id");
             data.add(userExerciseObj);
         }

@@ -21,7 +21,7 @@ public class CodeDAO extends Model {
             codeObj.create_timestamp = (Long) result.get("create_timestamp");
             codeObj.id = (Integer) result.get("id");
             codeObj.modify_timestamp = (Long) result.get("modify_timestamp");
-            codeObj.user_exercise_id = (Integer) result.get("user_exercice_id");
+            codeObj.user_exercice_id = (Integer) result.get("user_exercice_id");
             data.add(codeObj);
         }
     }

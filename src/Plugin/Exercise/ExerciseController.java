@@ -34,27 +34,27 @@ public class ExerciseController {
     }
 
     @Methode("GET")
-    @Route("/exercise/{exercise_id}/script")
+    @Route("/exercise/{exercice_id}/script")
     public ScriptDAO getExerciseScript(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new ScriptDAO().getExerciceScript(socket, args.getInt("exercise_id"));
+        return new ScriptDAO().getExerciceScript(socket, args.getInt("exercice_id"));
     }
 
     @Methode("GET")
-    @Route("/exercise/{exercise_id}/correction")
+    @Route("/exercise/{exercice_id}/correction")
     public ExerciceCorrectionDAO getExerciseCorrection(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new ExerciceCorrectionDAO().getExerciceCorrection(socket, args.getInt("exercise_id"));
+        return new ExerciceCorrectionDAO().getExerciceCorrection(socket, args.getInt("exercice_id"));
     }
 
     @Methode("GET")
-    @Route("/exercise/{exercise_id}/comments")
+    @Route("/exercise/{exercice_id}/comments")
     public ExerciceCommentDAO getExerciseComments(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new ExerciceCommentDAO().getExerciceComments(socket, args.getInt("exercise_id"));
+        return new ExerciceCommentDAO().getExerciceComments(socket, args.getInt("exercice_id"));
     }
 
     @Methode("GET")
-    @Route("/exercise/{exercise_id}/moderation")
+    @Route("/exercise/{exercice_id}/moderation")
     public ExerciceModerationDAO getExerciseModeration(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new ExerciceModerationDAO().getExerciceModeration(socket, args.getInt("exercise_id"));
+        return new ExerciceModerationDAO().getExerciceModeration(socket, args.getInt("exercice_id"));
     }
 
     @Methode("POST")

@@ -20,7 +20,7 @@ public class ExerciceCommentDAO extends Model {
             exerciseCommentObj.account_id = (Integer) aResult.get("account_id");
             exerciseCommentObj.content = (String) aResult.get("content");
             exerciseCommentObj.create_timestamp = (Long) aResult.get("create_timestamp");
-            exerciseCommentObj.exercise_id = (Integer) aResult.get("exercice_id");
+            exerciseCommentObj.exercice_id = (Integer) aResult.get("exercice_id");
             exerciseCommentObj.id = (Integer) aResult.get("id");
             exerciseCommentObj.modify_timestamp = (Long) aResult.get("modify_timestamp");
             data.add(exerciseCommentObj);

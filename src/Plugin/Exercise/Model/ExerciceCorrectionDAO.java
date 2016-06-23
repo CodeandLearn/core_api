@@ -18,7 +18,7 @@ public class ExerciceCorrectionDAO extends Model {
         for (HashMap<String, Object> aResult : sql.getResultSet()) {
             ExerciseCorrectionObj exerciseCorrectionObj = new ExerciseCorrectionObj();
             exerciseCorrectionObj.content = (String) aResult.get("content");
-            exerciseCorrectionObj.exercise_id = (Integer) aResult.get("exercice_id");
+            exerciseCorrectionObj.exercice_id = (Integer) aResult.get("exercice_id");
             exerciseCorrectionObj.id = (Integer) aResult.get("id");
             data.add(exerciseCorrectionObj);
         }

@@ -19,7 +19,7 @@ public class GradeDAO extends Model {
             GradeObj gradeObj = new GradeObj();
             gradeObj.id = (Integer) aResult.get("id");
             gradeObj.timestamp = (Long) aResult.get("timestamp");
-            gradeObj.user_exercise_id = (Integer) aResult.get("user_exercice_id");
+            gradeObj.user_exercice_id = (Integer) aResult.get("user_exercice_id");
             gradeObj.value = (Integer) aResult.get("value");
             data.add(gradeObj);
         }
