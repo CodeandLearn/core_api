@@ -50,17 +50,4 @@ public class JDBCLib extends SQL {
         }
         return this;
     }
-
-    @SQLDriver("IBMDB2")
-    public JDBCLib IBMDB2() {
-        try {
-            Class.forName("COM.ibm.db2.jdbc.app.DB2Driver");
-            c = DriverManager.getConnection("jdbc:db2://" + url + "/?user=" + username + "&password=" + password);
-            stmt = c.createStatement();
-            c.setAutoCommit(false);
-        } catch (ClassNotFoundException | SQLException e) {
-            ServerSingleton.getInstance().log("IBMDB2 : " + e.getMessage(), true);
-        }
-        return this;
-    }
 }

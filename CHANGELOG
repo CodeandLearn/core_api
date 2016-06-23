@@ -1,4 +1,29 @@
-# V0.0.02
+# V0.0.4
+## Plugins
+* Ajout de la communication avec le serveur com
+* Optimisation sur la route /register
+* Correction de coherence sur exercise/exercice
+
+## Core
+* Le temps d'expiration du token se rafréchis quand il est utilisé
+* Ajout du support multi DB
+* Affiche l'erreur 404 quand il n'y a pas de donnée dans la DB
+* Retourne l'id lors d'un insert
+
+# V0.0.3
+## Plugins
+* Update & fix Language
+* Update & fix Course
+* Update & fix Exercises
+* Update & fix User_exercises
+* Add comments by course_id in Course plugin
+
+## Core
+* Fix /register
+* Fix for windows phone app
+* Add route : /routes
+
+# V0.0.2
 ## Plugins
 * Account et Blog sont totalement fonctionnel
 
