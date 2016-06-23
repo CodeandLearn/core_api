@@ -32,29 +32,6 @@ public class PostAccount extends Model {
         return user.getResultSet().size() > 0;
     }
 
-    private boolean addUser(String username) {
-        make.add(username);
-        SQLRequest user = new SQLRequest(SQL.make("SELECT accounts.id'accounts.id',\n" +
-                "accounts.username'accounts.username',\n" +
-                "accounts.password'accounts.password',\n" +
-                "groups.parent_id'groups.parent_id'\n" +
-                "FROM accounts, groups\n" +
-                "WHERE accounts.group_id=groups.id\n" +
-                "AND accounts.username=?", make.toArray()));
-        user.select();
-        make.clear();
-        if (user.getResultSet().size() > 0) {
-            for (HashMap<String, Object> result : user.getResultSet()) {
-                UserSecuritySingleton.getInstance().addUser((Integer) result.get("accounts.id"),
-                        (String) result.get("accounts.username"),
-                        (String) result.get("accounts.password"),
-                        (Integer) result.get("groups.parent_id"));
-            }
-            return true;
-        }
-        return false;
-    }
-
     public PostAccount register(String socket, JSONObject jsonObject) {
         if (!isExist(jsonObject.getString("username"), jsonObject.getString("email"))) {
             make.add(jsonObject.getString("username"));
@@ -68,11 +45,14 @@ public class PostAccount extends Model {
             make.add(0);
             setPost(socket, SQL.make("INSERT INTO accounts (username, password, email, group_id, avatar_id, create_timestamp, last_connect_timestamp, nb_courses_done, nb_exercices_done) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", make.toArray()));
             make.clear();
-            if (!addUser(jsonObject.getString("username"))) {
+            if (id != -1) {
+                UserSecuritySingleton.getInstance().addUser(id, jsonObject.getString("username"), UserSecuritySingleton.hashSHA1(jsonObject.getString("password")), 10);
+            } else {
                 setCode(socket, Code.INTERNAL_SERVER_ERROR);
             }
         } else {
-            setCode(socket, Code.INTERNAL_SERVER_ERROR);
+            setCode(socket, Code.FORBIDDEN);
+            setErrorMsg("User or Email already used by another account");
         }
         return this;
     }
