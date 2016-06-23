@@ -17,7 +17,8 @@ import java.util.HashMap;
 public class SQLRequest {
     private ArrayList<HashMap<String, Object>> entities = new ArrayList<>();
     private String request;
-    JDBCLib sql = new MyJDBC().load();
+    private JDBCLib sql = new MyJDBC().load();
+    private int generatedId = -1;
 
     public SQLRequest(String request) {
         this.request = request;
@@ -55,13 +56,20 @@ public class SQLRequest {
 
     public void insert() {
         sql.insertDB(request);
+        generatedId = sql.getGeneratedId();
     }
 
     public void update() {
         sql.updateDB(request);
+        generatedId = sql.getGeneratedId();
     }
 
     public void delete() {
         sql.deleteDB(request);
+        generatedId = sql.getGeneratedId();
+    }
+
+    public int getGeneratedId() {
+        return generatedId;
     }
 }

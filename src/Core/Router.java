@@ -77,6 +77,9 @@ public class Router {
         if (!json.isNull("make")) {
             json.remove("make");
         }
+        if (!json.isNull("id") && (json.get("id").equals(-1) || method.equals("GET"))) {
+            json.remove("id");
+        }
         if (!json.isNull("data") && json.getJSONArray("data").length() == 0) {
             json.remove("data");
             if (method.equals("GET") && json.get("code").equals(Code.OK)) {
