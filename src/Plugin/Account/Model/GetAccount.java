@@ -35,20 +35,20 @@ public class GetAccount extends Model {
     }
 
     public GetAccount getAccounts(String socket) {
-        setGet("SELECT accounts.username'accounts.username',\n" +
-                "accounts.id'accounts.id',\n" +
-                "accounts.email'accounts.email',\n" +
-                "accounts.avatar_id'accounts.avatar_id',\n" +
-                "accounts.group_id'accounts.group_id',\n" +
-                "accounts.create_timestamp'accounts.create_timestamp',\n" +
-                "accounts.last_connect_timestamp'accounts.last_connect_timestamp',\n" +
-                "accounts.nb_courses_done'accounts.nb_courses_done',\n" +
-                "accounts.nb_exercices_done'accounts.nb_exercices_done',\n" +
-                "groups.id'groups.id',\n" +
-                "groups.name'groups.name',\n" +
-                "groups.parent_id'groups.parent_id',\n" +
-                "avatars.id'avatars.id',\n" +
-                "avatars.path'avatars.path'\n" +
+        setGet("SELECT accounts.username\"accounts.username\",\n" +
+                "accounts.id\"accounts.id\",\n" +
+                "accounts.email\"accounts.email\",\n" +
+                "accounts.avatar_id\"accounts.avatar_id\",\n" +
+                "accounts.group_id\"accounts.group_id\",\n" +
+                "accounts.create_timestamp\"accounts.create_timestamp\",\n" +
+                "accounts.last_connect_timestamp\"accounts.last_connect_timestamp\",\n" +
+                "accounts.nb_courses_done\"accounts.nb_courses_done\",\n" +
+                "accounts.nb_exercices_done\"accounts.nb_exercices_done\",\n" +
+                "groups.id\"groups.id\",\n" +
+                "groups.name\"groups.name\",\n" +
+                "groups.parent_id\"groups.parent_id\",\n" +
+                "avatars.id\"avatars.id\",\n" +
+                "avatars.path\"avatars.path\"\n" +
                 "FROM accounts, groups, avatars\n" +
                 "WHERE accounts.avatar_id=avatars.id\n" +
                 "AND accounts.group_id=groups.id");
@@ -57,20 +57,20 @@ public class GetAccount extends Model {
 
     public GetAccount getAccountWithLimit(String socket, int limit) {
         make.add(limit);
-        setGet(SQL.make("SELECT accounts.username'accounts.username',\n" +
-                "accounts.id'accounts.id',\n" +
-                "accounts.email'accounts.email',\n" +
-                "accounts.avatar_id'accounts.avatar_id',\n" +
-                "accounts.group_id'accounts.group_id',\n" +
-                "accounts.create_timestamp'accounts.create_timestamp',\n" +
-                "accounts.last_connect_timestamp'accounts.last_connect_timestamp',\n" +
-                "accounts.nb_courses_done'accounts.nb_courses_done',\n" +
-                "accounts.nb_exercices_done'accounts.nb_exercices_done',\n" +
-                "groups.id'groups.id',\n" +
-                "groups.name'groups.name',\n" +
-                "groups.parent_id'groups.parent_id',\n" +
-                "avatars.id'avatars.id',\n" +
-                "avatars.path'avatars.path'\n" +
+        setGet(SQL.make("SELECT accounts.username\"accounts.username\",\n" +
+                "accounts.id\"accounts.id\",\n" +
+                "accounts.email\"accounts.email\",\n" +
+                "accounts.avatar_id\"accounts.avatar_id\",\n" +
+                "accounts.group_id\"accounts.group_id\",\n" +
+                "accounts.create_timestamp\"accounts.create_timestamp\",\n" +
+                "accounts.last_connect_timestamp\"accounts.last_connect_timestamp\",\n" +
+                "accounts.nb_courses_done\"accounts.nb_courses_done\",\n" +
+                "accounts.nb_exercices_done\"accounts.nb_exercices_done\",\n" +
+                "groups.id\"groups.id\",\n" +
+                "groups.name\"groups.name\",\n" +
+                "groups.parent_id\"groups.parent_id\",\n" +
+                "avatars.id\"avatars.id\",\n" +
+                "avatars.path\"avatars.path\"\n" +
                 "FROM accounts, groups, avatars\n" +
                 "WHERE accounts.avatar_id=avatars.id\n" +
                 "AND accounts.group_id=groups.id LIMIT ?", make.toArray()));
@@ -79,20 +79,20 @@ public class GetAccount extends Model {
 
     public GetAccount getAccount(String socket, int idUser) {
         make.add(idUser);
-        setGet(SQL.make("SELECT accounts.username'accounts.username',\n" +
-                "accounts.id'accounts.id',\n" +
-                "accounts.email'accounts.email',\n" +
-                "accounts.avatar_id'accounts.avatar_id',\n" +
-                "accounts.group_id'accounts.group_id',\n" +
-                "accounts.create_timestamp'accounts.create_timestamp',\n" +
-                "accounts.last_connect_timestamp'accounts.last_connect_timestamp',\n" +
-                "accounts.nb_courses_done'accounts.nb_courses_done',\n" +
-                "accounts.nb_exercices_done'accounts.nb_exercices_done',\n" +
-                "groups.id'groups.id',\n" +
-                "groups.name'groups.name',\n" +
-                "groups.parent_id'groups.parent_id',\n" +
-                "avatars.id'avatars.id',\n" +
-                "avatars.path'avatars.path'\n" +
+        setGet(SQL.make("SELECT accounts.username\"accounts.username\",\n" +
+                "accounts.id\"accounts.id\",\n" +
+                "accounts.email\"accounts.email\",\n" +
+                "accounts.avatar_id\"accounts.avatar_id\",\n" +
+                "accounts.group_id\"accounts.group_id\",\n" +
+                "accounts.create_timestamp\"accounts.create_timestamp\",\n" +
+                "accounts.last_connect_timestamp\"accounts.last_connect_timestamp\",\n" +
+                "accounts.nb_courses_done\"accounts.nb_courses_done\",\n" +
+                "accounts.nb_exercices_done\"accounts.nb_exercices_done\",\n" +
+                "groups.id\"groups.id\",\n" +
+                "groups.name\"groups.name\",\n" +
+                "groups.parent_id\"groups.parent_id\",\n" +
+                "avatars.id\"avatars.id\",\n" +
+                "avatars.path\"avatars.path\"\n" +
                 "FROM accounts, groups, avatars\n" +
                 "WHERE accounts.avatar_id=avatars.id\n" +
                 "AND accounts.group_id=groups.id AND accounts.id=?", make.toArray()));

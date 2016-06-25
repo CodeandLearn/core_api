@@ -16,14 +16,14 @@ public class PostAccount extends Model {
     private boolean isExist(String username, String email) {
         make.add(username);
         make.add(email);
-        SQLRequest user = new SQLRequest(SQL.make("SELECT accounts.id'accounts.id',\n" +
-                "accounts.username'accounts.username',\n" +
-                "accounts.password'accounts.password',\n" +
-                "accounts.email'accounts.email',\n" +
-                "accounts.group_id'accounts.group_id',\n" +
-                "groups.id'groups.id',\n" +
-                "groups.name'groups.name',\n" +
-                "groups.parent_id'groups.parent_id'\n" +
+        SQLRequest user = new SQLRequest(SQL.make("SELECT accounts.id\"accounts.id\",\n" +
+                "accounts.username\"accounts.username\",\n" +
+                "accounts.password\"accounts.password\",\n" +
+                "accounts.email\"accounts.email\",\n" +
+                "accounts.group_id\"accounts.group_id\",\n" +
+                "groups.id\"groups.id\",\n" +
+                "groups.name\"groups.name\",\n" +
+                "groups.parent_id\"groups.parent_id\"\n" +
                 "FROM accounts, groups\n" +
                 "WHERE accounts.group_id=groups.id\n" +
                 "AND accounts.username=? OR email=?", make.toArray()));

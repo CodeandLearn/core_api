@@ -64,7 +64,8 @@ public class SQL {
 
     public ResultSet selectDB(String sql) {
         try {
-            ResultSet result = stmt.executeQuery(sql);
+            PreparedStatement preparedStatement = c.prepareStatement(sql);
+            ResultSet result = preparedStatement.executeQuery();
             c.commit();
             return result;
         } catch (SQLException e) {

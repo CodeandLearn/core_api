@@ -13,14 +13,14 @@ import Core.Task;
 public class AccountTask extends Job {
     @Override
     public void task() {
-        SQLRequest sql = new SQLRequest("SELECT accounts.id'accounts.id',\n" +
-                "accounts.username'accounts.username',\n" +
-                "accounts.password'accounts.password',\n" +
-                "accounts.email'accounts.email',\n" +
-                "accounts.group_id'accounts.group_id',\n" +
-                "groups.id'groups.id',\n" +
-                "groups.name'groups.name',\n" +
-                "groups.parent_id'groups.parent_id'\n" +
+        SQLRequest sql = new SQLRequest("SELECT accounts.id\"accounts.id\",\n" +
+                "accounts.username\"accounts.username\",\n" +
+                "accounts.password\"accounts.password\",\n" +
+                "accounts.email\"accounts.email\",\n" +
+                "accounts.group_id\"accounts.group_id\",\n" +
+                "groups.id\"groups.id\",\n" +
+                "groups.name\"groups.name\",\n" +
+                "groups.parent_id\"groups.parent_id\"\n" +
                 "FROM accounts, groups\n" +
                 "WHERE accounts.group_id=groups.id");
         sql.select();

@@ -23,24 +23,24 @@ public class GetLanguage extends Model {
     }
 
     public GetLanguage getLanguage(String socket) {
-        setGet("SELECT languages.id'languages.id',\n" +
-                "languages.name'languages.name'\n" +
+        setGet("SELECT languages.id\"languages.id\",\n" +
+                "languages.name\"languages.name\"\n" +
                 "FROM languages ORDER BY languages.name ASC");
         return this;
     }
 
     public GetLanguage getLanguageWithLimit(String socket, int limit) {
         make.add(limit);
-        setGet(SQL.make("SELECT languages.id'languages.id',\n" +
-                "languages.name'languages.name'\n" +
+        setGet(SQL.make("SELECT languages.id\"languages.id\",\n" +
+                "languages.name\"languages.name\"\n" +
                 "FROM languages ORDER BY languages.name ASC limit ?", make.toArray()));
         return this;
     }
 
     public GetLanguage getLanguageById(String socket, int id) {
         make.add(id);
-        setGet(SQL.make("SELECT languages.id'languages.id',\n" +
-                "languages.name'languages.name'\n" +
+        setGet(SQL.make("SELECT languages.id\"languages.id\",\n" +
+                "languages.name\"languages.name\"\n" +
                 "FROM languages WHERE languages.id=? ORDER BY languages.name ASC", make.toArray()));
         return this;
     }
