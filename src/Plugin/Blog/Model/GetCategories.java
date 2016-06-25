@@ -22,8 +22,8 @@ public class GetCategories extends Model {
     }
 
     public GetCategories getBlogCategories(String socket) {
-        setGet("SELECT blog_posts_category.id'blog_posts_category.id',\n" +
-                "blog_posts_category.name'blog_posts_category.name'\n" +
+        setGet("SELECT blog_posts_category.id\"blog_posts_category.id\",\n" +
+                "blog_posts_category.name\"blog_posts_category.name\"\n" +
                 "FROM blog_posts_category ORDER BY blog_posts_category.id DESC");
         return this;
     }

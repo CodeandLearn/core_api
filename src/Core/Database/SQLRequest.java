@@ -38,12 +38,12 @@ public class SQLRequest {
                 for (int i = 1; i <= metaData.getColumnCount(); i++) {
                     if (result.getObject(i).getClass().getTypeName().equals("java.lang.String")) {
                         try {
-                            data.put(metaData.getColumnName(i), URLDecoder.decode(result.getObject(i).toString(), ConfigSingleton.getInstance().getCharset()));
+                            data.put(metaData.getColumnLabel(i), URLDecoder.decode(result.getObject(i).toString(), ConfigSingleton.getInstance().getCharset()));
                         } catch (UnsupportedEncodingException e) {
                             ServerSingleton.getInstance().log("URLDecode : " + e, true);
                         }
                     } else {
-                        data.put(metaData.getColumnName(i), result.getObject(i));
+                        data.put(metaData.getColumnLabel(i), result.getObject(i));
                     }
                 }
                 entities.add(data);

@@ -22,12 +22,12 @@ public class GetCourse extends Model {
             courseObj.course.locales_id = (Integer) result.get("courses.locales_id");
             courseObj.course.modify_timestamp = (Long) result.get("courses.modify_timestamp");
             courseObj.course.title = (String) result.get("courses.title");
-            SQLRequest commentSql = new SQLRequest("SELECT courses_comments.id'courses_comments.id',\n" +
-                    "courses_comments.course_id'courses_comments.course_id',\n" +
-                    "courses_comments.account_id'courses_comments.account_id',\n" +
-                    "courses_comments.content'courses_comments.content',\n" +
-                    "courses_comments.create_timestamp'courses_comments.create_timestamp',\n" +
-                    "courses_comments.modify_timestamp'courses_comments.modify_timestamp'\n" +
+            SQLRequest commentSql = new SQLRequest("SELECT courses_comments.id\"courses_comments.id\",\n" +
+                    "courses_comments.course_id\"courses_comments.course_id\",\n" +
+                    "courses_comments.account_id\"courses_comments.account_id\",\n" +
+                    "courses_comments.content\"courses_comments.content\",\n" +
+                    "courses_comments.create_timestamp\"courses_comments.create_timestamp\",\n" +
+                    "courses_comments.modify_timestamp\"courses_comments.modify_timestamp\"\n" +
                     "FROM courses_comments WHERE courses_comments.course_id=" + result.get("courses.id"));
             commentSql.select();
             for (HashMap<String, Object> comment : commentSql.getResultSet()) {
@@ -45,98 +45,98 @@ public class GetCourse extends Model {
     }
 
     public GetCourse getCourse(String socket) {
-        setGet("SELECT courses.id'courses.id',\n" +
-                "courses.account_id'courses.account_id',\n" +
-                "courses.locales_id'courses.locales_id',\n" +
-                "courses.language_id'courses.language_id',\n" +
-                "courses.title'courses.title',\n" +
-                "courses.content'courses.content',\n" +
-                "courses.create_timestamp'courses.create_timestamp',\n" +
-                "courses.modify_timestamp'courses.modify_timestamp'\n" +
+        setGet("SELECT courses.id\"courses.id\",\n" +
+                "courses.account_id\"courses.account_id\",\n" +
+                "courses.locales_id\"courses.locales_id\",\n" +
+                "courses.language_id\"courses.language_id\",\n" +
+                "courses.title\"courses.title\",\n" +
+                "courses.content\"courses.content\",\n" +
+                "courses.create_timestamp\"courses.create_timestamp\",\n" +
+                "courses.modify_timestamp\"courses.modify_timestamp\"\n" +
                 "FROM courses ORDER BY courses.id ASC");
         return this;
     }
 
     public GetCourse getCourseWithId(String socket, int id) {
         make.add(id);
-        setGet(SQL.make("SELECT courses.id'courses.id',\n" +
-                "courses.account_id'courses.account_id',\n" +
-                "courses.locales_id'courses.locales_id',\n" +
-                "courses.language_id'courses.language_id',\n" +
-                "courses.title'courses.title',\n" +
-                "courses.content'courses.content',\n" +
-                "courses.create_timestamp'courses.create_timestamp',\n" +
-                "courses.modify_timestamp'courses.modify_timestamp'\n" +
+        setGet(SQL.make("SELECT courses.id\"courses.id\",\n" +
+                "courses.account_id\"courses.account_id\",\n" +
+                "courses.locales_id\"courses.locales_id\",\n" +
+                "courses.language_id\"courses.language_id\",\n" +
+                "courses.title\"courses.title\",\n" +
+                "courses.content\"courses.content\",\n" +
+                "courses.create_timestamp\"courses.create_timestamp\",\n" +
+                "courses.modify_timestamp\"courses.modify_timestamp\"\n" +
                 "FROM courses WHERE courses.id=? ORDER BY courses.id ASC", make.toArray()));
         return this;
     }
 
     public GetCourse getCourseWithLimit(String socket, int limit) {
         make.add(limit);
-        setGet(SQL.make("SELECT courses.id'courses.id',\n" +
-                "courses.account_id'courses.account_id',\n" +
-                "courses.locales_id'courses.locales_id',\n" +
-                "courses.language_id'courses.language_id',\n" +
-                "courses.title'courses.title',\n" +
-                "courses.content'courses.content',\n" +
-                "courses.create_timestamp'courses.create_timestamp',\n" +
-                "courses.modify_timestamp'courses.modify_timestamp'\n" +
+        setGet(SQL.make("SELECT courses.id\"courses.id\",\n" +
+                "courses.account_id\"courses.account_id\",\n" +
+                "courses.locales_id\"courses.locales_id\",\n" +
+                "courses.language_id\"courses.language_id\",\n" +
+                "courses.title\"courses.title\",\n" +
+                "courses.content\"courses.content\",\n" +
+                "courses.create_timestamp\"courses.create_timestamp\",\n" +
+                "courses.modify_timestamp\"courses.modify_timestamp\"\n" +
                 "FROM courses ORDER BY courses.id ASC LIMIT ?", make.toArray()));
         return this;
     }
 
     public GetCourse getCourseByAuthorId(String socket, int author_id) {
         make.add(author_id);
-        setGet(SQL.make("SELECT courses.id'courses.id',\n" +
-                "courses.account_id'courses.account_id',\n" +
-                "courses.locales_id'courses.locales_id',\n" +
-                "courses.language_id'courses.language_id',\n" +
-                "courses.title'courses.title',\n" +
-                "courses.content'courses.content',\n" +
-                "courses.create_timestamp'courses.create_timestamp',\n" +
-                "courses.modify_timestamp'courses.modify_timestamp'\n" +
+        setGet(SQL.make("SELECT courses.id\"courses.id\",\n" +
+                "courses.account_id\"courses.account_id\",\n" +
+                "courses.locales_id\"courses.locales_id\",\n" +
+                "courses.language_id\"courses.language_id\",\n" +
+                "courses.title\"courses.title\",\n" +
+                "courses.content\"courses.content\",\n" +
+                "courses.create_timestamp\"courses.create_timestamp\",\n" +
+                "courses.modify_timestamp\"courses.modify_timestamp\"\n" +
                 "FROM courses WHERE courses.account_id=? ORDER BY courses.id ASC", make.toArray()));
         return this;
     }
 
     public GetCourse getCourseByLanguageId(String socket, int language_id) {
         make.add(language_id);
-        setGet(SQL.make("SELECT courses.id'courses.id',\n" +
-                "courses.account_id'courses.account_id',\n" +
-                "courses.locales_id'courses.locales_id',\n" +
-                "courses.language_id'courses.language_id',\n" +
-                "courses.title'courses.title',\n" +
-                "courses.content'courses.content',\n" +
-                "courses.create_timestamp'courses.create_timestamp',\n" +
-                "courses.modify_timestamp'courses.modify_timestamp'\n" +
+        setGet(SQL.make("SELECT courses.id\"courses.id\",\n" +
+                "courses.account_id\"courses.account_id\",\n" +
+                "courses.locales_id\"courses.locales_id\",\n" +
+                "courses.language_id\"courses.language_id\",\n" +
+                "courses.title\"courses.title\",\n" +
+                "courses.content\"courses.content\",\n" +
+                "courses.create_timestamp\"courses.create_timestamp\",\n" +
+                "courses.modify_timestamp\"courses.modify_timestamp\"\n" +
                 "FROM courses WHERE courses.language_id=? ORDER BY courses.id ASC", make.toArray()));
         return this;
     }
 
     public GetCourse getCourseByLocalesId(String socket, int locales_id) {
         make.add(locales_id);
-        setGet(SQL.make("SELECT courses.id'courses.id',\n" +
-                "courses.account_id'courses.account_id',\n" +
-                "courses.locales_id'courses.locales_id',\n" +
-                "courses.language_id'courses.language_id',\n" +
-                "courses.title'courses.title',\n" +
-                "courses.content'courses.content',\n" +
-                "courses.create_timestamp'courses.create_timestamp',\n" +
-                "courses.modify_timestamp'courses.modify_timestamp'\n" +
+        setGet(SQL.make("SELECT courses.id\"courses.id\",\n" +
+                "courses.account_id\"courses.account_id\",\n" +
+                "courses.locales_id\"courses.locales_id\",\n" +
+                "courses.language_id\"courses.language_id\",\n" +
+                "courses.title\"courses.title\",\n" +
+                "courses.content\"courses.content\",\n" +
+                "courses.create_timestamp\"courses.create_timestamp\",\n" +
+                "courses.modify_timestamp\"courses.modify_timestamp\"\n" +
                 "FROM courses WHERE courses.locales_id=? ORDER BY courses.id ASC", make.toArray()));
         return this;
     }
 
     public GetCourse getCourseByTitle(String socket, String title) {
         make.add(title);
-        setGet(SQL.make("SELECT courses.id'courses.id',\n" +
-                "courses.account_id'courses.account_id',\n" +
-                "courses.locales_id'courses.locales_id',\n" +
-                "courses.language_id'courses.language_id',\n" +
-                "courses.title'courses.title',\n" +
-                "courses.content'courses.content',\n" +
-                "courses.create_timestamp'courses.create_timestamp',\n" +
-                "courses.modify_timestamp'courses.modify_timestamp'\n" +
+        setGet(SQL.make("SELECT courses.id\"courses.id\",\n" +
+                "courses.account_id\"courses.account_id\",\n" +
+                "courses.locales_id\"courses.locales_id\",\n" +
+                "courses.language_id\"courses.language_id\",\n" +
+                "courses.title\"courses.title\",\n" +
+                "courses.content\"courses.content\",\n" +
+                "courses.create_timestamp\"courses.create_timestamp\",\n" +
+                "courses.modify_timestamp\"courses.modify_timestamp\"\n" +
                 "FROM courses WHERE courses.title=? ORDER BY courses.id ASC", make.toArray()));
         return this;
     }
