@@ -271,11 +271,12 @@ CREATE SEQUENCE IF NOT EXISTS codes_seq;
 ALTER SEQUENCE IF EXISTS codes_seq RESTART WITH 1;
 
 CREATE TABLE IF NOT EXISTS codes (
-  id               INT    NOT NULL DEFAULT NEXTVAL('codes_seq'),
-  user_exercice_id INT    NOT NULL,
-  content          TEXT   NULL,
-  create_timestamp BIGINT NULL,
-  modify_timestamp BIGINT NULL,
+  id               INT           NOT NULL DEFAULT NEXTVAL('codes_seq'),
+  user_exercice_id INT           NOT NULL,
+  name             VARCHAR(75)   NULL,
+  content          TEXT          NULL,
+  create_timestamp BIGINT        NULL,
+  modify_timestamp BIGINT        NULL,
   PRIMARY KEY (id)
   ,
   CONSTRAINT user_exercice_id

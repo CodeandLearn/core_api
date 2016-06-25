@@ -257,6 +257,7 @@ CREATE INDEX "grades.user_exercice_id_idx" ON "grades" ("user_exercice_id");
 CREATE TABLE "codes" (
   "id"               INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
   "user_exercice_id" INTEGER                           NOT NULL,
+  "name"             VARCHAR(75),
   "content"          TEXT,
   "create_timestamp" TIMESTAMP,
   "modify_timestamp" TIMESTAMP,
