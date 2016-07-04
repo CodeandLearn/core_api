@@ -1,5 +1,7 @@
 package Plugin.Course.Obj;
 
+import Plugin.Account.Obj.AccountObj;
+
 public class CoursePostObj {
     public int id;
     public int account_id;
@@ -9,4 +11,5 @@ public class CoursePostObj {
     public String content;
     public long create_timestamp;
     public long modify_timestamp;
+    public AccountObj account = new AccountObj();
 }

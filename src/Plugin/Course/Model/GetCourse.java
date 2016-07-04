@@ -22,13 +22,36 @@ public class GetCourse extends Model {
             courseObj.course.locales_id = (Integer) result.get("courses.locales_id");
             courseObj.course.modify_timestamp = (Long) result.get("courses.modify_timestamp");
             courseObj.course.title = (String) result.get("courses.title");
+            courseObj.course.account.id = (Integer) result.get("accounts.id");
+            courseObj.course.account.username = (String) result.get("accounts.username");
+            courseObj.course.account.group.id = (Integer) result.get("groups.id");
+            courseObj.course.account.group.name = (String) result.get("groups.name");
+            courseObj.course.account.group.parent_id = (Integer) result.get("groups.parent_id");
+            courseObj.course.account.avatar.id = (Integer) result.get("avatars.id");
+            courseObj.course.account.avatar.path = (String) result.get("avatars.path");
             SQLRequest commentSql = new SQLRequest("SELECT courses_comments.id\"courses_comments.id\",\n" +
                     "courses_comments.course_id\"courses_comments.course_id\",\n" +
                     "courses_comments.account_id\"courses_comments.account_id\",\n" +
                     "courses_comments.content\"courses_comments.content\",\n" +
                     "courses_comments.create_timestamp\"courses_comments.create_timestamp\",\n" +
-                    "courses_comments.modify_timestamp\"courses_comments.modify_timestamp\"\n" +
-                    "FROM courses_comments WHERE courses_comments.course_id=" + result.get("courses.id"));
+                    "courses_comments.modify_timestamp\"courses_comments.modify_timestamp\",\n" +
+                    "accounts.username\"accounts.username\",\n" +
+                    "accounts.id\"accounts.id\",\n" +
+                    "accounts.group_id\"accounts.group_id\",\n" +
+                    "accounts.avatar_id\"accounts.avatar_id\",\n" +
+                    "accounts.last_connect_timestamp\"accounts.last_connect_timestamp\",\n" +
+                    "accounts.create_timestamp\"accounts.create_timestamp\",\n" +
+                    "accounts.nb_exercices_done\"accounts.nb_exercices_done\",\n" +
+                    "accounts.nb_courses_done\"accounts.nb_courses_done\",\n" +
+                    "groups.id\"groups.id\",\n" +
+                    "groups.name\"groups.name\",\n" +
+                    "groups.parent_id\"groups.parent_id\",\n" +
+                    "avatars.id\"avatars.id\",\n" +
+                    "avatars.path\"avatars.path\"\n" +
+                    "FROM courses_comments, accounts, groups, avatars\n" +
+                    "WHERE courses_comments.account_id=accounts.id\n" +
+                    "AND groups.id=accounts.group_id\n" +
+                    "AND avatars.id=accounts.avatar_id AND courses_comments.course_id=" + result.get("courses.id"));
             commentSql.select();
             for (HashMap<String, Object> comment : commentSql.getResultSet()) {
                 CourseCommentObj courseCommentObj = new CourseCommentObj();
@@ -38,6 +61,13 @@ public class GetCourse extends Model {
                 courseCommentObj.create_timestamp = (Long) comment.get("courses_comments.create_timestamp");
                 courseCommentObj.id = (Integer) comment.get("courses_comments.id");
                 courseCommentObj.modify_timestamp = (Long) comment.get("courses_comments.modify_timestamp");
+                courseCommentObj.user.id = (Integer) comment.get("accounts.id");
+                courseCommentObj.user.username = (String) comment.get("accounts.username");
+                courseCommentObj.user.group.id = (Integer) comment.get("groups.id");
+                courseCommentObj.user.group.name = (String) comment.get("groups.name");
+                courseCommentObj.user.group.parent_id = (Integer) comment.get("groups.parent_id");
+                courseCommentObj.user.avatar.id = (Integer) comment.get("avatars.id");
+                courseCommentObj.user.avatar.path = (String) comment.get("avatars.path");
                 courseObj.comments.add(courseCommentObj);
             }
             data.add(courseObj);
@@ -52,8 +82,19 @@ public class GetCourse extends Model {
                 "courses.title\"courses.title\",\n" +
                 "courses.content\"courses.content\",\n" +
                 "courses.create_timestamp\"courses.create_timestamp\",\n" +
-                "courses.modify_timestamp\"courses.modify_timestamp\"\n" +
-                "FROM courses ORDER BY courses.id ASC");
+                "courses.modify_timestamp\"courses.modify_timestamp\",\n" +
+                "accounts.id\"accounts.id\",\n" +
+                "accounts.username\"accounts.username\",\n" +
+                "avatars.id\"avatars.id\",\n" +
+                "avatars.path\"avatars.path\",\n" +
+                "groups.id\"groups.id\",\n" +
+                "groups.name\"groups.name\",\n" +
+                "groups.parent_id\"groups.parent_id\"\n" +
+                "FROM courses, accounts, avatars, groups\n" +
+                "WHERE accounts.id=courses.account_id\n" +
+                "AND avatars.id=accounts.avatar_id\n" +
+                "AND groups.id=accounts.group_id\n" +
+                "ORDER BY courses.id ASC");
         return this;
     }
 
@@ -66,8 +107,19 @@ public class GetCourse extends Model {
                 "courses.title\"courses.title\",\n" +
                 "courses.content\"courses.content\",\n" +
                 "courses.create_timestamp\"courses.create_timestamp\",\n" +
-                "courses.modify_timestamp\"courses.modify_timestamp\"\n" +
-                "FROM courses WHERE courses.id=? ORDER BY courses.id ASC", make.toArray()));
+                "courses.modify_timestamp\"courses.modify_timestamp\",\n" +
+                "accounts.id\"accounts.id\",\n" +
+                "accounts.username\"accounts.username\",\n" +
+                "avatars.id\"avatars.id\",\n" +
+                "avatars.path\"avatars.path\",\n" +
+                "groups.id\"groups.id\",\n" +
+                "groups.name\"groups.name\",\n" +
+                "groups.parent_id\"groups.parent_id\"\n" +
+                "FROM courses, accounts, avatars, groups\n" +
+                "WHERE accounts.id=courses.account_id\n" +
+                "AND avatars.id=accounts.avatar_id\n" +
+                "AND groups.id=accounts.group_id\n" +
+                "AND courses.id=? ORDER BY courses.id ASC", make.toArray()));
         return this;
     }
 
@@ -80,8 +132,19 @@ public class GetCourse extends Model {
                 "courses.title\"courses.title\",\n" +
                 "courses.content\"courses.content\",\n" +
                 "courses.create_timestamp\"courses.create_timestamp\",\n" +
-                "courses.modify_timestamp\"courses.modify_timestamp\"\n" +
-                "FROM courses ORDER BY courses.id ASC LIMIT ?", make.toArray()));
+                "courses.modify_timestamp\"courses.modify_timestamp\",\n" +
+                "accounts.id\"accounts.id\",\n" +
+                "accounts.username\"accounts.username\",\n" +
+                "avatars.id\"avatars.id\",\n" +
+                "avatars.path\"avatars.path\",\n" +
+                "groups.id\"groups.id\",\n" +
+                "groups.name\"groups.name\",\n" +
+                "groups.parent_id\"groups.parent_id\"\n" +
+                "FROM courses, accounts, avatars, groups\n" +
+                "WHERE accounts.id=courses.account_id\n" +
+                "AND avatars.id=accounts.avatar_id\n" +
+                "AND groups.id=accounts.group_id\n" +
+                "ORDER BY courses.id ASC LIMIT ?", make.toArray()));
         return this;
     }
 
@@ -94,8 +157,19 @@ public class GetCourse extends Model {
                 "courses.title\"courses.title\",\n" +
                 "courses.content\"courses.content\",\n" +
                 "courses.create_timestamp\"courses.create_timestamp\",\n" +
-                "courses.modify_timestamp\"courses.modify_timestamp\"\n" +
-                "FROM courses WHERE courses.account_id=? ORDER BY courses.id ASC", make.toArray()));
+                "courses.modify_timestamp\"courses.modify_timestamp\",\n" +
+                "accounts.id\"accounts.id\",\n" +
+                "accounts.username\"accounts.username\",\n" +
+                "avatars.id\"avatars.id\",\n" +
+                "avatars.path\"avatars.path\",\n" +
+                "groups.id\"groups.id\",\n" +
+                "groups.name\"groups.name\",\n" +
+                "groups.parent_id\"groups.parent_id\"\n" +
+                "FROM courses, accounts, avatars, groups\n" +
+                "WHERE accounts.id=courses.account_id\n" +
+                "AND avatars.id=accounts.avatar_id\n" +
+                "AND groups.id=accounts.group_id\n" +
+                "AND courses.account_id=? ORDER BY courses.id ASC", make.toArray()));
         return this;
     }
 
@@ -108,8 +182,19 @@ public class GetCourse extends Model {
                 "courses.title\"courses.title\",\n" +
                 "courses.content\"courses.content\",\n" +
                 "courses.create_timestamp\"courses.create_timestamp\",\n" +
-                "courses.modify_timestamp\"courses.modify_timestamp\"\n" +
-                "FROM courses WHERE courses.language_id=? ORDER BY courses.id ASC", make.toArray()));
+                "courses.modify_timestamp\"courses.modify_timestamp\",\n" +
+                "accounts.id\"accounts.id\",\n" +
+                "accounts.username\"accounts.username\",\n" +
+                "avatars.id\"avatars.id\",\n" +
+                "avatars.path\"avatars.path\",\n" +
+                "groups.id\"groups.id\",\n" +
+                "groups.name\"groups.name\",\n" +
+                "groups.parent_id\"groups.parent_id\"\n" +
+                "FROM courses, accounts, avatars, groups\n" +
+                "WHERE accounts.id=courses.account_id\n" +
+                "AND avatars.id=accounts.avatar_id\n" +
+                "AND groups.id=accounts.group_id\n" +
+                "AND courses.language_id=? ORDER BY courses.id ASC", make.toArray()));
         return this;
     }
 
@@ -122,8 +207,19 @@ public class GetCourse extends Model {
                 "courses.title\"courses.title\",\n" +
                 "courses.content\"courses.content\",\n" +
                 "courses.create_timestamp\"courses.create_timestamp\",\n" +
-                "courses.modify_timestamp\"courses.modify_timestamp\"\n" +
-                "FROM courses WHERE courses.locales_id=? ORDER BY courses.id ASC", make.toArray()));
+                "courses.modify_timestamp\"courses.modify_timestamp\",\n" +
+                "accounts.id\"accounts.id\",\n" +
+                "accounts.username\"accounts.username\",\n" +
+                "avatars.id\"avatars.id\",\n" +
+                "avatars.path\"avatars.path\",\n" +
+                "groups.id\"groups.id\",\n" +
+                "groups.name\"groups.name\",\n" +
+                "groups.parent_id\"groups.parent_id\"\n" +
+                "FROM courses, accounts, avatars, groups\n" +
+                "WHERE accounts.id=courses.account_id\n" +
+                "AND avatars.id=accounts.avatar_id\n" +
+                "AND groups.id=accounts.group_id\n" +
+                "AND courses.locales_id=? ORDER BY courses.id ASC", make.toArray()));
         return this;
     }
 
@@ -136,8 +232,19 @@ public class GetCourse extends Model {
                 "courses.title\"courses.title\",\n" +
                 "courses.content\"courses.content\",\n" +
                 "courses.create_timestamp\"courses.create_timestamp\",\n" +
-                "courses.modify_timestamp\"courses.modify_timestamp\"\n" +
-                "FROM courses WHERE courses.title=? ORDER BY courses.id ASC", make.toArray()));
+                "courses.modify_timestamp\"courses.modify_timestamp\",\n" +
+                "accounts.id\"accounts.id\",\n" +
+                "accounts.username\"accounts.username\",\n" +
+                "avatars.id\"avatars.id\",\n" +
+                "avatars.path\"avatars.path\",\n" +
+                "groups.id\"groups.id\",\n" +
+                "groups.name\"groups.name\",\n" +
+                "groups.parent_id\"groups.parent_id\"\n" +
+                "FROM courses, accounts, avatars, groups\n" +
+                "WHERE accounts.id=courses.account_id\n" +
+                "AND avatars.id=accounts.avatar_id\n" +
+                "AND groups.id=accounts.group_id\n" +
+                "AND courses.title=? ORDER BY courses.id ASC", make.toArray()));
         return this;
     }
 }
