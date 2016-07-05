@@ -1,11 +1,13 @@
 package Plugin.ServerCom.Task;
 
 import Core.Http.Job;
+import Core.Http.Logger;
 import Core.Singleton.ConfigSingleton;
 import Core.Singleton.ServerSingleton;
 import Core.Task;
 import Plugin.ServerCom.AuthPacket;
 import Plugin.ServerCom.ExecutePacket;
+import Plugin.ServerCom.ExerciseIds;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
@@ -33,9 +35,20 @@ public class ServerMain extends Job {
                     if (object instanceof AuthPacket) {
                         AuthPacket authPacket = (AuthPacket) object;
                         if (authPacket.auth_key.equals(ConfigSingleton.getInstance().getPropertie("auth_key_com"))) {
-                            ExecutePacket executePacket = new ExecutePacket();
-                            executePacket.user_exercise_id = 2;
-                            connection.sendTCP(executePacket);
+                            while (true) {
+                                try {
+                                    int id = ExerciseIds.getInstance().getLastId();
+                                    if (id != -1) {
+                                        ServerSingleton.getInstance().log("[SERVER] -> execute code for user_exercise_id: " + id);
+                                        ExecutePacket executePacket = new ExecutePacket();
+                                        executePacket.user_exercise_id = id;
+                                        connection.sendTCP(executePacket);
+                                    }
+                                    Thread.sleep(500);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
                         }
                     }
                 }

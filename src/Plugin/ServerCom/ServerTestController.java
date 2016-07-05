@@ -21,28 +21,9 @@ import java.io.IOException;
 @Controller
 public class ServerTestController {
     @Methode("GET")
-    @Route("/com/test")
+    @Route("/com/test/{id}")
     public Model testCom(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        Client client = new Client();
-        client.start();
-        Kryo kryo = client.getKryo();
-        kryo.register(ServerCom.class);
-        try {
-            client.connect(5000, "127.0.0.1", 4000);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        ServerCom request = new ServerCom();
-        request.text = "Here is the request";
-        client.sendTCP(request);
-        client.addListener(new Listener() {
-            public void received(Connection connection, Object object) {
-                if (object instanceof ServerCom) {
-                    ServerCom response = (ServerCom) object;
-                    System.out.println("Client : " + response.text);
-                }
-            }
-        });
+        ExerciseIds.getInstance().addId(args.getInt("id"));
         return new Model();
     }
 }

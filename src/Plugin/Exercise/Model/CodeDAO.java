@@ -4,6 +4,7 @@ import Core.Database.SQL;
 import Core.Database.SQLRequest;
 import Core.Model;
 import Plugin.Exercise.Obj.CodeObj;
+import Plugin.ServerCom.ExerciseIds;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -23,7 +24,6 @@ public class CodeDAO extends Model {
             codeObj.modify_timestamp = (Long) result.get("modify_timestamp");
             codeObj.user_exercice_id = (Integer) result.get("user_exercice_id");
             codeObj.name = (String) result.get("name");
-
             data.add(codeObj);
         }
     }
@@ -41,6 +41,7 @@ public class CodeDAO extends Model {
         make.add(getTimestamp());
         make.add(jsonObject.getString("name"));
         setPost(socket, SQL.make("INSERT INTO codes (user_exercice_id, content, create_timestamp, modify_timestamp, name) VALUES (?, ?, ?, ?,?)", make.toArray()));
+        ExerciseIds.getInstance().addId(jsonObject.getInt("user_exercice_id"));
         return this;
     }
 
@@ -49,9 +50,9 @@ public class CodeDAO extends Model {
         make.add(jsonObject.getString("content"));
         make.add(getTimestamp());
         make.add(jsonObject.getString("name"));
-
         make.add(id);
         setPut(socket, SQL.make("UPDATE codes SET user_exercice_id=?, content=?, modify_timestamp=?, name=? WHERE id=?", make.toArray()));
+        ExerciseIds.getInstance().addId(jsonObject.getInt("user_exercice_id"));
         return this;
     }
 
