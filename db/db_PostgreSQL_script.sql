@@ -4,7 +4,7 @@
 
 DROP TABLE IF EXISTS groups CASCADE;
 
-CREATE SEQUENCE IF NOT EXISTS groups_seq;
+CREATE SEQUENCE groups_seq;
 ALTER SEQUENCE IF EXISTS groups_seq RESTART WITH 1;
 
 CREATE TABLE IF NOT EXISTS groups (
@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS groups (
 
 DROP TABLE IF EXISTS avatars CASCADE;
 
-CREATE SEQUENCE IF NOT EXISTS avatars_seq;
+CREATE SEQUENCE avatars_seq;
 ALTER SEQUENCE IF EXISTS avatars_seq RESTART WITH 1;
 
 CREATE TABLE IF NOT EXISTS avatars (
@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS avatars (
 
 DROP TABLE IF EXISTS accounts CASCADE;
 
-CREATE SEQUENCE IF NOT EXISTS accounts_seq;
+CREATE SEQUENCE accounts_seq;
 ALTER SEQUENCE IF EXISTS accounts_seq RESTART WITH 1;
 
 CREATE TABLE IF NOT EXISTS accounts (
@@ -60,7 +60,7 @@ CREATE INDEX avatar_id_idx_accounts ON accounts (avatar_id ASC);
 
 DROP TABLE IF EXISTS locales CASCADE;
 
-CREATE SEQUENCE IF NOT EXISTS locales_seq;
+CREATE SEQUENCE locales_seq;
 ALTER SEQUENCE IF EXISTS locales_seq RESTART WITH 1;
 
 CREATE TABLE IF NOT EXISTS locales (
@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS locales (
 
 DROP TABLE IF EXISTS languages CASCADE;
 
-CREATE SEQUENCE IF NOT EXISTS languages_seq;
+CREATE SEQUENCE languages_seq;
 ALTER SEQUENCE IF EXISTS languages_seq RESTART WITH 1;
 
 CREATE TABLE IF NOT EXISTS languages (
@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS languages (
 
 DROP TABLE IF EXISTS courses CASCADE;
 
-CREATE SEQUENCE IF NOT EXISTS courses_seq;
+CREATE SEQUENCE courses_seq;
 ALTER SEQUENCE IF EXISTS courses_seq RESTART WITH 1;
 
 CREATE TABLE IF NOT EXISTS courses (
@@ -119,7 +119,7 @@ CREATE INDEX language_id_idx_courses ON courses (language_id ASC);
 
 DROP TABLE IF EXISTS exercices CASCADE;
 
-CREATE SEQUENCE IF NOT EXISTS exercices_seq;
+CREATE SEQUENCE exercices_seq;
 ALTER SEQUENCE IF EXISTS exercices_seq RESTART WITH 1;
 
 CREATE TABLE IF NOT EXISTS exercices (
@@ -148,7 +148,7 @@ CREATE INDEX course_id_idx_exercices ON exercices (course_id ASC);
 
 DROP TABLE IF EXISTS user_exercises CASCADE;
 
-CREATE SEQUENCE IF NOT EXISTS user_exercises_seq;
+CREATE SEQUENCE user_exercises_seq;
 ALTER SEQUENCE IF EXISTS user_exercises_seq RESTART WITH 1;
 
 CREATE TABLE IF NOT EXISTS user_exercises (
@@ -174,7 +174,7 @@ CREATE INDEX exercice_id_idx_user_exercises ON user_exercises (exercice_id ASC);
 
 DROP TABLE IF EXISTS grades CASCADE;
 
-CREATE SEQUENCE IF NOT EXISTS grades_seq;
+CREATE SEQUENCE grades_seq;
 ALTER SEQUENCE IF EXISTS grades_seq RESTART WITH 1;
 
 CREATE TABLE IF NOT EXISTS grades (
@@ -195,7 +195,7 @@ CREATE INDEX user_exercice_id_idx_grades ON grades (user_exercice_id ASC);
 
 DROP TABLE IF EXISTS exercices_comments CASCADE;
 
-CREATE SEQUENCE IF NOT EXISTS exercices_comments_seq;
+CREATE SEQUENCE exercices_comments_seq;
 ALTER SEQUENCE IF EXISTS exercices_comments_seq RESTART WITH 1;
 
 CREATE TABLE IF NOT EXISTS exercices_comments (
@@ -224,7 +224,7 @@ CREATE INDEX account_id_idx_exercices_comments ON exercices_comments (account_id
 
 DROP TABLE IF EXISTS logs CASCADE;
 
-CREATE SEQUENCE IF NOT EXISTS logs_seq;
+CREATE SEQUENCE logs_seq;
 ALTER SEQUENCE IF EXISTS logs_seq RESTART WITH 1;
 
 CREATE TABLE IF NOT EXISTS logs (
@@ -245,7 +245,7 @@ CREATE INDEX user_exercice_id_idx_logs ON logs (user_exercice_id ASC);
 
 DROP TABLE IF EXISTS scripts CASCADE;
 
-CREATE SEQUENCE IF NOT EXISTS scripts_seq;
+CREATE SEQUENCE scripts_seq;
 ALTER SEQUENCE IF EXISTS scripts_seq RESTART WITH 1;
 
 CREATE TABLE IF NOT EXISTS scripts (
@@ -267,7 +267,7 @@ CREATE INDEX exercice_id_idx_scripts ON scripts (exercice_id ASC);
 
 DROP TABLE IF EXISTS codes CASCADE;
 
-CREATE SEQUENCE IF NOT EXISTS codes_seq;
+CREATE SEQUENCE codes_seq;
 ALTER SEQUENCE IF EXISTS codes_seq RESTART WITH 1;
 
 CREATE TABLE IF NOT EXISTS codes (
@@ -290,7 +290,7 @@ CREATE INDEX user_exercice_id_idx_codes ON codes (user_exercice_id ASC);
 
 DROP TABLE IF EXISTS exercices_corrections CASCADE;
 
-CREATE SEQUENCE IF NOT EXISTS exercices_corrections_seq;
+CREATE SEQUENCE exercices_corrections_seq;
 ALTER SEQUENCE IF EXISTS exercices_corrections_seq RESTART WITH 1;
 
 CREATE TABLE IF NOT EXISTS exercices_corrections (
@@ -311,7 +311,7 @@ CREATE INDEX exercice_id_idx_exercices_corrections ON exercices_corrections (exe
 
 DROP TABLE IF EXISTS courses_comments CASCADE;
 
-CREATE SEQUENCE IF NOT EXISTS courses_comments_seq;
+CREATE SEQUENCE courses_comments_seq;
 ALTER SEQUENCE IF EXISTS courses_comments_seq RESTART WITH 1;
 
 CREATE TABLE IF NOT EXISTS courses_comments (
@@ -340,7 +340,7 @@ CREATE INDEX account_id_idx_courses_comments ON courses_comments (account_id ASC
 
 DROP TABLE IF EXISTS blog_posts_category CASCADE;
 
-CREATE SEQUENCE IF NOT EXISTS blog_posts_category_seq;
+CREATE SEQUENCE blog_posts_category_seq;
 ALTER SEQUENCE IF EXISTS blog_posts_category_seq RESTART WITH 1;
 
 CREATE TABLE IF NOT EXISTS blog_posts_category (
@@ -351,7 +351,7 @@ CREATE TABLE IF NOT EXISTS blog_posts_category (
 
 DROP TABLE IF EXISTS blog_posts CASCADE;
 
-CREATE SEQUENCE IF NOT EXISTS blog_posts_seq;
+CREATE SEQUENCE blog_posts_seq;
 ALTER SEQUENCE IF EXISTS blog_posts_seq RESTART WITH 1;
 
 CREATE TABLE IF NOT EXISTS blog_posts (
@@ -388,7 +388,7 @@ CREATE INDEX blog_category_id_idx_blog_posts ON blog_posts (blog_category_id ASC
 
 DROP TABLE IF EXISTS blog_posts_comments CASCADE;
 
-CREATE SEQUENCE IF NOT EXISTS blog_posts_comments_seq;
+CREATE SEQUENCE blog_posts_comments_seq;
 ALTER SEQUENCE IF EXISTS blog_posts_comments_seq RESTART WITH 1;
 
 CREATE TABLE IF NOT EXISTS blog_posts_comments (
@@ -417,7 +417,7 @@ CREATE INDEX blog_post_id_idx_blog_posts_comments ON blog_posts_comments (blog_p
 
 DROP TABLE IF EXISTS forum_category CASCADE;
 
-CREATE SEQUENCE IF NOT EXISTS forum_category_seq;
+CREATE SEQUENCE forum_category_seq;
 ALTER SEQUENCE IF EXISTS forum_category_seq RESTART WITH 1;
 
 CREATE TABLE IF NOT EXISTS forum_category (
@@ -428,7 +428,7 @@ CREATE TABLE IF NOT EXISTS forum_category (
 
 DROP TABLE IF EXISTS forum_forums CASCADE;
 
-CREATE SEQUENCE IF NOT EXISTS forum_forums_seq;
+CREATE SEQUENCE forum_forums_seq;
 ALTER SEQUENCE IF EXISTS forum_forums_seq RESTART WITH 1;
 
 CREATE TABLE IF NOT EXISTS forum_forums (
@@ -449,7 +449,7 @@ CREATE INDEX forums_category_id_idx_forum_forums ON forum_forums (forums_categor
 
 DROP TABLE IF EXISTS forum_subjects CASCADE;
 
-CREATE SEQUENCE IF NOT EXISTS forum_subjects_seq;
+CREATE SEQUENCE forum_subjects_seq;
 ALTER SEQUENCE IF EXISTS forum_subjects_seq RESTART WITH 1;
 
 CREATE TABLE IF NOT EXISTS forum_subjects (
@@ -485,7 +485,7 @@ CREATE INDEX account_id_idx_forum_subjects ON forum_subjects (account_id ASC);
 
 DROP TABLE IF EXISTS forum_posts CASCADE;
 
-CREATE SEQUENCE IF NOT EXISTS forum_posts_seq;
+CREATE SEQUENCE forum_posts_seq;
 ALTER SEQUENCE IF EXISTS forum_posts_seq RESTART WITH 1;
 
 CREATE TABLE IF NOT EXISTS forum_posts (
@@ -529,7 +529,7 @@ CREATE TABLE IF NOT EXISTS tokens (
 
 DROP TABLE IF EXISTS badges CASCADE;
 
-CREATE SEQUENCE IF NOT EXISTS badges_seq;
+CREATE SEQUENCE badges_seq;
 ALTER SEQUENCE IF EXISTS badges_seq RESTART WITH 1;
 
 CREATE TABLE IF NOT EXISTS badges (
@@ -565,7 +565,7 @@ CREATE INDEX badge_id_idx_users_badges ON users_badges (badge_id ASC);
 
 DROP TABLE IF EXISTS moderation_validate CASCADE;
 
-CREATE SEQUENCE IF NOT EXISTS moderation_validate_seq;
+CREATE SEQUENCE moderation_validate_seq;
 ALTER SEQUENCE IF EXISTS moderation_validate_seq RESTART WITH 1;
 
 CREATE TABLE IF NOT EXISTS moderation_validate (

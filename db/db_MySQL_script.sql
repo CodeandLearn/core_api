@@ -5,13 +5,9 @@ SET @OLD_UNIQUE_CHECKS = @@UNIQUE_CHECKS, UNIQUE_CHECKS = 0;
 SET @OLD_FOREIGN_KEY_CHECKS = @@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS = 0;
 SET @OLD_SQL_MODE = @@SQL_MODE, SQL_MODE = 'TRADITIONAL,ALLOW_INVALID_DATES';
 
-CREATE SCHEMA IF NOT EXISTS `code_and_learn`
-  DEFAULT CHARACTER SET utf8;
-USE `code_and_learn`;
+DROP TABLE IF EXISTS `groups`;
 
-DROP TABLE IF EXISTS `code_and_learn`.`groups`;
-
-CREATE TABLE IF NOT EXISTS `code_and_learn`.`groups` (
+CREATE TABLE IF NOT EXISTS `groups` (
   `id`        INT         NOT NULL AUTO_INCREMENT,
   `name`      VARCHAR(45) NULL,
   `parent_id` INT         NULL,
@@ -19,24 +15,24 @@ CREATE TABLE IF NOT EXISTS `code_and_learn`.`groups` (
 )
   ENGINE = InnoDB;
 
-DROP TABLE IF EXISTS `code_and_learn`.`avatars`;
+DROP TABLE IF EXISTS `avatars`;
 
-CREATE TABLE IF NOT EXISTS `code_and_learn`.`avatars` (
+CREATE TABLE IF NOT EXISTS `avatars` (
   `id`   INT          NOT NULL AUTO_INCREMENT,
   `path` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`)
 )
   ENGINE = InnoDB;
 
-DROP TABLE IF EXISTS `code_and_learn`.`accounts`;
+DROP TABLE IF EXISTS `accounts`;
 
-CREATE TABLE IF NOT EXISTS `code_and_learn`.`accounts` (
+CREATE TABLE IF NOT EXISTS `accounts` (
   `id`                     INT          NOT NULL AUTO_INCREMENT,
   `username`               VARCHAR(45)  NULL,
   `password`               VARCHAR(255) NULL,
   `email`                  VARCHAR(100) NULL,
-  `group_id`               INT          NULL,
-  `avatar_id`              INT          NULL,
+  `group_id`               INT          NOT NULL,
+  `avatar_id`              INT          NOT NULL,
   `create_timestamp`       LONG         NULL,
   `last_connect_timestamp` LONG         NULL,
   `nb_courses_done`        INT          NULL     DEFAULT 0,
@@ -46,42 +42,42 @@ CREATE TABLE IF NOT EXISTS `code_and_learn`.`accounts` (
   INDEX `avatar_id_idx` (`avatar_id` ASC),
   CONSTRAINT `group_id`
   FOREIGN KEY (`group_id`)
-  REFERENCES `code_and_learn`.`groups` (`id`)
+  REFERENCES `groups` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `avatar_id`
   FOREIGN KEY (`avatar_id`)
-  REFERENCES `code_and_learn`.`avatars` (`id`)
+  REFERENCES `avatars` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 )
   ENGINE = InnoDB;
 
-DROP TABLE IF EXISTS `code_and_learn`.`locales`;
+DROP TABLE IF EXISTS `locales`;
 
-CREATE TABLE IF NOT EXISTS `code_and_learn`.`locales` (
-  `id`   INT ZEROFILL NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `locales` (
+  `id`   INT  NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45)  NULL,
   PRIMARY KEY (`id`)
 )
   ENGINE = InnoDB;
 
-DROP TABLE IF EXISTS `code_and_learn`.`languages`;
+DROP TABLE IF EXISTS `languages`;
 
-CREATE TABLE IF NOT EXISTS `code_and_learn`.`languages` (
+CREATE TABLE IF NOT EXISTS `languages` (
   `id`   INT         NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL,
   PRIMARY KEY (`id`)
 )
   ENGINE = InnoDB;
 
-DROP TABLE IF EXISTS `code_and_learn`.`courses`;
+DROP TABLE IF EXISTS `courses`;
 
-CREATE TABLE IF NOT EXISTS `code_and_learn`.`courses` (
+CREATE TABLE IF NOT EXISTS `courses` (
   `id`               INT         NOT NULL AUTO_INCREMENT,
-  `account_id`       INT         NULL,
-  `locales_id`       INT         NULL,
-  `language_id`      INT         NULL,
+  `account_id`       INT         NOT NULL,
+  `locales_id`       INT         NOT NULL,
+  `language_id`      INT         NOT NULL,
   `title`            VARCHAR(45) NULL,
   `content`          TEXT        NULL,
   `create_timestamp` LONG        NULL,
@@ -92,25 +88,25 @@ CREATE TABLE IF NOT EXISTS `code_and_learn`.`courses` (
   INDEX `language_id_idx` (`language_id` ASC),
   CONSTRAINT `account_id`
   FOREIGN KEY (`account_id`)
-  REFERENCES `code_and_learn`.`accounts` (`id`)
+  REFERENCES `accounts` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `locales_id`
   FOREIGN KEY (`locales_id`)
-  REFERENCES `code_and_learn`.`locales` (`id`)
+  REFERENCES `locales` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `language_id`
   FOREIGN KEY (`language_id`)
-  REFERENCES `code_and_learn`.`languages` (`id`)
+  REFERENCES `languages` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 )
   ENGINE = InnoDB;
 
-DROP TABLE IF EXISTS `code_and_learn`.`exercices`;
+DROP TABLE IF EXISTS `exercices`;
 
-CREATE TABLE IF NOT EXISTS `code_and_learn`.`exercices` (
+CREATE TABLE IF NOT EXISTS `exercices` (
   `id`          INT          NOT NULL AUTO_INCREMENT,
   `account_id`  INT          NOT NULL,
   `course_id`   INT          NOT NULL,
@@ -120,44 +116,44 @@ CREATE TABLE IF NOT EXISTS `code_and_learn`.`exercices` (
   PRIMARY KEY (`id`),
   INDEX `account_id_idx` (`account_id` ASC),
   INDEX `course_id_idx` (`course_id` ASC),
-  CONSTRAINT `account_id`
+  CONSTRAINT `account_id_x`
   FOREIGN KEY (`account_id`)
-  REFERENCES `code_and_learn`.`accounts` (`id`)
+  REFERENCES `accounts` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `course_id`
   FOREIGN KEY (`course_id`)
-  REFERENCES `code_and_learn`.`courses` (`id`)
+  REFERENCES `courses` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 )
   ENGINE = InnoDB;
 
-DROP TABLE IF EXISTS `code_and_learn`.`user_exercises`;
+DROP TABLE IF EXISTS `user_exercises`;
 
-CREATE TABLE IF NOT EXISTS `code_and_learn`.`user_exercises` (
+CREATE TABLE IF NOT EXISTS `user_exercises` (
   `id`          INT NOT NULL AUTO_INCREMENT,
-  `account_id`  INT NULL,
-  `exercice_id` INT NULL,
+  `account_id`  INT NOT NULL,
+  `exercice_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `account_id_idx` (`account_id` ASC),
   INDEX `exercice_id_idx` (`exercice_id` ASC),
-  CONSTRAINT `account_id`
+  CONSTRAINT `account_id_xx`
   FOREIGN KEY (`account_id`)
-  REFERENCES `code_and_learn`.`accounts` (`id`)
+  REFERENCES `accounts` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `exercice_id`
   FOREIGN KEY (`exercice_id`)
-  REFERENCES `code_and_learn`.`exercices` (`id`)
+  REFERENCES `exercices` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 )
   ENGINE = InnoDB;
 
-DROP TABLE IF EXISTS `code_and_learn`.`grades`;
+DROP TABLE IF EXISTS `grades`;
 
-CREATE TABLE IF NOT EXISTS `code_and_learn`.`grades` (
+CREATE TABLE IF NOT EXISTS `grades` (
   `id`               INT  NOT NULL AUTO_INCREMENT,
   `user_exercice_id` INT  NOT NULL,
   `value`            INT  NULL,
@@ -166,15 +162,15 @@ CREATE TABLE IF NOT EXISTS `code_and_learn`.`grades` (
   INDEX `user_exercice_id_idx` (`user_exercice_id` ASC),
   CONSTRAINT `user_exercice_id`
   FOREIGN KEY (`user_exercice_id`)
-  REFERENCES `code_and_learn`.`user_exercises` (`id`)
+  REFERENCES `user_exercises` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 )
   ENGINE = InnoDB;
 
-DROP TABLE IF EXISTS `code_and_learn`.`exercices_comments`;
+DROP TABLE IF EXISTS `exercices_comments`;
 
-CREATE TABLE IF NOT EXISTS `code_and_learn`.`exercices_comments` (
+CREATE TABLE IF NOT EXISTS `exercices_comments` (
   `id`               INT  NOT NULL AUTO_INCREMENT,
   `exercice_id`      INT  NOT NULL,
   `account_id`       INT  NOT NULL,
@@ -184,39 +180,39 @@ CREATE TABLE IF NOT EXISTS `code_and_learn`.`exercices_comments` (
   PRIMARY KEY (`id`),
   INDEX `exercice_id_idx` (`exercice_id` ASC),
   INDEX `account_id_idx` (`account_id` ASC),
-  CONSTRAINT `exercice_id`
+  CONSTRAINT `exercice_id_x`
   FOREIGN KEY (`exercice_id`)
-  REFERENCES `code_and_learn`.`exercices` (`id`)
+  REFERENCES `exercices` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `account_id`
+  CONSTRAINT `account_id_xxx`
   FOREIGN KEY (`account_id`)
-  REFERENCES `code_and_learn`.`accounts` (`id`)
+  REFERENCES `accounts` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 )
   ENGINE = InnoDB;
 
-DROP TABLE IF EXISTS `code_and_learn`.`logs`;
+DROP TABLE IF EXISTS `logs`;
 
-CREATE TABLE IF NOT EXISTS `code_and_learn`.`logs` (
+CREATE TABLE IF NOT EXISTS `logs` (
   `id`               INT  NOT NULL AUTO_INCREMENT,
   `user_exercice_id` INT  NOT NULL,
   `content`          TEXT NULL,
   `LONG`             LONG NULL,
   PRIMARY KEY (`id`),
   INDEX `user_exercice_id_idx` (`user_exercice_id` ASC),
-  CONSTRAINT `user_exercice_id`
+  CONSTRAINT `user_exercice_id_x`
   FOREIGN KEY (`user_exercice_id`)
-  REFERENCES `code_and_learn`.`user_exercises` (`id`)
+  REFERENCES `user_exercises` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 )
   ENGINE = InnoDB;
 
-DROP TABLE IF EXISTS `code_and_learn`.`scripts`;
+DROP TABLE IF EXISTS `scripts`;
 
-CREATE TABLE IF NOT EXISTS `code_and_learn`.`scripts` (
+CREATE TABLE IF NOT EXISTS `scripts` (
   `id`               INT  NOT NULL AUTO_INCREMENT,
   `exercice_id`      INT  NOT NULL,
   `content`          TEXT NULL,
@@ -224,17 +220,17 @@ CREATE TABLE IF NOT EXISTS `code_and_learn`.`scripts` (
   `modify_timestamp` LONG NULL,
   PRIMARY KEY (`id`),
   INDEX `exercice_id_idx` (`exercice_id` ASC),
-  CONSTRAINT `exercice_id`
+  CONSTRAINT `exercice_id_xx`
   FOREIGN KEY (`exercice_id`)
-  REFERENCES `code_and_learn`.`exercices` (`id`)
+  REFERENCES `exercices` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 )
   ENGINE = InnoDB;
 
-DROP TABLE IF EXISTS `code_and_learn`.`codes`;
+DROP TABLE IF EXISTS `codes`;
 
-CREATE TABLE IF NOT EXISTS `code_and_learn`.`codes` (
+CREATE TABLE IF NOT EXISTS `codes` (
   `id`               INT         NOT NULL AUTO_INCREMENT,
   `user_exercice_id` INT         NOT NULL,
   `name`             VARCHAR(75) NULL,
@@ -243,72 +239,72 @@ CREATE TABLE IF NOT EXISTS `code_and_learn`.`codes` (
   `modify_timestamp` LONG        NULL,
   PRIMARY KEY (`id`),
   INDEX `user_exercice_id_idx` (`user_exercice_id` ASC),
-  CONSTRAINT `user_exercice_id`
+  CONSTRAINT `user_exercice_id_xx`
   FOREIGN KEY (`user_exercice_id`)
-  REFERENCES `code_and_learn`.`user_exercises` (`id`)
+  REFERENCES `user_exercises` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 )
   ENGINE = InnoDB;
 
-DROP TABLE IF EXISTS `code_and_learn`.`exercices_corrections`;
+DROP TABLE IF EXISTS `exercices_corrections`;
 
-CREATE TABLE IF NOT EXISTS `code_and_learn`.`exercices_corrections` (
+CREATE TABLE IF NOT EXISTS `exercices_corrections` (
   `id`          INT  NOT NULL AUTO_INCREMENT,
   `exercice_id` INT  NOT NULL,
   `content`     TEXT NULL,
   `LONG`        LONG NULL,
   PRIMARY KEY (`id`),
   INDEX `exercice_id_idx` (`exercice_id` ASC),
-  CONSTRAINT `exercice_id`
+  CONSTRAINT `exercice_id_xxx`
   FOREIGN KEY (`exercice_id`)
-  REFERENCES `code_and_learn`.`exercices` (`id`)
+  REFERENCES `exercices` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 )
   ENGINE = InnoDB;
 
-DROP TABLE IF EXISTS `code_and_learn`.`courses_comments`;
+DROP TABLE IF EXISTS `courses_comments`;
 
-CREATE TABLE IF NOT EXISTS `code_and_learn`.`courses_comments` (
+CREATE TABLE IF NOT EXISTS `courses_comments` (
   `id`               INT  NOT NULL AUTO_INCREMENT,
-  `course_id`        INT  NULL,
-  `account_id`       INT  NULL,
+  `course_id`        INT  NOT NULL,
+  `account_id`       INT  NOT NULL,
   `content`          TEXT NULL,
   `create_timestamp` LONG NULL,
   `modify_timestamp` LONG NULL,
   PRIMARY KEY (`id`),
   INDEX `course_id_idx` (`course_id` ASC),
   INDEX `account_id_idx` (`account_id` ASC),
-  CONSTRAINT `course_id`
+  CONSTRAINT `course_id_x`
   FOREIGN KEY (`course_id`)
-  REFERENCES `code_and_learn`.`courses` (`id`)
+  REFERENCES `courses` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `account_id`
+  CONSTRAINT `account_id_xxxx`
   FOREIGN KEY (`account_id`)
-  REFERENCES `code_and_learn`.`accounts` (`id`)
+  REFERENCES `accounts` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 )
   ENGINE = InnoDB;
 
-DROP TABLE IF EXISTS `code_and_learn`.`blog_posts_category`;
+DROP TABLE IF EXISTS `blog_posts_category`;
 
-CREATE TABLE IF NOT EXISTS `code_and_learn`.`blog_posts_category` (
+CREATE TABLE IF NOT EXISTS `blog_posts_category` (
   `id`   INT         NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL,
   PRIMARY KEY (`id`)
 )
   ENGINE = InnoDB;
 
-DROP TABLE IF EXISTS `code_and_learn`.`blog_posts`;
+DROP TABLE IF EXISTS `blog_posts`;
 
-CREATE TABLE IF NOT EXISTS `code_and_learn`.`blog_posts` (
+CREATE TABLE IF NOT EXISTS `blog_posts` (
   `id`               INT         NOT NULL AUTO_INCREMENT,
-  `account_id`       INT         NULL,
-  `locales_id`       INT         NULL,
-  `blog_category_id` INT         NULL,
+  `account_id`       INT         NOT NULL,
+  `locales_id`       INT         NOT NULL,
+  `blog_category_id` INT         NOT NULL,
   `title`            VARCHAR(45) NULL,
   `content`          TEXT        NULL,
   `create_timestamp` LONG        NULL,
@@ -317,82 +313,82 @@ CREATE TABLE IF NOT EXISTS `code_and_learn`.`blog_posts` (
   INDEX `account_d_idx` (`account_id` ASC),
   INDEX `locales_id_idx` (`locales_id` ASC),
   INDEX `blog_category_id_idx` (`blog_category_id` ASC),
-  CONSTRAINT `account_id`
+  CONSTRAINT `account_id_xxxxx`
   FOREIGN KEY (`account_id`)
-  REFERENCES `code_and_learn`.`accounts` (`id`)
+  REFERENCES `accounts` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `locales_id`
+  CONSTRAINT `locales_id_x`
   FOREIGN KEY (`locales_id`)
-  REFERENCES `code_and_learn`.`locales` (`id`)
+  REFERENCES `locales` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `blog_category_id`
+  CONSTRAINT `blog_category_id_x`
   FOREIGN KEY (`blog_category_id`)
-  REFERENCES `code_and_learn`.`blog_posts_category` (`id`)
+  REFERENCES `blog_posts_category` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 )
   ENGINE = InnoDB;
 
-DROP TABLE IF EXISTS `code_and_learn`.`blog_posts_comments`;
+DROP TABLE IF EXISTS `blog_posts_comments`;
 
-CREATE TABLE IF NOT EXISTS `code_and_learn`.`blog_posts_comments` (
+CREATE TABLE IF NOT EXISTS `blog_posts_comments` (
   `id`               INT  NOT NULL AUTO_INCREMENT,
-  `account_id`       INT  NULL,
-  `blog_post_id`     INT  NULL,
+  `account_id`       INT  NOT NULL,
+  `blog_post_id`     INT  NOT NULL,
   `content`          TEXT NULL,
   `create_timestamp` LONG NULL,
   `modify_timestamp` LONG NULL,
   PRIMARY KEY (`id`),
   INDEX `account_id_idx` (`account_id` ASC),
   INDEX `blog_post_id_idx` (`blog_post_id` ASC),
-  CONSTRAINT `account_id`
+  CONSTRAINT `account_id_xxxxxx`
   FOREIGN KEY (`account_id`)
-  REFERENCES `code_and_learn`.`accounts` (`id`)
+  REFERENCES `accounts` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `blog_post_id`
+  CONSTRAINT `blog_post_id_x`
   FOREIGN KEY (`blog_post_id`)
-  REFERENCES `code_and_learn`.`blog_posts` (`id`)
+  REFERENCES `blog_posts` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 )
   ENGINE = InnoDB;
 
-DROP TABLE IF EXISTS `code_and_learn`.`forum_category`;
+DROP TABLE IF EXISTS `forum_category`;
 
-CREATE TABLE IF NOT EXISTS `code_and_learn`.`forum_category` (
+CREATE TABLE IF NOT EXISTS `forum_category` (
   `id`   INT         NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL,
   PRIMARY KEY (`id`)
 )
   ENGINE = InnoDB;
 
-DROP TABLE IF EXISTS `code_and_learn`.`forum_forums`;
+DROP TABLE IF EXISTS `forum_forums`;
 
-CREATE TABLE IF NOT EXISTS `code_and_learn`.`forum_forums` (
+CREATE TABLE IF NOT EXISTS `forum_forums` (
   `id`                 INT         NOT NULL AUTO_INCREMENT,
-  `forums_category_id` INT         NULL,
+  `forums_category_id` INT         NOT NULL,
   `name`               VARCHAR(45) NULL,
   `description`        TEXT        NULL,
   PRIMARY KEY (`id`),
   INDEX `forums_category_id_idx` (`forums_category_id` ASC),
   CONSTRAINT `forums_category_id`
   FOREIGN KEY (`forums_category_id`)
-  REFERENCES `code_and_learn`.`forum_category` (`id`)
+  REFERENCES `forum_category` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 )
   ENGINE = InnoDB;
 
-DROP TABLE IF EXISTS `code_and_learn`.`forum_subjects`;
+DROP TABLE IF EXISTS `forum_subjects`;
 
-CREATE TABLE IF NOT EXISTS `code_and_learn`.`forum_subjects` (
+CREATE TABLE IF NOT EXISTS `forum_subjects` (
   `id`              INT  NOT NULL AUTO_INCREMENT,
-  `forums_forum_id` INT  NULL,
-  `locales_id`      INT  NULL,
-  `account_id`      INT  NULL,
+  `forums_forum_id` INT  NOT NULL,
+  `locales_id`      INT  NOT NULL,
+  `account_id`      INT  NOT NULL,
   `LONG`            LONG NULL,
   `replies`         INT  NULL,
   `views`           INT  NULL,
@@ -400,30 +396,30 @@ CREATE TABLE IF NOT EXISTS `code_and_learn`.`forum_subjects` (
   INDEX `forums_forum_id_idx` (`forums_forum_id` ASC),
   INDEX `locales_id_idx` (`locales_id` ASC),
   INDEX `account_id_idx` (`account_id` ASC),
-  CONSTRAINT `forums_forum_id`
+  CONSTRAINT `forums_forum_id_xx`
   FOREIGN KEY (`forums_forum_id`)
-  REFERENCES `code_and_learn`.`forum_forums` (`id`)
+  REFERENCES `forum_forums` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `locales_id`
+  CONSTRAINT `locales_id_xxx`
   FOREIGN KEY (`locales_id`)
-  REFERENCES `code_and_learn`.`locales` (`id`)
+  REFERENCES `locales` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `account_id`
+  CONSTRAINT `account_id_xxyxxxx`
   FOREIGN KEY (`account_id`)
-  REFERENCES `code_and_learn`.`accounts` (`id`)
+  REFERENCES `accounts` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 )
   ENGINE = InnoDB;
 
-DROP TABLE IF EXISTS `code_and_learn`.`forum_posts`;
+DROP TABLE IF EXISTS `forum_posts`;
 
-CREATE TABLE IF NOT EXISTS `code_and_learn`.`forum_posts` (
+CREATE TABLE IF NOT EXISTS `forum_posts` (
   `id`                INT  NOT NULL AUTO_INCREMENT,
-  `forums_subject_id` INT  NULL,
-  `account_id`        INT  NULL,
+  `forums_subject_id` INT  NOT NULL,
+  `account_id`        INT  NOT NULL,
   `create_timestamp`  LONG NULL,
   `modify_timestamp`  LONG NULL,
   `content`           TEXT NULL,
@@ -431,37 +427,37 @@ CREATE TABLE IF NOT EXISTS `code_and_learn`.`forum_posts` (
   PRIMARY KEY (`id`),
   INDEX `forums_subject_id_idx` (`forums_subject_id` ASC),
   INDEX `account_id_idx` (`account_id` ASC),
-  CONSTRAINT `forums_subject_id`
+  CONSTRAINT `forums_subject_id_x`
   FOREIGN KEY (`forums_subject_id`)
-  REFERENCES `code_and_learn`.`forum_subjects` (`id`)
+  REFERENCES `forum_subjects` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `account_id`
+  CONSTRAINT `account_id_xxxxxxxx`
   FOREIGN KEY (`account_id`)
-  REFERENCES `code_and_learn`.`accounts` (`id`)
+  REFERENCES `accounts` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 )
   ENGINE = InnoDB;
 
-DROP TABLE IF EXISTS `code_and_learn`.`tokens`;
+DROP TABLE IF EXISTS `tokens`;
 
-CREATE TABLE IF NOT EXISTS `code_and_learn`.`tokens` (
+CREATE TABLE IF NOT EXISTS `tokens` (
   `account_id` INT          NOT NULL,
   `token`      VARCHAR(255) NULL,
   `ttl`        INT          NULL,
   PRIMARY KEY (`account_id`),
-  CONSTRAINT `account_id`
+  CONSTRAINT `account_id_yy`
   FOREIGN KEY (`account_id`)
-  REFERENCES `code_and_learn`.`accounts` (`id`)
+  REFERENCES `accounts` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 )
   ENGINE = InnoDB;
 
-DROP TABLE IF EXISTS `code_and_learn`.`badges`;
+DROP TABLE IF EXISTS `badges`;
 
-CREATE TABLE IF NOT EXISTS `code_and_learn`.`badges` (
+CREATE TABLE IF NOT EXISTS `badges` (
   `id`                INT          NOT NULL AUTO_INCREMENT,
   `name`              VARCHAR(45)  NULL,
   `path_img`          VARCHAR(255) NULL,
@@ -471,73 +467,73 @@ CREATE TABLE IF NOT EXISTS `code_and_learn`.`badges` (
 )
   ENGINE = InnoDB;
 
-DROP TABLE IF EXISTS `code_and_learn`.`users_badges`;
+DROP TABLE IF EXISTS `users_badges`;
 
-CREATE TABLE IF NOT EXISTS `code_and_learn`.`users_badges` (
+CREATE TABLE IF NOT EXISTS `users_badges` (
   `account_id` INT  NOT NULL,
-  `badge_id`   INT  NULL,
+  `badge_id`   INT  NOT NULL,
   `LONG`       LONG NULL,
   PRIMARY KEY (`account_id`),
   INDEX `badge_id_idx` (`badge_id` ASC),
-  CONSTRAINT `account_id`
+  CONSTRAINT `account_id_yyy`
   FOREIGN KEY (`account_id`)
-  REFERENCES `code_and_learn`.`accounts` (`id`)
+  REFERENCES `accounts` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `badge_id`
+  CONSTRAINT `badge_id_y`
   FOREIGN KEY (`badge_id`)
-  REFERENCES `code_and_learn`.`badges` (`id`)
+  REFERENCES `badges` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 )
   ENGINE = InnoDB;
 
-DROP TABLE IF EXISTS `code_and_learn`.`moderation_validate`;
+DROP TABLE IF EXISTS `moderation_validate`;
 
-CREATE TABLE IF NOT EXISTS `code_and_learn`.`moderation_validate` (
+CREATE TABLE IF NOT EXISTS `moderation_validate` (
   `id`   INT         NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL,
   PRIMARY KEY (`id`)
 )
   ENGINE = InnoDB;
 
-DROP TABLE IF EXISTS `code_and_learn`.`exercices_moderation`;
+DROP TABLE IF EXISTS `exercices_moderation`;
 
-CREATE TABLE IF NOT EXISTS `code_and_learn`.`exercices_moderation` (
+CREATE TABLE IF NOT EXISTS `exercices_moderation` (
   `exercice_id`            INT  NOT NULL,
-  `moderation_validate_id` INT  NULL,
+  `moderation_validate_id` INT  NOT NULL,
   `commentary`             TEXT NULL,
   PRIMARY KEY (`exercice_id`),
   INDEX `moderation_validate_id_idx` (`moderation_validate_id` ASC),
-  CONSTRAINT `exercice_id`
+  CONSTRAINT `exercice_id_y`
   FOREIGN KEY (`exercice_id`)
-  REFERENCES `code_and_learn`.`exercices` (`id`)
+  REFERENCES `exercices` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `moderation_validate_id`
+  CONSTRAINT `moderation_validate_id_y`
   FOREIGN KEY (`moderation_validate_id`)
-  REFERENCES `code_and_learn`.`moderation_validate` (`id`)
+  REFERENCES `moderation_validate` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 )
   ENGINE = InnoDB;
 
-DROP TABLE IF EXISTS `code_and_learn`.`course_moderation`;
+DROP TABLE IF EXISTS `course_moderation`;
 
-CREATE TABLE IF NOT EXISTS `code_and_learn`.`course_moderation` (
+CREATE TABLE IF NOT EXISTS `course_moderation` (
   `course_id`              INT  NOT NULL,
-  `moderation_validate_id` INT  NULL,
+  `moderation_validate_id` INT  NOT NULL,
   `commentary`             TEXT NULL,
   PRIMARY KEY (`course_id`),
   INDEX `moderation_validate_id_idx` (`moderation_validate_id` ASC),
-  CONSTRAINT `course_id`
+  CONSTRAINT `course_id_yy`
   FOREIGN KEY (`course_id`)
-  REFERENCES `code_and_learn`.`courses` (`id`)
+  REFERENCES `courses` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `moderation_validate_id`
+  CONSTRAINT `moderation_validate_id_yy`
   FOREIGN KEY (`moderation_validate_id`)
-  REFERENCES `code_and_learn`.`moderation_validate` (`id`)
+  REFERENCES `moderation_validate` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 )
