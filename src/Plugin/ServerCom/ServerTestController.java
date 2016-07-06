@@ -1,12 +1,14 @@
 package Plugin.ServerCom;
 
 import Core.Controller;
+import Core.Http.Code;
 import Core.Http.Header;
 import Core.Http.Map;
 import Core.Http.Oauth2;
 import Core.Methode;
 import Core.Model;
 import Core.Route;
+import Plugin.ServerCom.Model.ServerComModel;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
@@ -24,6 +26,6 @@ public class ServerTestController {
     @Route("/com/test/{id}")
     public Model testCom(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         ExerciseIds.getInstance().addId(args.getInt("id"));
-        return new Model();
+        return new ServerComModel().performTest(args.getInt("id"));
     }
 }

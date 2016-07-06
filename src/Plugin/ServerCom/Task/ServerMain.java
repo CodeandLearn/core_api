@@ -37,8 +37,11 @@ public class ServerMain extends Job {
                     if (object instanceof AuthPacket) {
                         AuthPacket authPacket = (AuthPacket) object;
                         if (authPacket.auth_key.equals(ConfigSingleton.getInstance().getPropertie("auth_key_com"))) {
-                            connection.sendTCP(new ExecutePacket());
+                            AuthPacket authPacketResp = new AuthPacket();
+                            authPacketResp.auth_key = ConfigSingleton.getInstance().getPropertie("auth_key_com");
+                            connection.sendTCP(authPacketResp);
                             ExerciseIds.getInstance().setServer(server);
+                            ServerSingleton.getInstance().log("[COM] -> credentials is validated");
                         }
                     } else if (object instanceof AuthenticateClientPacket) {
                         AuthenticateClientPacket authenticateClientPacket = (AuthenticateClientPacket) object;
@@ -53,13 +56,13 @@ public class ServerMain extends Job {
                 @Override
                 public void connected(Connection connection) {
                     super.connected(connection);
-                    ServerSingleton.getInstance().log("[COM] -> server com connected " + connection.getID());
+                    ServerSingleton.getInstance().log("[COM] -> server com connected id: " + connection.getID());
                 }
 
                 @Override
                 public void disconnected(Connection connection) {
                     super.disconnected(connection);
-                    ServerSingleton.getInstance().log("[COM] -> server com disconnected " + connection.getID());
+                    ServerSingleton.getInstance().log("[COM] -> server com disconnected id: " + connection.getID());
                 }
             });
         } catch (IOException e) {
