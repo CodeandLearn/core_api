@@ -1,13 +1,11 @@
 package Plugin.ServerCom.Task;
 
 import Core.Http.Job;
-import Core.Http.Logger;
 import Core.Singleton.ConfigSingleton;
 import Core.Singleton.ServerSingleton;
+import Core.Singleton.UserSecuritySingleton;
 import Core.Task;
-import Plugin.ServerCom.AuthPacket;
-import Plugin.ServerCom.ExecutePacket;
-import Plugin.ServerCom.ExerciseIds;
+import Plugin.ServerCom.*;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
@@ -22,7 +20,7 @@ import java.io.IOException;
 public class ServerMain extends Job {
     @Override
     public void task() {
-        Server server = new Server();
+        final Server server = new Server();
         server.start();
         try {
             server.bind(Integer.parseInt(ConfigSingleton.getInstance().getPropertie("port_com")));
@@ -30,27 +28,38 @@ public class ServerMain extends Job {
             Kryo kryo = server.getKryo();
             kryo.register(AuthPacket.class);
             kryo.register(ExecutePacket.class);
+            kryo.register(AuthenticateClientPacket.class);
+            kryo.register(AuthenticatedClientPacket.class);
             server.addListener(new Listener() {
+                @Override
                 public void received(Connection connection, Object object) {
+                    super.received(connection, object);
                     if (object instanceof AuthPacket) {
                         AuthPacket authPacket = (AuthPacket) object;
                         if (authPacket.auth_key.equals(ConfigSingleton.getInstance().getPropertie("auth_key_com"))) {
-                            while (true) {
-                                try {
-                                    int id = ExerciseIds.getInstance().getLastId();
-                                    if (id != -1) {
-                                        ServerSingleton.getInstance().log("[SERVER] -> execute code for user_exercise_id: " + id);
-                                        ExecutePacket executePacket = new ExecutePacket();
-                                        executePacket.user_exercise_id = id;
-                                        connection.sendTCP(executePacket);
-                                    }
-                                    Thread.sleep(500);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                            }
+                            connection.sendTCP(new ExecutePacket());
+                            ExerciseIds.getInstance().setServer(server);
                         }
+                    } else if (object instanceof AuthenticateClientPacket) {
+                        AuthenticateClientPacket authenticateClientPacket = (AuthenticateClientPacket) object;
+                        ServerSingleton.getInstance().log("[COM] -> request user_id by token");
+                        AuthenticatedClientPacket authenticatedClientPacket = new AuthenticatedClientPacket();
+                        authenticatedClientPacket.authentication_id = authenticateClientPacket.authentication_id;
+                        authenticatedClientPacket.client_id = UserSecuritySingleton.getInstance().getIdByToken(authenticateClientPacket.token);
+                        connection.sendTCP(authenticatedClientPacket);
                     }
+                }
+
+                @Override
+                public void connected(Connection connection) {
+                    super.connected(connection);
+                    ServerSingleton.getInstance().log("[COM] -> server com connected " + connection.getID());
+                }
+
+                @Override
+                public void disconnected(Connection connection) {
+                    super.disconnected(connection);
+                    ServerSingleton.getInstance().log("[COM] -> server com disconnected " + connection.getID());
                 }
             });
         } catch (IOException e) {

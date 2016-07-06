@@ -1,5 +1,7 @@
 package Plugin.ServerCom;
 
+import com.esotericsoftware.kryonet.Server;
+
 import java.util.ArrayList;
 
 /**
@@ -7,6 +9,7 @@ import java.util.ArrayList;
  */
 public class ExerciseIds {
     private ArrayList<Integer> list = new ArrayList<>();
+    private Server server;
 
     private static class SingletonHolder {
         private static ExerciseIds instance = new ExerciseIds();
@@ -27,5 +30,13 @@ public class ExerciseIds {
             return i;
         }
         return -1;
+    }
+
+    public void setServer(Server server) {
+        this.server = server;
+    }
+
+    public Server getServer() {
+        return server;
     }
 }
