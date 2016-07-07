@@ -1,14 +1,23 @@
-# V0.0.4
+# V1.0.0 beta
+## Database
+* Ajout du script SQL pour MySQL
+* Ajout du script SQL pour PostgresSQL
+* Mise à jour du fichier config pour les adresses des serveurs SQL
+* Ajout d'un champs 'name' dans différentes tables
+
 ## Plugins
 * Ajout de la communication avec le serveur com
 * Optimisation sur la route /register
 * Correction de coherence sur exercise/exercice
 
 ## Core
-* Le temps d'expiration du token se rafréchis quand il est utilisé
+* Le temps d'expiration du token se raffréchis quand il est utilisé
 * Ajout du support multi DB
 * Affiche l'erreur 404 quand il n'y a pas de donnée dans la DB
 * Retourne l'id lors d'un insert
+* Nettoyage du build généré
+* Ajout d'une méthode permettant de récupérer l'id_user en fonction d'un token
+* Ajout d'informations sur l'auteur + la version au lancement de l'api
 
 # V0.0.3
 ## Plugins
