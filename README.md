@@ -1,4 +1,4 @@
-# Core API RESTful
+# Core API RESTful 1.0.0 beta
 ## Liens utiles
 * Les dernière versions stable **[Release](https://gitlab.com/CodeandLearn/core_api/pipelines?scope=tags)** et le dernier changelog **[Changelog](https://gitlab.com/CodeandLearn/core_api/tags)**
 * Le calendrier des livrables **[Agenda](https://gitlab.com/CodeandLearn/core_api/milestones)**
@@ -9,7 +9,7 @@
 ## Lancement de l'API
 Il existe deux scripts `launcher.bat` pour Windows et `launcher.sh` pour Linux/Mac
 ```
-	java -jar CL_API_V2-0.0.4-jar-with-dependencies.jar
+	java -jar cl_api.jar
 ```
 
 ### I - Récupération du token
