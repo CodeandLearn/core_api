@@ -26,7 +26,7 @@ public class PostAccount extends Model {
                 "groups.parent_id\"groups.parent_id\"\n" +
                 "FROM accounts, groups\n" +
                 "WHERE accounts.group_id=groups.id\n" +
-                "AND accounts.username=? OR email=?", make.toArray()));
+                "AND accounts.username=? OR accounts.email=?", make.toArray()));
         user.select();
         make.clear();
         return user.getResultSet().size() > 0;
