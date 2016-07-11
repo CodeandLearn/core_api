@@ -18,3 +18,5 @@ git ls-files -z | xargs -0n1 git blame -w | perl -n -e '/^.*?\((.*?)\s+[\d]{4}/;
     * Core
     * Account plugin
     * Blog plugin
+    * Server plugin
+    * ServerCom plugin
