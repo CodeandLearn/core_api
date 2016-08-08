@@ -3,11 +3,10 @@ package Plugin.Account.Model;
 import Core.Database.SQL;
 import Core.Database.SQLRequest;
 import Core.Http.Code;
+import Core.Http.Map;
 import Core.Model;
 import Core.Singleton.UserSecuritySingleton;
 import org.json.JSONObject;
-
-import java.util.HashMap;
 
 /**
  * Created by teddy on 09/04/2016.
@@ -16,15 +15,7 @@ public class PostAccount extends Model {
     private boolean isExist(String username, String email) {
         make.add(username);
         make.add(email);
-        SQLRequest user = new SQLRequest(SQL.make("SELECT accounts.id\"accounts.id\",\n" +
-                "accounts.username\"accounts.username\",\n" +
-                "accounts.password\"accounts.password\",\n" +
-                "accounts.email\"accounts.email\",\n" +
-                "accounts.group_id\"accounts.group_id\",\n" +
-                "groups.id\"groups.id\",\n" +
-                "groups.name\"groups.name\",\n" +
-                "groups.parent_id\"groups.parent_id\"\n" +
-                "FROM accounts, groups\n" +
+        SQLRequest user = new SQLRequest(SQL.make("SELECT * FROM accounts, groups\n" +
                 "WHERE accounts.group_id=groups.id\n" +
                 "AND accounts.username=? OR accounts.email=?", make.toArray()));
         user.select();
@@ -43,7 +34,7 @@ public class PostAccount extends Model {
             make.add(getTimestamp());
             make.add(0);
             make.add(0);
-            setPost(socket, SQL.make("INSERT INTO accounts (username, password, email, group_id, avatar_id, create_timestamp, last_connect_timestamp, nb_courses_done, nb_exercices_done) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", make.toArray()));
+            setPost(SQL.make("INSERT INTO accounts (username, password, email, group_id, avatar_id, create_timestamp, last_connect_timestamp, nb_courses_done, nb_exercices_done) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", make.toArray()));
             make.clear();
             if (id != -1) {
                 UserSecuritySingleton.getInstance().addUser(id, jsonObject.getString("username"), UserSecuritySingleton.hashSHA1(jsonObject.getString("password")), 10);
@@ -55,5 +46,10 @@ public class PostAccount extends Model {
             setErrorMsg("User or Email already used by another account");
         }
         return this;
+    }
+
+    @Override
+    protected Object setData(Map result) {
+        return null;
     }
 }

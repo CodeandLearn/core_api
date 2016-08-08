@@ -1,32 +1,27 @@
 package Plugin.Exercise.Model;
 
 import Core.Database.SQL;
-import Core.Database.SQLRequest;
+import Core.Http.Map;
 import Core.Model;
 import Plugin.Exercise.Obj.ExerciseCorrectionObj;
 import org.json.JSONObject;
-
-import java.util.HashMap;
 
 /**
  * Created by HallElouia on 04/25/2016.
  */
 public class ExerciceCorrectionDAO extends Model {
-    protected void setGet(String request) {
-        SQLRequest sql = new SQLRequest(request);
-        sql.select();
-        for (HashMap<String, Object> aResult : sql.getResultSet()) {
-            ExerciseCorrectionObj exerciseCorrectionObj = new ExerciseCorrectionObj();
-            exerciseCorrectionObj.content = (String) aResult.get("content");
-            exerciseCorrectionObj.exercice_id = (Integer) aResult.get("exercice_id");
-            exerciseCorrectionObj.id = (Integer) aResult.get("id");
-            data.add(exerciseCorrectionObj);
-        }
+    @Override
+    protected Object setData(Map result) {
+        ExerciseCorrectionObj exerciseCorrectionObj = new ExerciseCorrectionObj();
+        exerciseCorrectionObj.content = result.getString("content");
+        exerciseCorrectionObj.exercice_id = result.getInt("exercice_id");
+        exerciseCorrectionObj.id = result.getInt("id");
+        return exerciseCorrectionObj;
     }
 
     public ExerciceCorrectionDAO getExerciceCorrection(String socket, int exercice_id) {
         make.add(exercice_id);
-        setGet(SQL.make("SELECT id, exercice_id, content, exercices_corrections.timestamp FROM exercices_corrections where exercice_id=?", make.toArray()));
+        setGet(SQL.make("SELECT * FROM exercices_corrections where exercice_id=?", make.toArray()));
         return this;
     }
 
@@ -34,7 +29,7 @@ public class ExerciceCorrectionDAO extends Model {
         make.add(jsonObject.getInt("exercice_id"));
         make.add(jsonObject.getString("content"));
         make.add(getTimestamp());
-        setPost(socket, SQL.make("INSERT INTO exercices_corrections (exercice_id, content, timestamp) VALUES (?, ?, ?)", make.toArray()));
+        setPost(SQL.make("INSERT INTO exercices_corrections (exercice_id, content, timestamp) VALUES (?, ?, ?)", make.toArray()));
         return this;
     }
 
@@ -43,13 +38,13 @@ public class ExerciceCorrectionDAO extends Model {
         make.add(jsonObject.getString("content"));
         make.add(getTimestamp());
         make.add(id);
-        setPut(socket, SQL.make("UPDATE exercices_corrections SET exercice_id=?, content=?, timestamp=? WHERE id=?", make.toArray()));
+        setPut(SQL.make("UPDATE exercices_corrections SET exercice_id=?, content=?, timestamp=? WHERE id=?", make.toArray()));
         return this;
     }
 
     public ExerciceCorrectionDAO delete(String socket, int id) {
         make.add(id);
-        setDelete(socket, SQL.make("DELETE FROM exercices_corrections WHERE id=?", make.toArray()));
+        setDelete(SQL.make("DELETE FROM exercices_corrections WHERE id=?", make.toArray()));
         return this;
     }
 }

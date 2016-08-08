@@ -1,6 +1,7 @@
 package Plugin.Blog.Model;
 
 import Core.Database.SQL;
+import Core.Http.Map;
 import Core.Model;
 import org.json.JSONObject;
 
@@ -10,7 +11,7 @@ import org.json.JSONObject;
 public class Post extends Model {
     public Post postBlogCategory(String socket, JSONObject jsonObject) {
         make.add(jsonObject.getString("name"));
-        setPost(socket, SQL.make("INSERT INTO blog_posts_category (name) VALUES (?)", make.toArray()));
+        setPost(SQL.make("INSERT INTO blog_posts_category (name) VALUES (?)", make.toArray()));
         return this;
     }
 
@@ -22,7 +23,7 @@ public class Post extends Model {
         make.add(jsonObject.getString("content"));
         make.add(getTimestamp());
         make.add(getTimestamp());
-        setPost(socket, SQL.make("INSERT INTO blog_posts (account_id, locales_id, blog_category_id, title, content, create_timestamp, modify_timestamp) VALUES (?, ?, ?, ?, ?, ?, ?)", make.toArray()));
+        setPost(SQL.make("INSERT INTO blog_posts (account_id, locales_id, blog_category_id, title, content, create_timestamp, modify_timestamp) VALUES (?, ?, ?, ?, ?, ?, ?)", make.toArray()));
         return this;
     }
 
@@ -32,7 +33,12 @@ public class Post extends Model {
         make.add(jsonObject.getString("content"));
         make.add(getTimestamp());
         make.add(getTimestamp());
-        setPost(socket, SQL.make("INSERT INTO blog_posts_comments (account_id, blog_post_id, content, create_timestamp, modify_timestamp) VALUES (?, ?, ?, ?, ?)", make.toArray()));
+        setPost(SQL.make("INSERT INTO blog_posts_comments (account_id, blog_post_id, content, create_timestamp, modify_timestamp) VALUES (?, ?, ?, ?, ?)", make.toArray()));
         return this;
+    }
+
+    @Override
+    protected Object setData(Map result) {
+        return null;
     }
 }

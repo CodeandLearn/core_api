@@ -20,10 +20,18 @@ public class UserSecuritySingleton {
         return instance;
     }
 
+    public static String hashMD5(String text) {
+        return hash(text, "MD5");
+    }
+
     public static String hashSHA1(String text) {
+        return hash(text, "SHA-1");
+    }
+
+    public static String hash(String text, String hash) {
         MessageDigest md;
         try {
-            md = MessageDigest.getInstance("SHA-1");
+            md = MessageDigest.getInstance(hash);
             md.update(text.concat(ConfigSingleton.getInstance().getSalt()).getBytes(ConfigSingleton.getInstance().getCharset()), 0, text.length());
             return toHex(md.digest());
         } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {

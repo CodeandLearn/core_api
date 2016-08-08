@@ -22,7 +22,7 @@ import java.io.IOException;
  * Created by teddy on 17/06/2016.
  */
 @Controller
-public class ServerTestController {
+public class ServerComController {
     @Methode("GET")
     @Route("/com/test/{id}")
     public ServerComModel testCom(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {

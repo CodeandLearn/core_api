@@ -1,3 +1,15 @@
+# V1.0.1 beta
+## Core
+* Correction pour le multi db
+
+## Plugins
+* Mise à jours de toutes les requêtes pour le support multi db (le SELECT * marche très bien ;))
+* GET account: l'email des autres utilisateurs est caché selon la reqûete
+* GET account: l'email en MD5 est fournis pour les reuquêtes /account & /accounts sous le champs "email_md5"
+* PUT account: le champ vide ou inexistant de "password" permet de ne pas changer le mot de passe
+* PUT account: le champ "goup_id" n'est plus utile!
+* Correction de la route pour le /revoke
+
 # V1.0.0 beta
 ## Database
 * Ajout du script SQL pour MySQL

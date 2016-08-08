@@ -1,5 +1,6 @@
 package Plugin.ServerCom.Model;
 
+import Core.Http.Map;
 import Core.Model;
 import Plugin.ServerCom.Obj.ServerComObj;
 
@@ -12,5 +13,10 @@ public class ServerComModel extends Model {
         serverComObj.id = id;
         data.add(serverComObj);
         return this;
+    }
+
+    @Override
+    protected Object setData(Map result) {
+        return null;
     }
 }

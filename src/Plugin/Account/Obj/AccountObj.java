@@ -8,6 +8,7 @@ public class AccountObj {
     public String username;
     public String password;
     public String email;
+    public String email_md5;
     public int group_id;
     public int avatar_id;
     public long create_timestamp;

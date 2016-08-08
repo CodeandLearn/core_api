@@ -49,6 +49,24 @@ public class Map extends HashMap {
         return -1;
     }
 
+    public boolean getBoolean(Object key) {
+        try {
+            return Boolean.valueOf(get(key).toString());
+        } catch (NumberFormatException e) {
+            ServerSingleton.getInstance().log("[SERVER] -> Map.getBoolean : " + e, true);
+        }
+        return false;
+    }
+
+    public long getLong(Object key) {
+        try {
+            return Long.valueOf(get(key).toString());
+        } catch (NumberFormatException e) {
+            ServerSingleton.getInstance().log("[SERVER] -> Map.getBoolean : " + e, true);
+        }
+        return -1;
+    }
+
     @Override
     @SuppressWarnings("unchecked")
     public Object put(Object key, Object value) {

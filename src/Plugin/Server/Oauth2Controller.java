@@ -19,13 +19,12 @@ public class Oauth2Controller {
     @Methode("POST")
     @Route("/oauth")
     public Oauth2Model getToken(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new Oauth2Model(socket, oauth2);
+        return new Oauth2Model().initUser(socket, oauth2);
     }
 
     @Methode("DELETE")
     @Route("/revoke")
     public Model revokeToken(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        UserSecuritySingleton.getInstance().revokUserToken(socket);
-        return new Model();
+        return new Oauth2Model().revokToken(socket);
     }
 }

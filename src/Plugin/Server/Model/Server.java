@@ -1,6 +1,7 @@
 package Plugin.Server.Model;
 
 import Core.Http.Code;
+import Core.Http.Map;
 import Core.Model;
 import Core.Singleton.ConfigSingleton;
 import Core.Singleton.NbClientsSingleton;
@@ -21,5 +22,10 @@ public class Server extends Model {
         serverObj.socket_timeout = ConfigSingleton.getInstance().getSocketTimeout();
         data.add(serverObj);
         setCode(socket, Code.OK);
+    }
+
+    @Override
+    protected Object setData(Map result) {
+        return null;
     }
 }

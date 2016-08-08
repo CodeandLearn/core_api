@@ -1,6 +1,7 @@
 package Plugin.Course.Model;
 
 import Core.Database.SQL;
+import Core.Http.Map;
 import Core.Model;
 import org.json.JSONObject;
 
@@ -13,7 +14,7 @@ public class PostCourse extends Model {
         make.add(jsonObject.getString("content"));
         make.add(getTimestamp());
         make.add(getTimestamp());
-        setPost(socket, SQL.make("INSERT INTO courses (account_id, locales_id, language_id, title, content, create_timestamp, modify_timestamp) VALUES (?, ?, ?, ?, ?, ?, ?)", make.toArray()));
+        setPost(SQL.make("INSERT INTO courses (account_id, locales_id, language_id, title, content, create_timestamp, modify_timestamp) VALUES (?, ?, ?, ?, ?, ?, ?)", make.toArray()));
         return this;
     }
 
@@ -23,7 +24,12 @@ public class PostCourse extends Model {
         make.add(jsonObject.getString("content"));
         make.add(getTimestamp());
         make.add(getTimestamp());
-        setPost(socket, SQL.make("INSERT INTO courses_comments (course_id, account_id, content, create_timestamp, modify_timestamp) VALUES (?, ?, ?, ?, ?)", make.toArray()));
+        setPost(SQL.make("INSERT INTO courses_comments (course_id, account_id, content, create_timestamp, modify_timestamp) VALUES (?, ?, ?, ?, ?)", make.toArray()));
         return this;
+    }
+
+    @Override
+    protected Object setData(Map result) {
+        return null;
     }
 }

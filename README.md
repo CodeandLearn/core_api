@@ -1,4 +1,7 @@
-# Core API RESTful 1.0.0 beta
+# Core API RESTful 1.0.1 beta
+## Updater
+Pour faciliter la récupération des dernières mise à jours vous pouvez utiliser un **[Gitlab-Builds-updater](https://gitlab.com/tfSheol/Gitlab-Builds-updater)**
+
 ## Liens utiles
 * Les dernière versions stable **[Release](https://gitlab.com/CodeandLearn/core_api/pipelines?scope=tags)** et le dernier changelog **[Changelog](https://gitlab.com/CodeandLearn/core_api/tags)**
 * Le calendrier des livrables **[Agenda](https://gitlab.com/CodeandLearn/core_api/milestones)**

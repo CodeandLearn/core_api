@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>cl_api</groupId>
     <artifactId>cl_api</artifactId>
-    <version>1.0.0 beta</version>
+    <version>1.0.1 beta</version>
     <dependencies>
         <dependency>
             <groupId>com.esotericsoftware</groupId>

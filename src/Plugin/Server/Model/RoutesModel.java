@@ -1,5 +1,6 @@
 package Plugin.Server.Model;
 
+import Core.Http.Map;
 import Core.Model;
 import Core.Singleton.PermsSingleton;
 
@@ -14,5 +15,10 @@ public class RoutesModel extends Model {
             data.add(perm);
         }
         return this;
+    }
+
+    @Override
+    protected Object setData(Map result) {
+        return null;
     }
 }

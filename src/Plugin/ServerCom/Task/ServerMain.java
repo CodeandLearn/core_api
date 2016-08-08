@@ -23,8 +23,8 @@ public class ServerMain extends Job {
         final Server server = new Server();
         server.start();
         try {
-            server.bind(Integer.parseInt(ConfigSingleton.getInstance().getPropertie("port_com")));
-            ServerSingleton.getInstance().log("[COM] -> opened com server on port " + ConfigSingleton.getInstance().getPropertie("port_com"));
+            server.bind(Integer.parseInt(ConfigSingleton.getInstance().getString("port_com")));
+            ServerSingleton.getInstance().log("[COM] -> opened com server on port " + ConfigSingleton.getInstance().getString("port_com"));
             Kryo kryo = server.getKryo();
             kryo.register(AuthPacket.class);
             kryo.register(ExecutePacket.class);
@@ -36,9 +36,9 @@ public class ServerMain extends Job {
                     super.received(connection, object);
                     if (object instanceof AuthPacket) {
                         AuthPacket authPacket = (AuthPacket) object;
-                        if (authPacket.auth_key.equals(ConfigSingleton.getInstance().getPropertie("auth_key_com"))) {
+                        if (authPacket.auth_key.equals(ConfigSingleton.getInstance().getString("auth_key_com"))) {
                             AuthPacket authPacketResp = new AuthPacket();
-                            authPacketResp.auth_key = ConfigSingleton.getInstance().getPropertie("auth_key_com");
+                            authPacketResp.auth_key = ConfigSingleton.getInstance().getString("auth_key_com");
                             connection.sendTCP(authPacketResp);
                             ExerciseIds.getInstance().setServer(server);
                             ServerSingleton.getInstance().log("[COM] -> credentials is validated");

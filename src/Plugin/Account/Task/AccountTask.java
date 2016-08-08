@@ -2,6 +2,7 @@ package Plugin.Account.Task;
 
 import Core.Database.SQLRequest;
 import Core.Http.Job;
+import Core.Http.Map;
 import Core.Singleton.ServerSingleton;
 import Core.Singleton.UserSecuritySingleton;
 import Core.Task;
@@ -13,22 +14,14 @@ import Core.Task;
 public class AccountTask extends Job {
     @Override
     public void task() {
-        SQLRequest sql = new SQLRequest("SELECT accounts.id\"accounts.id\",\n" +
-                "accounts.username\"accounts.username\",\n" +
-                "accounts.password\"accounts.password\",\n" +
-                "accounts.email\"accounts.email\",\n" +
-                "accounts.group_id\"accounts.group_id\",\n" +
-                "groups.id\"groups.id\",\n" +
-                "groups.name\"groups.name\",\n" +
-                "groups.parent_id\"groups.parent_id\"\n" +
-                "FROM accounts, groups\n" +
+        SQLRequest sql = new SQLRequest("SELECT * FROM accounts, groups\n" +
                 "WHERE accounts.group_id=groups.id");
         sql.select();
-        for (int i = 0; i < sql.getResultSet().size(); i++) {
-            UserSecuritySingleton.getInstance().addUser((int) sql.getResultSet().get(i).get("accounts.id"),
-                    (String) sql.getResultSet().get(i).get("accounts.username"),
-                    (String) sql.getResultSet().get(i).get("accounts.password"),
-                    (int) sql.getResultSet().get(i).get("groups.parent_id"));
+        for (Map result : sql.getResultSet()) {
+            UserSecuritySingleton.getInstance().addUser(result.getInt("accounts.id"),
+                    result.getString("accounts.username"),
+                    result.getString("accounts.password"),
+                    result.getInt("groups.parent_id"));
         }
         ServerSingleton.getInstance().log("[SYSTEM] -> Nb users loaded: " + UserSecuritySingleton.getInstance().getNbUsers());
     }
