@@ -1,6 +1,7 @@
 # V1.0.1 beta
 ## Core
 * Correction pour le multi db
+* Rajouts: de l'email, de l'user_id et de l'username quand on effectue une récupération de token (/oauh)
 
 ## Plugins
 * Mise à jours de toutes les requêtes pour le support multi db (le SELECT * marche très bien ;))

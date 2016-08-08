@@ -72,4 +72,10 @@ public class Map extends HashMap {
     public Object put(Object key, Object value) {
         return super.put(key, value);
     }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public Object replace(Object key, Object value) {
+        return super.replace(key, value);
+    }
 }
