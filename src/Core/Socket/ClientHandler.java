@@ -7,12 +7,16 @@ import Core.Singleton.ConfigSingleton;
 import Core.Singleton.NbClientsSingleton;
 import Core.Singleton.ServerSingleton;
 import Core.Singleton.UserSecuritySingleton;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.zip.GZIPOutputStream;
 
 /**
  * Created by teddy on 04/05/2016.
@@ -44,12 +48,16 @@ public class ClientHandler implements Runnable {
                     if (!method.equals("OPTIONS")) {
                         while ((buffer = userInput.readLine()).length() > 2) {
                             ServerSingleton.getInstance().log(clientId, "[HEADER] -> " + buffer);
-                            headerField.put(buffer.split(": ")[0], buffer.split(": ")[1]);
+                            if (buffer.contains("Authorization")) {
+                                headerField.put(buffer.split(": ")[0], buffer.split(": ")[1]);
+                            } else {
+                                headerField.put(buffer.split(": ")[0].toLowerCase(), buffer.split(": ")[1].toLowerCase());
+                            }
                         }
-                        if ((headerField.containsKey("Accept") && headerField.getString("Accept").equals("application/json")) || (headerField.containsKey("Content-Type") && headerField.getString("Content-Type").equals("application/json"))) {
-                            if (headerField.containsKey("Content-Length") && headerField.getInt("Content-Length") > 0) {
+                        if ((headerField.containsKey("accept") && headerField.getString("accept").equals("application/json")) || (headerField.containsKey("content-type") && headerField.getString("content-type").equals("application/json"))) {
+                            if (headerField.containsKey("content-length") && headerField.getInt("content-length") > 0) {
                                 byte[] array = new byte[0];
-                                while ((array.length != headerField.getInt("Content-Length"))) {
+                                while ((array.length != headerField.getInt("content-length"))) {
                                     jsonClient = jsonClient + (char) userInput.read();
                                     array = jsonClient.getBytes();
                                 }
@@ -61,7 +69,7 @@ public class ClientHandler implements Runnable {
                                 jsonObject = new JSONObject(jsonClient);
                             }
                             String jsonReturn = router.find(clientId, method, route, headerField, jsonObject);
-                            userOutput.write(makeResult(clientId, jsonReturn).getBytes(ConfigSingleton.getInstance().getCharset()));
+                            userOutput.write(makeResult(clientId, jsonReturn));
                             userOutput.flush();
                         }
                     } else {
@@ -78,9 +86,20 @@ public class ClientHandler implements Runnable {
             ServerSingleton.getInstance().removeHttpRequest(clientId);
             clientSock.close();
             NbClientsSingleton.getInstance().delClient();
-        } catch (IOException | JSONException ioe) {
-            ServerSingleton.getInstance().log("IOException : " + ioe, true);
+        } catch (Exception e) {
+            ServerSingleton.getInstance().log("IOException : " + e, true);
         }
+    }
+
+    private byte[] compress(String str) throws Exception {
+        ServerSingleton.getInstance().log("[SERVER GZIP] -> Current length " + str.length());
+        ByteArrayOutputStream obj = new ByteArrayOutputStream();
+        GZIPOutputStream gzip = new GZIPOutputStream(obj);
+        gzip.write(str.getBytes(ConfigSingleton.getInstance().getCharset()));
+        gzip.close();
+        byte[] outStr = obj.toByteArray();
+        ServerSingleton.getInstance().log("[SERVER GZIP] -> Encoded " + outStr.length);
+        return outStr;
     }
 
     private boolean setInitialData(String clientId, String data) {
@@ -102,12 +121,12 @@ public class ClientHandler implements Runnable {
         return route.isEmpty() || (!method.equals("OPTIONS") && !method.equals("POST") && !method.equals("GET") && !method.equals("PUT") && !method.equals("DELETE")) || !protocolVersion.equals("HTTP/1.1");
     }
 
-    private String makeResult(String clientId, String json) throws UnsupportedEncodingException {
-        final byte[] utf8Bytes = json.getBytes(ConfigSingleton.getInstance().getCharset());
+    private byte[] makeResult(String clientId, String json) throws Exception {
+        byte[] encodedJSON = compress(json);
         SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z");
         String currentDate = dateFormat.format(System.currentTimeMillis());
         int code = (int) ServerSingleton.getInstance().getHttpCode(clientId);
-        return "HTTP/1.1 " + code + " " + Model.getCodeName(code) + "\r\n" +
+        byte[] data = ("HTTP/1.1 " + code + " " + Model.getCodeName(code) + "\r\n" +
                 "Date: " + currentDate + "\r\n" +
                 "Server: " + ConfigSingleton.getInstance().getName() + "/" + ConfigSingleton.getInstance().getVersion() + "\r\n" +
                 "Content-Type: application/json\r\n" +
@@ -115,10 +134,19 @@ public class ClientHandler implements Runnable {
                 "Access-Control-Allow-Credentials: true\r\n" +
                 "Access-Control-Allow-Headers: origin, content-type, accept, Authorization\r\n" +
                 "Access-Control-Allow-Methods: OPTIONS, GET, PUT, POST, DELETE\r\n" +
-                "Content-Length: " + utf8Bytes.length + "\r\n" +
+                "Content-Encoding: gzip\r\n" +
+                "Content-Length: " + encodedJSON.length + "\r\n" +
                 "Expires: " + currentDate + "\r\n" +
                 "Last-modified: " + currentDate + "\r\n" +
-                "\r\n" + json + EOF;
+                "\r\n").getBytes(ConfigSingleton.getInstance().getCharset());
+        byte[] ret = new byte[data.length + encodedJSON.length];
+        System.arraycopy(data, 0, ret, 0, data.length);
+        System.arraycopy(encodedJSON, 0, ret, data.length, encodedJSON.length);
+        byte[] byteEOF = EOF.getBytes(ConfigSingleton.getInstance().getCharset());
+        byte[] withEOF = new byte[ret.length + byteEOF.length];
+        System.arraycopy(ret, 0, withEOF, 0, ret.length);
+        System.arraycopy(byteEOF, 0, withEOF, ret.length, byteEOF.length);
+        return withEOF;
     }
 
     private String makeOptionsResult() {

@@ -26,14 +26,16 @@ public class Oauth2ComboModel extends Model {
     }
 
     public Oauth2ComboModel combo(String socket, GetAccount getAccount) {
-        Map user = UserSecuritySingleton.getInstance().getUserObj(socket);
-        AccountObj accountObj = (AccountObj) getAccount.getData().get(0);
-        access_token = user.getString("token");
-        expires_in = user.getLong("expires_in");
-        group = user.getInt("group");
-        email = accountObj.email;
-        user_id = accountObj.id;
-        username = accountObj.username;
+        if (getAccount.getData().size() > 0) {
+            AccountObj accountObj = (AccountObj) getAccount.getData().get(0);
+            Map user = UserSecuritySingleton.getInstance().getUserObj(socket);
+            access_token = user.getString("token");
+            expires_in = user.getLong("expires_in");
+            group = user.getInt("group");
+            email = accountObj.email;
+            user_id = accountObj.id;
+            username = accountObj.username;
+        }
         return this;
     }
 }

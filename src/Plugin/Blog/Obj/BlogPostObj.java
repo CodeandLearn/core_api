@@ -12,6 +12,7 @@ public class BlogPostObj {
     public int blog_category_id;
     public String title;
     public String content;
+    public String content_prev;
     public long create_timestamp;
     public long modify_timestamp;
     public AccountObj account = new AccountObj();

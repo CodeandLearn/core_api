@@ -24,6 +24,7 @@ public class GetPosts extends Model {
             blogObj.article.account_id = result.getInt("blog_posts.account_id");
             blogObj.article.blog_category_id = result.getInt("blog_posts.blog_category_id");
             blogObj.article.content = result.getString("blog_posts.content");
+            blogObj.article.content_prev = result.getString("blog_posts.content.prev");
             blogObj.article.create_timestamp = result.getLong("blog_posts.create_timestamp");
             blogObj.article.id = result.getInt("blog_posts.id");
             blogObj.article.locales_id = result.getInt("blog_posts.locales_id");
