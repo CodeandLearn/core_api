@@ -34,6 +34,12 @@ public class ExerciseController {
     }
 
     @Methode("GET")
+    @Route("/exercise/{exercise_id}/code_templates")
+    public CodeTemplateDAO getTemplatesByExercise(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
+        return new CodeTemplateDAO().getTemplates(socket, args.getInt("exercise_id"));
+    }
+
+    @Methode("GET")
     @Route("/exercise/{exercice_id}/script")
     public ScriptDAO getExerciseScript(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new ScriptDAO().getExerciceScript(socket, args.getInt("exercice_id"));
@@ -61,6 +67,12 @@ public class ExerciseController {
     @Route("/exercise")
     public ExerciseDAO postExercise(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new ExerciseDAO().post(socket, UserSecuritySingleton.getInstance().getUserId(socket), jsonObject);
+    }
+
+    @Methode("POST")
+    @Route("/exercise/code_template")
+    public CodeTemplateDAO postTemplate(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args){
+        return new CodeTemplateDAO().post(socket, jsonObject);
     }
 
     @Methode("POST")
@@ -94,6 +106,12 @@ public class ExerciseController {
     }
 
     @Methode("PUT")
+    @Route("/exercise/code_template/{id}")
+    public CodeTemplateDAO putTemplate(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
+        return new CodeTemplateDAO().update(socket, args.getInt("id"), jsonObject);
+    }
+
+    @Methode("PUT")
     @Route("/exercise/script/{script_id}")
     public ScriptDAO putExerciseScript(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new ScriptDAO().update(socket, args.getInt("script_id"), jsonObject);
@@ -124,6 +142,19 @@ public class ExerciseController {
     }
 
     @Methode("DELETE")
+    @Route("/exercise/code_template/{id}")
+    public CodeTemplateDAO deleteTemplate(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
+        return new CodeTemplateDAO().delete(socket, args.getInt("id"));
+    }
+
+    @Methode("DELETE")
+    @Route("/exercise/{exercise_id}/code_templates")
+    public CodeTemplateDAO deleteTemplates(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
+        return new CodeTemplateDAO().deleteAll(socket, args.getInt("exercise_id"));
+    }
+
+
+    @Methode("DELETE")
     @Route("/exercise/script/{script_id}")
     public ScriptDAO deleteExerciseScript(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new ScriptDAO().delete(socket, args.getInt("script_id"));
@@ -146,4 +177,5 @@ public class ExerciseController {
     public ExerciceModerationDAO deleteExerciseModeration(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new ExerciceModerationDAO().delete(socket, args.getInt("moderation_id"));
     }
+
 }

@@ -11,6 +11,8 @@
 * PUT account: le champ vide ou inexistant de "password" permet de ne pas changer le mot de passe
 * PUT account: le champ "goup_id" n'est plus utile!
 * Correction de la route pour le /revoke
+* Implementation du Forum
+* Implementation des CodeTemplates (ne pas utiliser!)
 
 # V1.0.0 beta
 ## Database
