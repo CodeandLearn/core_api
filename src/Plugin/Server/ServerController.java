@@ -24,6 +24,6 @@ public class ServerController {
     @Methode("GET")
     @Route("/routes")
     public RoutesModel getRoutes(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new RoutesModel().getRoutes(socket);
+        return new RoutesModel().getRoutes();
     }
 }

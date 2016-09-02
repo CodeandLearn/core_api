@@ -65,7 +65,7 @@ public class GetPosts extends Model {
         }
     }
 
-    public GetPosts getBlog(String socket) {
+    public GetPosts getBlog() {
         setGet("SELECT * FROM blog_posts, blog_posts_category, locales, accounts, avatars, groups\n" +
                 "WHERE blog_posts.blog_category_id=blog_posts_category.id\n" +
                 "AND locales.id=blog_posts.locales_id\n" +
@@ -75,7 +75,7 @@ public class GetPosts extends Model {
         return this;
     }
 
-    public GetPosts getBlogWithLimit(String socket, int limit) {
+    public GetPosts getBlogWithLimit(int limit) {
         make.add(limit);
         setGet(SQL.make("SELECT * FROM blog_posts, blog_posts_category, locales, accounts, avatars, groups\n" +
                 "WHERE blog_posts.blog_category_id=blog_posts_category.id\n" +
@@ -86,7 +86,7 @@ public class GetPosts extends Model {
         return this;
     }
 
-    public GetPosts getBlogByAuthoName(String socket, String author) {
+    public GetPosts getBlogByAuthoName(String author) {
         make.add(author);
         setGet(SQL.make("SELECT * FROM blog_posts, blog_posts_category, locales, accounts, avatars, groups\n" +
                 "WHERE blog_posts.blog_category_id=blog_posts_category.id\n" +
@@ -97,7 +97,7 @@ public class GetPosts extends Model {
         return this;
     }
 
-    public GetPosts getBlogByAuthorId(String socket, int id) {
+    public GetPosts getBlogByAuthorId(int id) {
         make.add(id);
         setGet(SQL.make("SELECT * FROM blog_posts, blog_posts_category, locales, accounts, avatars, groups\n" +
                 "WHERE blog_posts.blog_category_id=blog_posts_category.id\n" +
@@ -108,7 +108,7 @@ public class GetPosts extends Model {
         return this;
     }
 
-    public GetPosts getBlogByCategory(String socket, String category) {
+    public GetPosts getBlogByCategory(String category) {
         make.add(category);
         setGet(SQL.make("SELECT * FROM blog_posts, blog_posts_category, locales, accounts, avatars, groups\n" +
                 "WHERE blog_posts.blog_category_id=blog_posts_category.id\n" +
@@ -119,7 +119,7 @@ public class GetPosts extends Model {
         return this;
     }
 
-    public GetPosts getBlogByCategoryId(String socket, int id) {
+    public GetPosts getBlogByCategoryId(int id) {
         make.add(id);
         setGet(SQL.make("SELECT * FROM blog_posts, blog_posts_category, locales, accounts, avatars, groups\n" +
                 "WHERE blog_posts.blog_category_id=blog_posts_category.id\n" +
@@ -130,7 +130,7 @@ public class GetPosts extends Model {
         return this;
     }
 
-    public GetPosts getBlogById(String socket, int id) {
+    public GetPosts getBlogById(int id) {
         make.add(id);
         setGet(SQL.make("SELECT * FROM blog_posts, blog_posts_category, locales, accounts, avatars, groups\n" +
                 "WHERE blog_posts.blog_category_id=blog_posts_category.id\n" +

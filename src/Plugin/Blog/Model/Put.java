@@ -9,7 +9,7 @@ import org.json.JSONObject;
  * Created by teddy on 09/04/2016.
  */
 public class Put extends Model {
-    public Put putBlog(String socket, int id, JSONObject jsonObject) {
+    public Put putBlog(int id, JSONObject jsonObject) {
         make.add(jsonObject.getInt("locales_id"));
         make.add(jsonObject.getInt("blog_category_id"));
         make.add(jsonObject.getString("title"));
@@ -20,14 +20,14 @@ public class Put extends Model {
         return this;
     }
 
-    public Put putBlogCategory(String socket, int id, JSONObject jsonObject) {
+    public Put putBlogCategory(int id, JSONObject jsonObject) {
         make.add(jsonObject.getString("name"));
         make.add(id);
         setPut(SQL.make("UPDATE blog_posts_category SET name=? WHERE id=?", make.toArray()));
         return this;
     }
 
-    public Put putBlogComment(String socket, int id, JSONObject jsonObject) {
+    public Put putBlogComment(int id, JSONObject jsonObject) {
         make.add(jsonObject.getInt("blog_post_id"));
         make.add(jsonObject.getString("content"));
         make.add(getTimestamp());

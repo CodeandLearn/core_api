@@ -111,10 +111,11 @@
                                 <echo>Add Ip file</echo>
                                 <copy file="./ip.properties" tofile="${project.build.directory}/ip.properties"/>
                                 <echo>Add Database</echo>
-                                <copy file="./db/db_SQLlite.db" tofile="${project.build.directory}/db/db_SQLlite.db"/>
-                                <copy file="./db/db_SQLlite_script.sql" tofile="${project.build.directory}/sql_script/db_SQLlite_scritp.sql"/>
-                                <copy file="./db/db_MySQL_script.sql" tofile="${project.build.directory}/sql_script/db_MySQL_script.sql"/>
-                                <copy file="./db/db_PostgreSQL_script.sql" tofile="${project.build.directory}/sql_script/db_PostgreSQL_script.sql"/>
+                                <copy file="./db/db_SQLite.db" tofile="${project.build.directory}/db/db_SQLite.db"/>
+                                <copy file="./db/db_SQLite_empty.db" tofile="${project.build.directory}/db/db_SQLite_empty.db"/>
+                                <copy file="./db/v2/SQLite.sql" tofile="${project.build.directory}/sql_script/SQLite.sql"/>
+                                <copy file="./db/v2/MySQL.sql" tofile="${project.build.directory}/sql_script/MySQL.sql"/>
+                                <copy file="./db/v2/PostgreSQL.sql" tofile="${project.build.directory}/sql_script/PostgreSQL.sql"/>
                                 <echo>Add Launcher script</echo>
                                 <copy file="./scripts/launcher.bat" tofile="${project.build.directory}/launcher.bat"/>
                                 <copy file="./scripts/launcher.sh" tofile="${project.build.directory}/launcher.sh"/>

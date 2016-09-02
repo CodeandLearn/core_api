@@ -17,18 +17,18 @@ public class GetLanguage extends Model {
         return languageObj;
     }
 
-    public GetLanguage getLanguage(String socket) {
+    public GetLanguage getLanguage() {
         setGet("SELECT * FROM languages ORDER BY languages.name ASC");
         return this;
     }
 
-    public GetLanguage getLanguageWithLimit(String socket, int limit) {
+    public GetLanguage getLanguageWithLimit(int limit) {
         make.add(limit);
         setGet(SQL.make("SELECT * FROM languages ORDER BY languages.name ASC limit ?", make.toArray()));
         return this;
     }
 
-    public GetLanguage getLanguageById(String socket, int id) {
+    public GetLanguage getLanguageById(int id) {
         make.add(id);
         setGet(SQL.make("SELECT * FROM languages WHERE languages.id=? ORDER BY languages.name ASC", make.toArray()));
         return this;

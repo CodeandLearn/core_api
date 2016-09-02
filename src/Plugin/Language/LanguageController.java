@@ -20,36 +20,36 @@ public class LanguageController {
     @Methode("GET")
     @Route("/languages")
     public GetLanguage getLanguage(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new GetLanguage().getLanguage(socket);
+        return new GetLanguage().getLanguage();
     }
 
     @Methode("GET")
     @Route("/language/limit/{limit}")
     public GetLanguage getLanguageWithLimit(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new GetLanguage().getLanguageWithLimit(socket, args.getInt("limit"));
+        return new GetLanguage().getLanguageWithLimit(args.getInt("limit"));
     }
 
     @Methode("GET")
     @Route("/language/{id}")
     public GetLanguage getLanguageById(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new GetLanguage().getLanguageById(socket, args.getInt("id"));
+        return new GetLanguage().getLanguageById(args.getInt("id"));
     }
 
     @Methode("POST")
     @Route("/language")
     public PostLanguage postLanguage(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new PostLanguage().postLanguage(socket, jsonObject);
+        return new PostLanguage().postLanguage(jsonObject);
     }
 
     @Methode("PUT")
     @Route("/language/{id}")
     public PutLanguage putLanguage(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new PutLanguage().putLanguage(socket, args.getInt("id"), jsonObject);
+        return new PutLanguage().putLanguage(args.getInt("id"), jsonObject);
     }
 
     @Methode("DELETE")
     @Route("/language/{id}")
     public DeleteLanguage deleteLanguage(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new DeleteLanguage().deleteLanguage(socket, args.getInt("id"));
+        return new DeleteLanguage().deleteLanguage(args.getInt("id"));
     }
 }

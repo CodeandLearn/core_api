@@ -13,23 +13,23 @@ public class ForumPostModel extends Model {
     @Override
     protected Object setData(Map result) {
         ForumPostObj fpObj = new ForumPostObj();
-        fpObj.id = result.getInt("id");
-        fpObj.forums_subject_id = result.getInt("forum_subject_id");
-        fpObj.account_id = result.getInt("account_id");
-        fpObj.create_timestamp = result.getLong("create_timestamp");
-        fpObj.modify_timestamp = result.getLong("modify_timestamp");
-        fpObj.content = result.getString("content");
-        fpObj.likes = result.getInt("likes");
+        fpObj.id = result.getInt("forum_posts.id");
+        fpObj.forums_subject_id = result.getInt("forum_posts.forum_subject_id");
+        fpObj.account_id = result.getInt("forum_posts.account_id");
+        fpObj.create_timestamp = result.getLong("forum_posts.create_timestamp");
+        fpObj.modify_timestamp = result.getLong("forum_posts.modify_timestamp");
+        fpObj.content = result.getString("forum_posts.content");
+        fpObj.likes = result.getInt("forum_posts.likes");
         return fpObj;
     }
 
-    public ForumPostModel getPosts(String socket, int forum_subject_id) {
+    public ForumPostModel getPosts(int forum_subject_id) {
         make.add(forum_subject_id);
         setGet(SQL.make("SELECT * FROM forum_posts WHERE forum_subject_id = ?", make.toArray()));
         return this;
     }
 
-    public ForumPostModel insert(String socket, JSONObject jsonObject){
+    public ForumPostModel insert(JSONObject jsonObject){
         make.add(jsonObject.getInt("forums_subject_id"));
         make.add(jsonObject.getInt("account_id"));
         long t = getTimestamp();
@@ -40,7 +40,7 @@ public class ForumPostModel extends Model {
         return this;
     }
 
-    public ForumPostModel update(String socket, int id, JSONObject jsonObject) {
+    public ForumPostModel update(int id, JSONObject jsonObject) {
         make.add(getTimestamp());
         make.add(jsonObject.getString("content"));
         make.add(jsonObject.getInt("likes"));
@@ -49,13 +49,13 @@ public class ForumPostModel extends Model {
         return this;
     }
 
-    public ForumPostModel delete(String socket, int id){
+    public ForumPostModel delete(int id){
         make.add(id);
         setDelete(SQL.make("DELETE FROM forum_posts WHERE id=?", make.toArray()));
         return this;
     }
 
-    public ForumPostModel deleteAll(String socket, int forum_subject_id){
+    public ForumPostModel deleteAll(int forum_subject_id){
         make.add(forum_subject_id);
         setDelete(SQL.make("DELETE FROM forum_posts WHERE forum_subject_id=?", make.toArray()));
         return this;

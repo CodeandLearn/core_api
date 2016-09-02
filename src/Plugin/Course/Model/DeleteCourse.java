@@ -5,14 +5,14 @@ import Core.Http.Map;
 import Core.Model;
 
 public class DeleteCourse extends Model {
-    public DeleteCourse deleteCourse(String socket, int id) {
+    public DeleteCourse deleteCourse(int id) {
         make.add(id);
         setDelete(SQL.make("DELETE FROM courses_comments WHERE course_id=?", make.toArray()));
         setDelete(SQL.make("DELETE FROM courses WHERE id=?", make.toArray()));
         return this;
     }
 
-    public DeleteCourse deleteCourseComment(String socket, int id) {
+    public DeleteCourse deleteCourseComment(int id) {
         make.add(id);
         setDelete(SQL.make("DELETE FROM courses WHERE id=?", make.toArray()));
         return this;

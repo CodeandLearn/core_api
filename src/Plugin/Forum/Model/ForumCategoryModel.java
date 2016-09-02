@@ -18,25 +18,25 @@ public class ForumCategoryModel extends Model {
         return fcObj;
     }
 
-    public ForumCategoryModel getForumCategories(String socket) {
+    public ForumCategoryModel getForumCategories() {
         setGet(SQL.make("SELECT * FROM forum_category", make.toArray()));
         return this;
     }
 
-    public ForumCategoryModel addCategory(String socket, JSONObject jsonObject) {
+    public ForumCategoryModel addCategory(JSONObject jsonObject) {
         make.add(jsonObject.getString("name"));
         setPost(SQL.make("INSERT INTO forum_category (name) VALUES (?)", make.toArray()));
         return this;
     }
 
-    public ForumCategoryModel modifyCategory(String socket, int id, JSONObject jsonObject) {
+    public ForumCategoryModel modifyCategory(int id, JSONObject jsonObject) {
         make.add(jsonObject.getString("name"));
         make.add(id);
         setPut(SQL.make("UPDATE forum_category SET name=? WHERE id=?", make.toArray()));
         return this;
     }
 
-    public ForumCategoryModel deleteCategory(String socket, int id){
+    public ForumCategoryModel deleteCategory(int id){
         make.add(id);
         setDelete(SQL.make("DELETE FROM forum_category WHERE id = ?", make.toArray()));
         return this;

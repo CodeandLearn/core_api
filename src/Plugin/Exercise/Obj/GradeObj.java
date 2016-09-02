@@ -5,7 +5,7 @@ package Plugin.Exercise.Obj;
  */
 public class GradeObj {
     public int id;
-    public int user_exercice_id;
+    public int user_exercise_id;
     public int value;
     public long timestamp;
 }

@@ -5,7 +5,7 @@ package Plugin.Exercise.Obj;
  */
 public class ExerciseCorrectionObj {
     public int id;
-    public int exercice_id;
+    public int exercise_id;
     public String content;
     public long timestamp;
 }

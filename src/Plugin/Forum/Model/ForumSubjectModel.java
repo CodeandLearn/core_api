@@ -13,24 +13,24 @@ public class ForumSubjectModel extends Model {
     @Override
     protected Object setData(Map result) {
         ForumSubjectObj fsObj = new ForumSubjectObj();
-        fsObj.id = result.getInt("id");
-        fsObj.forums_forum_id = result.getInt("forums_forum_id");
-        fsObj.locales_id = result.getInt("locales_id");
-        fsObj.account_id = result.getInt("account_id");
-        fsObj.timestamp =  result.getLong("timestamp");
-        fsObj.replies =  result.getInt("replies");
-        fsObj.views = result.getInt("views");
-        fsObj.subject = result.getString("subject");
-        return null;
+        fsObj.id = result.getInt("forum_posts.id");
+        fsObj.forums_forum_id = result.getInt("forum_posts.forums_forum_id");
+        fsObj.locales_id = result.getInt("forum_posts.locales_id");
+        fsObj.account_id = result.getInt("forum_posts.account_id");
+        fsObj.timestamp =  result.getLong("forum_posts.timestamp");
+        fsObj.replies =  result.getInt("forum_posts.replies");
+        fsObj.views = result.getInt("forum_posts.views");
+        fsObj.subject = result.getString("forum_posts.subject");
+        return fsObj;
     }
 
-    public ForumSubjectModel getSubjects(String socket, int forums_forum_id){
+    public ForumSubjectModel getSubjects(int forums_forum_id){
         make.add(forums_forum_id);
         setGet(SQL.make("SELECT * FROM forum_subjects WHERE forums_forum_id = ?", make.toArray()));
         return this;
     }
 
-    public ForumSubjectModel insert(String socket, JSONObject jsonObject) {
+    public ForumSubjectModel insert(JSONObject jsonObject) {
         make.add(jsonObject.getInt("forums_forum_id"));
         make.add(jsonObject.getInt("locales_id"));
         make.add(jsonObject.getInt("account_id"));
@@ -40,7 +40,7 @@ public class ForumSubjectModel extends Model {
         return this;
     }
 
-    public ForumSubjectModel update(String socket, int id, JSONObject jsonObject) {
+    public ForumSubjectModel update(int id, JSONObject jsonObject) {
         make.add(getTimestamp());
         make.add(jsonObject.getInt("replies"));
         make.add(jsonObject.getInt("views"));
@@ -50,13 +50,13 @@ public class ForumSubjectModel extends Model {
         return this;
     }
 
-    public ForumSubjectModel delete(String socket, int id) {
+    public ForumSubjectModel delete(int id) {
         make.add(id);
         setDelete(SQL.make("DELETE FROM forum_subjects WHERE id=?", make.toArray()));
         return this;
     }
 
-    public ForumSubjectModel deleteAll(String socket, int forums_forum_id) {
+    public ForumSubjectModel deleteAll(int forums_forum_id) {
         make.add(forums_forum_id);
         setDelete(SQL.make("DELETE FROM forum_subjects WHERE forums_forum_id=?", make.toArray()));
         return this;

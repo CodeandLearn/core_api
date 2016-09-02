@@ -9,7 +9,7 @@ import org.json.JSONObject;
  * Created by Fabien on 06/05/2016.
  */
 public class PostLanguage extends Model {
-    public PostLanguage postLanguage(String socket, JSONObject jsonObject) {
+    public PostLanguage postLanguage(JSONObject jsonObject) {
         make.add(jsonObject.getString("name"));
         setPost(SQL.make("INSERT INTO languages (name) VALUES (?)", make.toArray()));
         return this;

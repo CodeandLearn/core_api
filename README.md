@@ -9,6 +9,12 @@ Pour faciliter la récupération des dernières mise à jours vous pouvez utilis
 * Quand vous avez un un problème avec l'api c'est par ici : [Issues](https://gitlab.com/CodeandLearn/core_api/issues)
 * Pour plus d'informations sur les routes et les capacité de l'api : [Wiki & Doc](https://gitlab.com/CodeandLearn/core_api/wikis/home) ou [depot doc](https://gitlab.com/CodeandLearn/Doc) 
 
+## Contrib pro-tip
+Pour éviter de commit des fichiers ou dossiers non voulus voici l'astuce:
+```
+git rm --cached .idea/ -r
+```
+
 ## Lancement de l'API
 Il existe deux scripts `launcher.bat` pour Windows et `launcher.sh` pour Linux/Mac
 ```

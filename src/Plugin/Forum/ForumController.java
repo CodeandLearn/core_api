@@ -21,96 +21,96 @@ public class ForumController {
     @Methode("GET")
     @Route("/forum_categories")
     public ForumCategoryModel getForumCategories(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new ForumCategoryModel().getForumCategories(socket);
+        return new ForumCategoryModel().getForumCategories();
     }
 
     @Methode("GET")
     @Route("/forums/{category_id}")
     public ForumModel getForumsInCategory(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new ForumModel().getForums(socket, args.getInt("category_id"));
+        return new ForumModel().getForums(args.getInt("category_id"));
     }
     @Methode("GET")
     @Route("/forum_subjects/{forum_id}")
     public ForumSubjectModel getSubjectsInForum(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new ForumSubjectModel().getSubjects(socket, args.getInt("forum_id"));
+        return new ForumSubjectModel().getSubjects(args.getInt("forum_id"));
     }
 
     @Methode("GET")
     @Route("/forum_posts/{subject_id}")
     public ForumPostModel getPostInSubject(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new ForumPostModel().getPosts(socket, args.getInt("subject_id"));
+        return new ForumPostModel().getPosts(args.getInt("subject_id"));
     }
 
     @Methode("POST")
     @Route("/forum_category")
     public ForumCategoryModel addForumCategory(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new ForumCategoryModel().addCategory(socket, jsonObject);
+        return new ForumCategoryModel().addCategory(jsonObject);
     }
 
     @Methode("POST")
     @Route("/forum")
     public ForumModel addForum(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new ForumModel().insert(socket, jsonObject);
+        return new ForumModel().insert(jsonObject);
     }
 
     @Methode("POST")
     @Route("/forum_subject")
     public ForumSubjectModel addSubject(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new ForumSubjectModel().insert(socket, jsonObject);
+        return new ForumSubjectModel().insert(jsonObject);
     }
 
     @Methode("POST")
     @Route("/forum_post")
     public ForumPostModel addPost(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new ForumPostModel().insert(socket, jsonObject);
+        return new ForumPostModel().insert(jsonObject);
     }
 
     @Methode("PUT")
     @Route("/forum_category/{id}")
     public ForumCategoryModel updateCategory(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new ForumCategoryModel().modifyCategory(socket, args.getInt("id"), jsonObject);
+        return new ForumCategoryModel().modifyCategory(args.getInt("id"), jsonObject);
     }
 
     @Methode("PUT")
     @Route("/forum/{id}")
     public ForumModel updateForum(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new ForumModel().update(socket, args.getInt("id"), jsonObject);
+        return new ForumModel().update(args.getInt("id"), jsonObject);
     }
 
     @Methode("PUT")
     @Route("/forum_subject/{id}")
     public ForumSubjectModel updateSubject(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new ForumSubjectModel().update(socket, args.getInt("id"), jsonObject);
+        return new ForumSubjectModel().update(args.getInt("id"), jsonObject);
     }
 
     @Methode("PUT")
     @Route("/forum_post/{id}")
     public ForumPostModel updatePost(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new ForumPostModel().update(socket, args.getInt("id"), jsonObject);
+        return new ForumPostModel().update(args.getInt("id"), jsonObject);
     }
 
     @Methode("DELETE")
     @Route("/forum_category/{id}")
     public ForumCategoryModel deleteCategory(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new ForumCategoryModel().deleteCategory(socket, args.getInt("id"));
+        return new ForumCategoryModel().deleteCategory(args.getInt("id"));
     }
 
     @Methode("DELETE")
     @Route("/forum/{id}")
     public ForumModel deleteForum(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new ForumModel().delete(socket, args.getInt("id"));
+        return new ForumModel().delete(args.getInt("id"));
     }
 
     @Methode("DELETE")
     @Route("/forum_category/{id}")
     public ForumSubjectModel deleteSubject(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new ForumSubjectModel().delete(socket, args.getInt("id"));
+        return new ForumSubjectModel().delete(args.getInt("id"));
     }
 
     @Methode("DELETE")
     @Route("/forum_category/{id}")
     public ForumPostModel deletePost(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new ForumPostModel().delete(socket, args.getInt("id"));
+        return new ForumPostModel().delete(args.getInt("id"));
     }
 
 }

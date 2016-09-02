@@ -59,7 +59,7 @@ public class GetCourse extends Model {
         }
     }
 
-    public GetCourse getCourse(String socket) {
+    public GetCourse getCourse() {
         setGet("SELECT * FROM courses, accounts, avatars, groups\n" +
                 "WHERE accounts.id=courses.account_id\n" +
                 "AND avatars.id=accounts.avatar_id\n" +
@@ -68,7 +68,7 @@ public class GetCourse extends Model {
         return this;
     }
 
-    public GetCourse getCourseWithId(String socket, int id) {
+    public GetCourse getCourseWithId(int id) {
         make.add(id);
         setGet(SQL.make("SELECT * FROM courses, accounts, avatars, groups\n" +
                 "WHERE accounts.id=courses.account_id\n" +
@@ -78,7 +78,7 @@ public class GetCourse extends Model {
         return this;
     }
 
-    public GetCourse getCourseWithLimit(String socket, int limit) {
+    public GetCourse getCourseWithLimit(int limit) {
         make.add(limit);
         setGet(SQL.make("SELECT * FROM courses, accounts, avatars, groups\n" +
                 "WHERE accounts.id=courses.account_id\n" +
@@ -88,7 +88,7 @@ public class GetCourse extends Model {
         return this;
     }
 
-    public GetCourse getCourseByAuthorId(String socket, int author_id) {
+    public GetCourse getCourseByAuthorId(int author_id) {
         make.add(author_id);
         setGet(SQL.make("SELECT * FROM courses, accounts, avatars, groups\n" +
                 "WHERE accounts.id=courses.account_id\n" +
@@ -98,7 +98,7 @@ public class GetCourse extends Model {
         return this;
     }
 
-    public GetCourse getCourseByLanguageId(String socket, int language_id) {
+    public GetCourse getCourseByLanguageId(int language_id) {
         make.add(language_id);
         setGet(SQL.make("SELECT * FROM courses, accounts, avatars, groups\n" +
                 "WHERE accounts.id=courses.account_id\n" +
@@ -108,7 +108,7 @@ public class GetCourse extends Model {
         return this;
     }
 
-    public GetCourse getCourseByLocalesId(String socket, int locales_id) {
+    public GetCourse getCourseByLocalesId(int locales_id) {
         make.add(locales_id);
         setGet(SQL.make("SELECT * FROM courses, accounts, avatars, groups\n" +
                 "WHERE accounts.id=courses.account_id\n" +
@@ -118,7 +118,7 @@ public class GetCourse extends Model {
         return this;
     }
 
-    public GetCourse getCourseByTitle(String socket, String title) {
+    public GetCourse getCourseByTitle(String title) {
         make.add(title);
         setGet(SQL.make("SELECT * FROM courses, accounts, avatars, groups\n" +
                 "WHERE accounts.id=courses.account_id\n" +
