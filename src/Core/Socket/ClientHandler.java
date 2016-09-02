@@ -99,7 +99,7 @@ public class ClientHandler implements Runnable {
         gzip.write(str.getBytes(ConfigSingleton.getInstance().getCharset()));
         gzip.close();
         byte[] outStr = obj.toByteArray();
-        ServerSingleton.getInstance().log("[SERVER GZIP] -> Encoded " + outStr.length);
+        ServerSingleton.getInstance().log("[SERVER GZIP] -> Encoded length " + outStr.length);
         return outStr;
     }
 

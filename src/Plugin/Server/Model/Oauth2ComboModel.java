@@ -30,8 +30,8 @@ public class Oauth2ComboModel extends Model {
         if (getAccount.getData().size() > 0) {
             AccountObj accountObj = (AccountObj) getAccount.getData().get(0);
             Map user = UserSecuritySingleton.getInstance().getUserObj(socket);
-            access_token = user.getString("token");
-            expires_in = user.getLong("expires_in");
+            access_token = UserSecuritySingleton.getInstance().getUserToken(socket);
+            expires_in = UserSecuritySingleton.getInstance().getTokenExpires(socket);
             group = user.getInt("group");
             scope = "read/write";
             token_type = Oauth2.BEARER.toLowerCase();

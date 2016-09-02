@@ -4,6 +4,7 @@
 * Rajouts: de l'email, de l'user_id et de l'username quand on effectue une récupération de token (/oauh)
 * Ajout de la compression GZIP!!
 * Amélioration du logger d'erreur
+* Ajout du multi-token avec le maximum de token simultané pour un compte configurable dans le fichier de config
 
 ## Plugins
 * Mise à jours de toutes les requêtes pour le support multi db (le SELECT * marche très bien ;))

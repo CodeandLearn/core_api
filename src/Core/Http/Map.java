@@ -5,6 +5,7 @@ import Core.Singleton.ServerSingleton;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -65,6 +66,16 @@ public class Map extends HashMap {
             ServerSingleton.getInstance().log("[SERVER] -> Map.getBoolean : " + e, e);
         }
         return -1;
+    }
+
+    @SuppressWarnings("unchecked")
+    public ArrayList<Map> getArrayList(Object key) {
+        try {
+            return (ArrayList<Map>) get(key);
+        } catch (NumberFormatException e) {
+            ServerSingleton.getInstance().log("[SERVER] -> Map.getArrayList : " + e, e);
+        }
+        return new ArrayList<>();
     }
 
     @Override
