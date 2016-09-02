@@ -67,6 +67,7 @@ public class ClientHandler implements Runnable {
                             JSONObject jsonObject = new JSONObject();
                             if (Router.isJSONValid(jsonClient)) {
                                 jsonObject = new JSONObject(jsonClient);
+                                ServerSingleton.getInstance().log(clientId, "[USER] -> " + jsonClient);
                             }
                             String jsonReturn = router.find(clientId, method, route, headerField, jsonObject);
                             userOutput.write(makeResult(clientId, jsonReturn));
@@ -87,7 +88,7 @@ public class ClientHandler implements Runnable {
             clientSock.close();
             NbClientsSingleton.getInstance().delClient();
         } catch (Exception e) {
-            ServerSingleton.getInstance().log("IOException : " + e, true);
+            ServerSingleton.getInstance().log("IOException : " + e, e);
         }
     }
 

@@ -19,8 +19,8 @@ public class ConfigSingleton {
             FileReader reader = new FileReader(configFile);
             props.load(reader);
             reader.close();
-        } catch (IOException ex) {
-            ServerSingleton.getInstance().log("IOException : " + ex, true);
+        } catch (IOException e) {
+            ServerSingleton.getInstance().log("IOException : " + e, e);
         }
     }
 

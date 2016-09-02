@@ -17,7 +17,7 @@ public class Map extends HashMap {
         try {
             return Integer.parseInt(get(key).toString());
         } catch (NumberFormatException e) {
-            ServerSingleton.getInstance().log("[SERVER] -> Map.getInt : " + e, true);
+            ServerSingleton.getInstance().log("[SERVER] -> Map.getInt : " + e, e);
         }
         return -1;
     }
@@ -35,7 +35,7 @@ public class Map extends HashMap {
         try {
             return Double.valueOf(get(key).toString());
         } catch (NumberFormatException e) {
-            ServerSingleton.getInstance().log("[SERVER] -> Map.getDouble : " + e, true);
+            ServerSingleton.getInstance().log("[SERVER] -> Map.getDouble : " + e, e);
         }
         return -1;
     }
@@ -44,7 +44,7 @@ public class Map extends HashMap {
         try {
             return Float.valueOf(get(key).toString());
         } catch (NumberFormatException e) {
-            ServerSingleton.getInstance().log("[SERVER] -> Map.getFloat : " + e, true);
+            ServerSingleton.getInstance().log("[SERVER] -> Map.getFloat : " + e, e);
         }
         return -1;
     }
@@ -53,7 +53,7 @@ public class Map extends HashMap {
         try {
             return Boolean.valueOf(get(key).toString());
         } catch (NumberFormatException e) {
-            ServerSingleton.getInstance().log("[SERVER] -> Map.getBoolean : " + e, true);
+            ServerSingleton.getInstance().log("[SERVER] -> Map.getBoolean : " + e, e);
         }
         return false;
     }
@@ -62,7 +62,7 @@ public class Map extends HashMap {
         try {
             return Long.valueOf(get(key).toString());
         } catch (NumberFormatException e) {
-            ServerSingleton.getInstance().log("[SERVER] -> Map.getBoolean : " + e, true);
+            ServerSingleton.getInstance().log("[SERVER] -> Map.getBoolean : " + e, e);
         }
         return -1;
     }

@@ -10,6 +10,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -43,11 +45,9 @@ public class Router {
                                     ServerSingleton.getInstance().log(socket, "[SERVER] -> " + json);
                                     return json;
                                 } catch (IllegalAccessException | InstantiationException e) {
-                                    ServerSingleton.getInstance().log(socket, "[SERVER] -> error on route finder : " + e, true);
+                                    ServerSingleton.getInstance().log(socket, "[SERVER] -> error on route finder : ", e);
                                 } catch (InvocationTargetException e) {
-                                    error.setErrorMsg(e.getTargetException().getMessage());
-                                    e.printStackTrace();
-                                    ServerSingleton.getInstance().log(socket, "[SERVER] -> router: " + e.getTargetException().getMessage(), true);
+                                    ServerSingleton.getInstance().log(socket, "[SERVER] -> router: ", e);
                                 }
                             }
                         }

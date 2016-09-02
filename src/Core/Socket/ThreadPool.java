@@ -36,7 +36,7 @@ public class ThreadPool extends Thread {
             new Oauth2TokenService().start();
             ServerSingleton.getInstance().setHostIp(String.valueOf(listenSocket.getLocalSocketAddress()));
         } catch (IOException e) {
-            ServerSingleton.getInstance().log("[SERVER] -> An exception occurred while creating the listen socket: " + e.getMessage(), true);
+            ServerSingleton.getInstance().log("[SERVER] -> An exception occurred while creating the listen socket: " + e.getMessage(), e);
             System.exit(1);
         }
     }
@@ -45,8 +45,8 @@ public class ThreadPool extends Thread {
     public void run() {
         try {
             listenSocket.setSoTimeout(ConfigSingleton.getInstance().getSocketTimeout());
-        } catch (SocketException e1) {
-            ServerSingleton.getInstance().log("[SERVER] -> Unable to set acceptor timeout value. The server may not shutdown gracefully.", true);
+        } catch (SocketException e) {
+            ServerSingleton.getInstance().log("[SERVER] -> Unable to set acceptor timeout value. The server may not shutdown gracefully.", e);
         }
         ServerSingleton.getInstance().log("[SERVER] -> Accepting incoming connections on port " + listenSocket.getLocalPort());
         while (keepRunning) {
@@ -61,15 +61,15 @@ public class ThreadPool extends Thread {
                 }
             } catch (SocketTimeoutException te) {
                 System.err.print("");
-            } catch (IOException ioe) {
-                ServerSingleton.getInstance().log("[SERVER] -> Exception occurred while handling client request: " + ioe.getMessage(), true);
+            } catch (IOException e) {
+                ServerSingleton.getInstance().log("[SERVER] -> Exception occurred while handling client request: " + e.getMessage(), e);
                 Thread.yield();
             }
         }
         try {
             listenSocket.close();
-        } catch (IOException ioe) {
-            ServerSingleton.getInstance().log("[SERVER] -> IOException : " + ioe, true);
+        } catch (IOException e) {
+            ServerSingleton.getInstance().log("[SERVER] -> IOException : " + e, e);
         }
         ServerSingleton.getInstance().log("[SERVER] -> Stopped accepting incoming connections.");
     }
@@ -83,7 +83,7 @@ public class ThreadPool extends Thread {
         try {
             join();
         } catch (InterruptedException e) {
-            ServerSingleton.getInstance().log("[SERVER] -> Shutdown : " + e, true);
+            ServerSingleton.getInstance().log("[SERVER] -> Shutdown : " + e, e);
         }
     }
 }

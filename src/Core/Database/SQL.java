@@ -38,7 +38,7 @@ public class SQL {
             generatedId = rs.getInt(1);
         } catch (SQLException e) {
             e.printStackTrace();
-            ServerSingleton.getInstance().log("SQLException on insert: " + e.getMessage(), true);
+            ServerSingleton.getInstance().log("SQLException on insert: " + e.getMessage(), e);
         }
     }
 
@@ -51,7 +51,7 @@ public class SQL {
             rs.next();
             generatedId = rs.getInt(1);
         } catch (SQLException e) {
-            ServerSingleton.getInstance().log("SQLException on update: " + e.getMessage(), true);
+            ServerSingleton.getInstance().log("SQLException on update: " + e.getMessage(), e);
         }
     }
 
@@ -64,7 +64,7 @@ public class SQL {
             rs.next();
             generatedId = rs.getInt(1);
         } catch (SQLException e) {
-            ServerSingleton.getInstance().log("SQLException on delete: " + e.getMessage(), true);
+            ServerSingleton.getInstance().log("SQLException on delete: " + e.getMessage(), e);
         }
     }
 
@@ -75,7 +75,7 @@ public class SQL {
             c.commit();
             return result;
         } catch (SQLException e) {
-            ServerSingleton.getInstance().log("SQLException on select: " + e.getMessage(), true);
+            ServerSingleton.getInstance().log("SQLException on select: " + e.getMessage(), e);
         }
         return null;
     }
@@ -85,7 +85,7 @@ public class SQL {
             stmt.close();
             c.close();
         } catch (SQLException e) {
-            ServerSingleton.getInstance().log("SQLException on close: " + e.getMessage(), true);
+            ServerSingleton.getInstance().log("SQLException on close: " + e.getMessage(), e);
         }
     }
 
