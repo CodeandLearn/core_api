@@ -69,7 +69,7 @@ public class Router {
         error.setCode(socket, Code.METHOD_NOT_ALLOWED);
         String json = cleanJson(socket, method, error).toString();
         ServerSingleton.getInstance().log(socket, "[SERVER] -> " + json);
-        IpSingleton.getInstance().setIpFail(socket.split(":")[0].replace("/", ""));
+        IpSingleton.getInstance().setIpFail(socket);
         return json;
     }
 

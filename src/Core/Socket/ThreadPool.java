@@ -36,7 +36,7 @@ public class ThreadPool extends Thread {
             new Oauth2TokenService().start();
             ServerSingleton.getInstance().setHostIp(String.valueOf(listenSocket.getLocalSocketAddress()));
         } catch (IOException e) {
-            ServerSingleton.getInstance().log("[SERVER] -> An exception occurred while creating the listen socket: " + e.getMessage(), e);
+            ServerSingleton.getInstance().log("[SERVER] -> An exception occurred while creating the listen socket: ", e);
             System.exit(1);
         }
     }
@@ -62,14 +62,14 @@ public class ThreadPool extends Thread {
             } catch (SocketTimeoutException te) {
                 System.err.print("");
             } catch (IOException e) {
-                ServerSingleton.getInstance().log("[SERVER] -> Exception occurred while handling client request: " + e.getMessage(), e);
+                ServerSingleton.getInstance().log("[SERVER] -> Exception occurred while handling client request: ", e);
                 Thread.yield();
             }
         }
         try {
             listenSocket.close();
         } catch (IOException e) {
-            ServerSingleton.getInstance().log("[SERVER] -> IOException : " + e, e);
+            ServerSingleton.getInstance().log("[SERVER] -> IOException : ", e);
         }
         ServerSingleton.getInstance().log("[SERVER] -> Stopped accepting incoming connections.");
     }
@@ -83,7 +83,7 @@ public class ThreadPool extends Thread {
         try {
             join();
         } catch (InterruptedException e) {
-            ServerSingleton.getInstance().log("[SERVER] -> Shutdown : " + e, e);
+            ServerSingleton.getInstance().log("[SERVER] -> Shutdown : ", e);
         }
     }
 }

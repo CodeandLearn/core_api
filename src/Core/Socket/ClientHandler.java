@@ -3,10 +3,7 @@ package Core.Socket;
 import Core.Http.Header;
 import Core.Model;
 import Core.Router;
-import Core.Singleton.ConfigSingleton;
-import Core.Singleton.NbClientsSingleton;
-import Core.Singleton.ServerSingleton;
-import Core.Singleton.UserSecuritySingleton;
+import Core.Singleton.*;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -72,6 +69,8 @@ public class ClientHandler implements Runnable {
                             String jsonReturn = router.find(clientId, method, route, headerField, jsonObject);
                             userOutput.write(makeResult(clientId, jsonReturn));
                             userOutput.flush();
+                        } else {
+                            IpSingleton.getInstance().setIpFail(clientId);
                         }
                     } else {
                         ServerSingleton.getInstance().log(clientId, "[USER] -> " + method + " " + route);
