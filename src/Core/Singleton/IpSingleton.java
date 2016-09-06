@@ -91,7 +91,7 @@ public class IpSingleton {
             writer.close();
             ServerSingleton.getInstance().log("[SERVER BAN IP] -> " + ip + " as been banned!");
         } catch (IOException e) {
-            e.printStackTrace();
+            ServerSingleton.getInstance().log("[SERVER BAN IP] -> Exception occurred while ban ip " + ip, e);
         }
     }
 
@@ -103,7 +103,7 @@ public class IpSingleton {
             writer.close();
             ServerSingleton.getInstance().log("[SERVER BAN IP] -> " + ip + " as been unbanned!");
         } catch (IOException e) {
-            e.printStackTrace();
+            ServerSingleton.getInstance().log("[SERVER BAN IP] -> Exception occurred while unban ip " + ip, e);
         }
     }
 }
