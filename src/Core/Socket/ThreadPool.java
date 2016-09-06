@@ -52,7 +52,7 @@ public class ThreadPool extends Thread {
         while (keepRunning) {
             try {
                 final Socket clientSocket = listenSocket.accept();
-                if (!IpSingleton.getInstance().isBanned(clientSocket.getRemoteSocketAddress().toString().split(":")[0].replace("/", ""))) {
+                if (!IpSingleton.getInstance().isBanned(IpSingleton.getInstance().convertToIp(clientSocket.getRemoteSocketAddress().toString()))) {
                     ServerSingleton.getInstance().log("[SERVER] -> Accepted connection from " + clientSocket.getRemoteSocketAddress());
                     ServerSingleton.getInstance().addHttpRequest(clientSocket.getRemoteSocketAddress().toString());
                     NbClientsSingleton.getInstance().addClient();

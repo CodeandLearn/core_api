@@ -31,8 +31,12 @@ public class IpSingleton {
         return instance;
     }
 
+    public String convertToIp(String socket) {
+        return new StringBuilder(new StringBuilder(socket).reverse().toString().replace("/", "").replaceFirst(":", " ")).reverse().toString().split(" ")[0];
+    }
+
     public void setIpFail(String socket) {
-        String ip = new StringBuilder(new StringBuilder(socket).reverse().toString().replace("/", "").replaceFirst(":", " ")).reverse().toString().split(" ")[0];
+        String ip = convertToIp(socket);
         if (!isBanned(ip) && !isWhiteListed(ip)) {
             boolean founded = false;
             for (int i = 0; i < ipList.size(); i++) {
@@ -70,6 +74,7 @@ public class IpSingleton {
 
     public void reloadIp() {
         try {
+            props.clear();
             FileReader reader = new FileReader(ipFile);
             props.load(reader);
             reader.close();
