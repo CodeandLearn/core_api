@@ -16,6 +16,8 @@
 * Correction de la route pour le /revoke
 * Implementation du Forum
 * Implementation des CodeTemplates (ne pas utiliser!)
+* Fix check de l'email lors d'une inscription
+* Chngement de "group" à "power" dans la réponse de /oauth
 
 # V1.0.0 beta
 ## Database

@@ -16,7 +16,7 @@ public class Oauth2ComboModel extends Model {
     public Long expires_in;
     public String token_type;
     public String scope;
-    public Integer group;
+    public Integer power;
     public String email;
     public Integer user_id;
     public String username;
@@ -32,7 +32,7 @@ public class Oauth2ComboModel extends Model {
             Map user = UserSecuritySingleton.getInstance().getUserObj(socket);
             access_token = UserSecuritySingleton.getInstance().getUserToken(socket);
             expires_in = UserSecuritySingleton.getInstance().getTokenExpires(socket);
-            group = user.getInt("group");
+            power = user.getInt("group");
             scope = "read/write";
             token_type = Oauth2.BEARER.toLowerCase();
             email = accountObj.email;

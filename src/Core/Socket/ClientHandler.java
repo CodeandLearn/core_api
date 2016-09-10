@@ -20,7 +20,6 @@ import java.util.zip.GZIPOutputStream;
 public class ClientHandler implements Runnable {
     private final Socket clientSock;
     private static String EOF = "\r\n";
-    private String jsonClient = "";
     private String method = "";
     private String route = "";
     private String protocolVersion = "";
@@ -39,12 +38,13 @@ public class ClientHandler implements Runnable {
         try {
             clientSock.setSoTimeout(ConfigSingleton.getInstance().getInt("keep-alive-timeout") * 1000);
             try {
-                String buffer;
                 String tmp;
                 userInput = new BufferedReader(new InputStreamReader(clientSock.getInputStream(), ConfigSingleton.getInstance().getCharset()));
                 userOutput = new DataOutputStream(clientSock.getOutputStream());
                 keepConnect = ConfigSingleton.getInstance().getBoolean("keep-alive");
                 while (keepConnect && (tmp = userInput.readLine()) != null && tmp.length() > 0) {
+                    String buffer;
+                    String jsonClient = "";
                     ServerSingleton.getInstance().setHttpCode(clientId, Code.OK);
                     Header headerField = new Header();
                     if (!setInitialData(clientId, tmp)) {
@@ -193,6 +193,6 @@ public class ClientHandler implements Runnable {
                 "Access-Control-Allow-Credentials: true\r\n" +
                 "Access-Control-Allow-Headers: origin, content-type, accept, authorization\r\n" +
                 "Access-Control-Allow-Methods: OPTIONS, GET, PUT, POST, DELETE\r\n" +
-                "\r\n";
+                EOF;
     }
 }
