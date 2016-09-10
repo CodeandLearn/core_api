@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import java.io.*;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.text.SimpleDateFormat;
 import java.util.zip.GZIPOutputStream;
@@ -18,9 +19,7 @@ import java.util.zip.GZIPOutputStream;
  */
 public class ClientHandler implements Runnable {
     private final Socket clientSock;
-    private static int CR = 0x0D;
-    private static int LF = 0x0A;
-    private static String EOF = CR + "" + LF;
+    private static String EOF = "\r\n";
     private String jsonClient = "";
     private String method = "";
     private String route = "";
@@ -100,6 +99,8 @@ public class ClientHandler implements Runnable {
                     close(clientId);
                 }
             }
+        } catch (SocketException e) {
+            ServerSingleton.getInstance().log("[SERVER] -> Connection lost to " + clientId);
         } catch (Exception e) {
             ServerSingleton.getInstance().log("IOException: ", e);
         }
