@@ -5,6 +5,7 @@
 * Ajout de la compression GZIP!!
 * Amélioration du logger d'erreur
 * Ajout du multi-token avec le maximum de token simultané pour un compte configurable dans le fichier de config
+* Ajout du keep-alive
 
 ## Plugins
 * Mise à jours de toutes les requêtes pour le support multi db (le SELECT * marche très bien ;))

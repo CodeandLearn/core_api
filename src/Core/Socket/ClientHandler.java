@@ -1,18 +1,16 @@
 package Core.Socket;
 
+import Core.Http.Code;
 import Core.Http.Header;
 import Core.Model;
 import Core.Router;
 import Core.Singleton.*;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.zip.GZIPOutputStream;
 
 /**
@@ -20,12 +18,16 @@ import java.util.zip.GZIPOutputStream;
  */
 public class ClientHandler implements Runnable {
     private final Socket clientSock;
-    private static String EOF = "\u0000";
+    private static int CR = 0x0D;
+    private static int LF = 0x0A;
+    private static String EOF = CR + "" + LF;
     private String jsonClient = "";
-    private Header headerField = new Header();
     private String method = "";
     private String route = "";
     private String protocolVersion = "";
+    private BufferedReader userInput;
+    private DataOutputStream userOutput;
+    private int nbRequestKeepAlive = ConfigSingleton.getInstance().getInt("keep-alive-max");
 
     public ClientHandler(final Socket clientSocket) {
         this.clientSock = clientSocket;
@@ -33,61 +35,87 @@ public class ClientHandler implements Runnable {
 
     @Override
     public void run() {
-        BufferedReader userInput;
-        DataOutputStream userOutput;
         String clientId = clientSock.getRemoteSocketAddress().toString();
+        boolean keepConnect = true;
         try {
-            userInput = new BufferedReader(new InputStreamReader(clientSock.getInputStream(), ConfigSingleton.getInstance().getCharset()));
-            userOutput = new DataOutputStream(clientSock.getOutputStream());
-            if (!setInitialData(clientId, userInput.readLine())) {
-                if (!checkInitialData()) {
-                    String buffer;
-                    if (!method.equals("OPTIONS")) {
-                        while ((buffer = userInput.readLine()).length() > 2) {
-                            ServerSingleton.getInstance().log(clientId, "[HEADER] -> " + buffer);
-                            if (buffer.contains("Authorization")) {
-                                headerField.put(buffer.split(": ")[0], buffer.split(": ")[1]);
-                            } else {
-                                headerField.put(buffer.split(": ")[0].toLowerCase(), buffer.split(": ")[1].toLowerCase());
-                            }
-                        }
-                        if ((headerField.containsKey("accept") && headerField.getString("accept").equals("application/json")) || (headerField.containsKey("content-type") && headerField.getString("content-type").equals("application/json"))) {
-                            if (headerField.containsKey("content-length") && headerField.getInt("content-length") > 0) {
-                                byte[] array = new byte[0];
-                                while ((array.length != headerField.getInt("content-length"))) {
-                                    jsonClient = jsonClient + (char) userInput.read();
-                                    array = jsonClient.getBytes();
+            clientSock.setSoTimeout(ConfigSingleton.getInstance().getInt("keep-alive-timeout") * 1000);
+            try {
+                String buffer;
+                String tmp;
+                userInput = new BufferedReader(new InputStreamReader(clientSock.getInputStream(), ConfigSingleton.getInstance().getCharset()));
+                userOutput = new DataOutputStream(clientSock.getOutputStream());
+                keepConnect = ConfigSingleton.getInstance().getBoolean("keep-alive");
+                while (keepConnect && (tmp = userInput.readLine()) != null && tmp.length() > 0) {
+                    ServerSingleton.getInstance().setHttpCode(clientId, Code.OK);
+                    Header headerField = new Header();
+                    if (!setInitialData(clientId, tmp)) {
+                        if (!checkInitialData()) {
+                            while ((buffer = userInput.readLine()).length() > 2) {
+                                ServerSingleton.getInstance().log(clientId, "[HEADER] -> " + buffer);
+                                if (buffer.contains("Authorization")) {
+                                    headerField.put(buffer.split(": ")[0], buffer.split(": ")[1]);
+                                } else {
+                                    headerField.put(buffer.split(": ")[0].toLowerCase(), buffer.split(": ")[1].toLowerCase());
                                 }
                             }
-                            Router router = new Router();
-                            ServerSingleton.getInstance().log(clientId, "[USER] -> " + method + " " + route);
-                            JSONObject jsonObject = new JSONObject();
-                            if (Router.isJSONValid(jsonClient)) {
-                                jsonObject = new JSONObject(jsonClient);
-                                ServerSingleton.getInstance().log(clientId, "[USER] -> " + jsonClient);
+                            if (!method.equals("OPTIONS")) {
+                                nbRequestKeepAlive--;
+                                if (nbRequestKeepAlive <= 0) {
+                                    keepConnect = false;
+                                }
+                                if ((headerField.containsKey("accept") && headerField.getString("accept").equals("application/json")) || (headerField.containsKey("content-type") && headerField.getString("content-type").equals("application/json"))) {
+                                    clientSock.setSoTimeout(ConfigSingleton.getInstance().getInt("keep-alive-timeout") * 1000);
+                                    if (headerField.containsKey("content-length") && headerField.getInt("content-length") > 0) {
+                                        byte[] array = new byte[0];
+                                        while ((array.length != headerField.getInt("content-length"))) {
+                                            jsonClient = jsonClient + (char) userInput.read();
+                                            array = jsonClient.getBytes();
+                                        }
+                                    }
+                                    Router router = new Router();
+                                    ServerSingleton.getInstance().log(clientId, "[USER] -> " + method + " " + route);
+                                    JSONObject jsonObject = new JSONObject();
+                                    if (Router.isJSONValid(jsonClient)) {
+                                        jsonObject = new JSONObject(jsonClient);
+                                        ServerSingleton.getInstance().log(clientId, "[USER] -> " + jsonClient);
+                                    }
+                                    String jsonReturn = router.find(clientId, method, route, headerField, jsonObject);
+                                    userOutput.write(makeResult(clientId, jsonReturn));
+                                    userOutput.flush();
+                                } else {
+                                    IpSingleton.getInstance().setIpFail(clientId);
+                                }
+                            } else {
+                                ServerSingleton.getInstance().log(clientId, "[USER] -> " + method + " " + route);
+                                userOutput.write(makeOptionsResult().getBytes(ConfigSingleton.getInstance().getCharset()));
+                                userOutput.flush();
                             }
-                            String jsonReturn = router.find(clientId, method, route, headerField, jsonObject);
-                            userOutput.write(makeResult(clientId, jsonReturn));
-                            userOutput.flush();
-                        } else {
-                            IpSingleton.getInstance().setIpFail(clientId);
                         }
-                    } else {
-                        ServerSingleton.getInstance().log(clientId, "[USER] -> " + method + " " + route);
-                        userOutput.write(makeOptionsResult().getBytes(ConfigSingleton.getInstance().getCharset()));
-                        userOutput.flush();
                     }
                 }
+            } catch (SocketTimeoutException e) {
+                close(clientId);
+            } finally {
+                if (!keepConnect) {
+                    close(clientId);
+                }
             }
+        } catch (Exception e) {
+            ServerSingleton.getInstance().log("IOException: ", e);
+        }
+    }
+
+    private void close(String clientId) {
+        try {
             userInput.close();
             userOutput.close();
+            clientSock.close();
             UserSecuritySingleton.getInstance().setUserOffline(clientId);
             ServerSingleton.getInstance().log("[SERVER] -> Close connection to " + clientId);
             ServerSingleton.getInstance().removeHttpRequest(clientId);
-            clientSock.close();
             NbClientsSingleton.getInstance().delClient();
-        } catch (Exception e) {
-            ServerSingleton.getInstance().log("IOException : " + e, e);
+        } catch (IOException e) {
+            ServerSingleton.getInstance().log("SocketTimeoutException: ", e);
         }
     }
 
@@ -104,12 +132,12 @@ public class ClientHandler implements Runnable {
 
     private boolean setInitialData(String clientId, String data) {
         if (data != null) {
-            ServerSingleton.getInstance().log(clientId, "[REQUEST] -> " + data);
             String[] tmp = data.split(" ");
             if (tmp.length == 3) {
                 method = tmp[0];
                 route = tmp[1];
                 protocolVersion = tmp[2];
+                ServerSingleton.getInstance().log(clientId, "[REQUEST] -> " + data);
             }
         } else {
             return true;
@@ -123,20 +151,20 @@ public class ClientHandler implements Runnable {
 
     private byte[] makeResult(String clientId, String json) throws Exception {
         byte[] encodedJSON = compress(json);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE d MMM yyyy HH:mm:ss Z");
         String currentDate = dateFormat.format(System.currentTimeMillis());
+        String expireDate = dateFormat.format(System.currentTimeMillis() + ConfigSingleton.getInstance().getInt("expire") * 1000);
         int code = (int) ServerSingleton.getInstance().getHttpCode(clientId);
         byte[] data = ("HTTP/1.1 " + code + " " + Model.getCodeName(code) + "\r\n" +
                 "Date: " + currentDate + "\r\n" +
                 "Server: " + ConfigSingleton.getInstance().getName() + "/" + ConfigSingleton.getInstance().getVersion() + "\r\n" +
-                "Content-Type: application/json\r\n" +
                 "Access-Control-Allow-Origin: " + ConfigSingleton.getInstance().getString("Access-Control-Allow-Origin") + "\r\n" +
-                "Access-Control-Allow-Credentials: true\r\n" +
-                "Access-Control-Allow-Headers: origin, content-type, accept, Authorization\r\n" +
-                "Access-Control-Allow-Methods: OPTIONS, GET, PUT, POST, DELETE\r\n" +
+                "Content-Type: application/json\r\n" +
+                "Connection: keep-alive\r\n" +
+                "Keep-Alive: max=" + nbRequestKeepAlive + ", timeout=" + ConfigSingleton.getInstance().getInt("keep-alive-timeout") + "\r\n" +
                 "Content-Encoding: gzip\r\n" +
                 "Content-Length: " + encodedJSON.length + "\r\n" +
-                "Expires: " + currentDate + "\r\n" +
+                "Expires: " + expireDate + "\r\n" +
                 "Last-modified: " + currentDate + "\r\n" +
                 "\r\n").getBytes(ConfigSingleton.getInstance().getCharset());
         byte[] ret = new byte[data.length + encodedJSON.length];
@@ -150,11 +178,20 @@ public class ClientHandler implements Runnable {
     }
 
     private String makeOptionsResult() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE d MMM yyyy HH:mm:ss Z");
+        String currentDate = dateFormat.format(System.currentTimeMillis());
         return "HTTP/1.1 200 OK\r\n" +
+                "Date: " + currentDate + "\r\n" +
+                "Server: " + ConfigSingleton.getInstance().getName() + "/" + ConfigSingleton.getInstance().getVersion() + "\r\n" +
                 "Access-Control-Allow-Origin: " + ConfigSingleton.getInstance().getString("Access-Control-Allow-Origin") + "\r\n" +
+                "Connection: keep-alive\r\n" +
+                "Keep-Alive: max=" + nbRequestKeepAlive + ", timeout=" + ConfigSingleton.getInstance().getInt("keep-alive-timeout") + "\r\n" +
+                "Content-Length: 0\r\n" +
+                "Accept-Encoding: gzip\r\n" +
+                "Allow: OPTIONS, GET, PUT, POST, DELETE\r\n" +
                 "Access-Control-Allow-Credentials: true\r\n" +
-                "Access-Control-Allow-Headers: origin, content-type, accept, Authorization\r\n" +
-                "Access-Control-Allow-Methods: OPTIONS, GET, PUT, POST, DELETE\r\n"
-                + "\r\n" + EOF;
+                "Access-Control-Allow-Headers: origin, content-type, accept, authorization\r\n" +
+                "Access-Control-Allow-Methods: OPTIONS, GET, PUT, POST, DELETE\r\n" +
+                "\r\n";
     }
 }
