@@ -4,6 +4,7 @@ import Core.Database.SQL;
 import Core.Database.SQLRequest;
 import Core.Http.Code;
 import Core.Http.Map;
+import Core.Http.Tools;
 import Core.Model;
 import Core.Singleton.UserSecuritySingleton;
 import org.json.JSONObject;
@@ -24,7 +25,7 @@ public class PostAccount extends Model {
     }
 
     public PostAccount register(String socket, JSONObject jsonObject) {
-        if (!isExist(jsonObject.getString("username"), jsonObject.getString("email"))) {
+        if (Tools.isValidEmailAddress(jsonObject.getString("email")) && !isExist(jsonObject.getString("username"), jsonObject.getString("email"))) {
             make.add(jsonObject.getString("username"));
             make.add(UserSecuritySingleton.hashSHA1(jsonObject.getString("password")));
             make.add(jsonObject.getString("email"));
@@ -34,7 +35,7 @@ public class PostAccount extends Model {
             make.add(getTimestamp());
             make.add(0);
             make.add(0);
-            setPost(SQL.make("INSERT INTO accounts (username, password, email, group_id, avatar_id, create_timestamp, last_connect_timestamp, nb_courses_done, nb_exercices_done) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", make.toArray()));
+            setPost(SQL.make("INSERT INTO accounts (username, password, email, group_id, avatar_id, create_timestamp, last_connect_timestamp, nb_courses_done, nb_exercises_done) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", make.toArray()));
             make.clear();
             if (id != -1) {
                 UserSecuritySingleton.getInstance().addUser(id, jsonObject.getString("username"), UserSecuritySingleton.hashSHA1(jsonObject.getString("password")), 10);
@@ -43,7 +44,7 @@ public class PostAccount extends Model {
             }
         } else {
             setCode(socket, Code.FORBIDDEN);
-            setErrorMsg("User or Email already used by another account");
+            setErrorMsg("User or Email already used by another account or invalid");
         }
         return this;
     }

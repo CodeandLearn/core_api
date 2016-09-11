@@ -13,20 +13,20 @@ public class ForumModel extends Model {
     @Override
     protected Object setData(Map result) {
         ForumObj fObj = new ForumObj();
-        fObj.id = result.getInt("id");
-        fObj.forums_category_id = result.getInt("forums_category_id");
-        fObj.name = result.getString("name");
-        fObj.description = result.getString("description");
+        fObj.id = result.getInt("forum_forums.id");
+        fObj.forums_category_id = result.getInt("forum_forums.forums_category_id");
+        fObj.name = result.getString("forum_forums.name");
+        fObj.description = result.getString("forum_forums.description");
         return fObj;
     }
 
-    public ForumModel getForums(String socket, int forum_category_id) {
+    public ForumModel getForums(int forum_category_id) {
         make.add(forum_category_id);
         setGet(SQL.make("SELECT * FROM forum_forums WHERE forums_category_id = ?", make.toArray()));
         return this;
     }
 
-    public ForumModel insert(String socket, JSONObject jsonObject) {
+    public ForumModel insert(JSONObject jsonObject) {
         make.add(jsonObject.getInt("forums_category_id"));
         make.add(jsonObject.getString("name"));
         make.add(jsonObject.getString("description"));
@@ -34,7 +34,7 @@ public class ForumModel extends Model {
         return this;
     }
 
-    public ForumModel update(String socket, int id, JSONObject jsonObject){
+    public ForumModel update(int id, JSONObject jsonObject){
         make.add(jsonObject.getInt("forums_category_id"));
         make.add(jsonObject.getString("name"));
         make.add(jsonObject.getString("description"));
@@ -43,14 +43,13 @@ public class ForumModel extends Model {
         return this;
     }
 
-    public ForumModel delete(String socket, int id){
+    public ForumModel delete(int id){
         make.add(id);
         setDelete(SQL.make("DELETE FROM forum_forums WHERE id=?", make.toArray()));
         return this;
     }
 
-    public ForumModel deleteAll(String socket, int category_id){
-
+    public ForumModel deleteAll(int category_id){
         make.add(category_id);
         setDelete(SQL.make("DELETE FROM forum_forums WHERE forum_category_id=?", make.toArray()));
         return this;

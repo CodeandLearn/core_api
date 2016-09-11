@@ -12,20 +12,20 @@ import org.json.JSONObject;
 public class CodeTemplateDAO extends Model {
     protected Object setData(Map result) {
         CodeTemplateObj ctObj = new CodeTemplateObj();
-        ctObj.id = result.getInt("id");
-        ctObj.exercise_id = result.getInt("exercise_id");
-        ctObj.file_name = result.getString("file_name");
-        ctObj.content = result.getString("content");
+        ctObj.id = result.getInt("code_templates.id");
+        ctObj.exercise_id = result.getInt("code_templates.exercise_id");
+        ctObj.file_name = result.getString("code_templates.file_name");
+        ctObj.content = result.getString("code_templates.content");
         return ctObj;
     }
 
-    public CodeTemplateDAO getTemplates(String socket, int exercise_id) {
+    public CodeTemplateDAO getTemplates(int exercise_id) {
         make.add(exercise_id);
         setGet(SQL.make("SELECT * FROM code_templates WHERE exercise_id=?", make.toArray()));
         return this;
     }
 
-    public CodeTemplateDAO post(String socket, JSONObject jsonObject) {
+    public CodeTemplateDAO post(JSONObject jsonObject) {
         make.add(jsonObject.getInt("exercise_id"));
         make.add(jsonObject.getString("file_name"));
         make.add(jsonObject.getString("content"));
@@ -33,8 +33,8 @@ public class CodeTemplateDAO extends Model {
         return this;
     }
 
-    public CodeTemplateDAO update(String socket, int id, JSONObject jsonObject) {
-        make.add(jsonObject.getInt("user_exercice_id"));
+    public CodeTemplateDAO update(int id, JSONObject jsonObject) {
+        make.add(jsonObject.getInt("user_exercise_id"));
         make.add(jsonObject.getString("file_name"));
         make.add(jsonObject.getString("content"));
         make.add(id);
@@ -42,13 +42,13 @@ public class CodeTemplateDAO extends Model {
         return this;
     }
 
-    public CodeTemplateDAO delete(String socket, int id) {
+    public CodeTemplateDAO delete(int id) {
         make.add(id);
         setDelete(SQL.make("DELETE FROM code_templates WHERE id=?", make.toArray()));
         return this;
     }
 
-    public CodeTemplateDAO deleteAll(String socket, int exercise_id) {
+    public CodeTemplateDAO deleteAll(int exercise_id) {
         make.add(exercise_id);
         setDelete(SQL.make("DELETE FROM code_templates WHERE exercise_id=?", make.toArray()));
         return this;

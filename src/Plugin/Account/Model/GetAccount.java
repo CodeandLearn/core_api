@@ -26,7 +26,7 @@ public class GetAccount extends Model {
         accountObj.create_timestamp = result.getLong("accounts.create_timestamp");
         accountObj.last_connect_timestamp = result.getLong("accounts.last_connect_timestamp");
         accountObj.nb_courses_done = result.getInt("accounts.nb_courses_done");
-        accountObj.nb_exercices_done = result.getInt("accounts.nb_exercices_done");
+        accountObj.nb_exercises_done = result.getInt("accounts.nb_exercises_done");
         accountObj.group.id = result.getInt("groups.id");
         accountObj.group.name = result.getString("groups.name");
         accountObj.group.parent_id = result.getInt("groups.parent_id");
@@ -35,14 +35,14 @@ public class GetAccount extends Model {
         return accountObj;
     }
 
-    public GetAccount getAccounts(String socket) {
+    public GetAccount getAccounts() {
         setGet("SELECT * FROM accounts, groups, avatars\n" +
                 "WHERE accounts.avatar_id=avatars.id\n" +
                 "AND accounts.group_id=groups.id");
         return this;
     }
 
-    public GetAccount getAccountWithLimit(String socket, int limit) {
+    public GetAccount getAccountWithLimit(int limit) {
         make.add(limit);
         setGet(SQL.make("SELECT * FROM accounts, groups, avatars\n" +
                 "WHERE accounts.avatar_id=avatars.id\n" +
@@ -50,7 +50,7 @@ public class GetAccount extends Model {
         return this;
     }
 
-    public GetAccount getAccount(String socket, int idUser) {
+    public GetAccount getAccount(int idUser) {
         showEmail = true;
         make.add(idUser);
         setGet(SQL.make("SELECT * FROM accounts, groups, avatars\n" +

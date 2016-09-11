@@ -10,7 +10,7 @@ import java.util.HashMap;
  * Created by teddy on 13/06/2016.
  */
 public class RoutesModel extends Model {
-    public RoutesModel getRoutes(String socket) {
+    public RoutesModel getRoutes() {
         for (HashMap<String, Object> perm : PermsSingleton.getInstance().getPerms()) {
             data.add(perm);
         }

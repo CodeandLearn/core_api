@@ -6,5 +6,5 @@ package Plugin.Exercise.Obj;
 public class UserExerciseObj {
     public int id;
     public int account_id;
-    public int exercice_id;
+    public int exercise_id;
 }

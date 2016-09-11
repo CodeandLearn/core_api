@@ -5,7 +5,7 @@ package Plugin.Exercise.Obj;
  */
 public class CodeObj {
     public int id;
-    public int user_exercice_id;
+    public int user_exercise_id;
     public String content;
     public long create_timestamp;
     public long modify_timestamp;

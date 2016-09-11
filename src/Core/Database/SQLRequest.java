@@ -46,7 +46,7 @@ public class SQLRequest {
                                 data.put(metaData.getTableName(i) + "." + metaData.getColumnLabel(i) + ".prev", str);
                             }
                         } catch (UnsupportedEncodingException e) {
-                            ServerSingleton.getInstance().log("URLDecode : " + e, true);
+                            ServerSingleton.getInstance().log("URLDecode : " + e, e);
                         }
                     } else {
                         data.put(metaData.getTableName(i) + "." + metaData.getColumnLabel(i), result.getObject(i));
@@ -55,7 +55,7 @@ public class SQLRequest {
                 entities.add(data);
             }
         } catch (SQLException e) {
-            ServerSingleton.getInstance().log("SELECT : " + e, true);
+            ServerSingleton.getInstance().log("SELECT : " + e, e);
         }
         sql.closeDB();
     }

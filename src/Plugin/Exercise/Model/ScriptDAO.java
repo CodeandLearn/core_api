@@ -13,39 +13,39 @@ public class ScriptDAO extends Model {
     @Override
     protected Object setData(Map result) {
         ScriptObj scriptObj = new ScriptObj();
-        scriptObj.content = result.getString("content");
-        scriptObj.create_timestamp = result.getLong("create_timestamp");
-        scriptObj.exercice_id = result.getInt("exercice_id");
-        scriptObj.id = result.getInt("id");
-        scriptObj.modify_timestamp = result.getLong("modify_timestamp");
+        scriptObj.content = result.getString("scripts.content");
+        scriptObj.create_timestamp = result.getLong("scripts.create_timestamp");
+        scriptObj.exercise_id = result.getInt("scripts.exercise_id");
+        scriptObj.id = result.getInt("scripts.id");
+        scriptObj.modify_timestamp = result.getLong("scripts.modify_timestamp");
         return scriptObj;
     }
 
-    public ScriptDAO getExerciceScript(String socket, int exercice_id) {
-        make.add(exercice_id);
-        setGet(SQL.make("SELECT * FROM scripts WHERE exercice_id=?", make.toArray()));
+    public ScriptDAO getExerciseScript(int exercise_id) {
+        make.add(exercise_id);
+        setGet(SQL.make("SELECT * FROM scripts WHERE exercise_id=?", make.toArray()));
         return this;
     }
 
-    public ScriptDAO post(String socket, JSONObject jsonObject) {
-        make.add(jsonObject.getInt("exercice_id"));
+    public ScriptDAO post(JSONObject jsonObject) {
+        make.add(jsonObject.getInt("exercise_id"));
         make.add(jsonObject.getString("content"));
         make.add(getTimestamp());
         make.add(getTimestamp());
-        setPost(SQL.make("INSERT INTO scripts (exercice_id, content, create_timestamp, modify_timestamp) VALUES (?, ?, ?, ?)", make.toArray()));
+        setPost(SQL.make("INSERT INTO scripts (exercise_id, content, create_timestamp, modify_timestamp) VALUES (?, ?, ?, ?)", make.toArray()));
         return this;
     }
 
-    public ScriptDAO update(String socket, int id, JSONObject jsonObject) {
-        make.add(jsonObject.getInt("exercice_id"));
+    public ScriptDAO update(int id, JSONObject jsonObject) {
+        make.add(jsonObject.getInt("exercise_id"));
         make.add(jsonObject.getString("content"));
         make.add(getTimestamp());
         make.add(id);
-        setPut(SQL.make("UPDATE scripts SET exercice_id=?, content=?, modify_timestamp=? WHERE id=?", make.toArray()));
+        setPut(SQL.make("UPDATE scripts SET exercise_id=?, content=?, modify_timestamp=? WHERE id=?", make.toArray()));
         return this;
     }
 
-    public ScriptDAO delete(String socket, int id) {
+    public ScriptDAO delete(int id) {
         make.add(id);
         setDelete(SQL.make("DELETE FROM scripts WHERE id=?", make.toArray()));
         return this;

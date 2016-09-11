@@ -25,7 +25,7 @@ public class GetComments extends Model {
         blogCommentObj.user.avatar_id = result.getInt("accounts.avatar_id");
         blogCommentObj.user.last_connect_timestamp = result.getLong("accounts.last_connect_timestamp");
         blogCommentObj.user.create_timestamp = result.getLong("accounts.create_timestamp");
-        blogCommentObj.user.nb_exercices_done = result.getInt("accounts.nb_exercices_done");
+        blogCommentObj.user.nb_exercises_done = result.getInt("accounts.nb_exercises_done");
         blogCommentObj.user.nb_courses_done = result.getInt("accounts.nb_courses_done");
         blogCommentObj.user.group.id = result.getInt("groups.id");
         blogCommentObj.user.group.name = result.getString("groups.name");
@@ -35,7 +35,7 @@ public class GetComments extends Model {
         return blogCommentObj;
     }
 
-    public GetComments getBlogComments(String socket) {
+    public GetComments getBlogComments() {
         setGet("SELECT * FROM blog_posts_comments, accounts, groups, avatars\n" +
                 "WHERE blog_posts_comments.account_id=accounts.id\n" +
                 "AND groups.id=accounts.group_id\n" +
@@ -43,7 +43,7 @@ public class GetComments extends Model {
         return this;
     }
 
-    public GetComments getBlogCommentsWithLimit(String socket, int limit) {
+    public GetComments getBlogCommentsWithLimit(int limit) {
         make.add(limit);
         setGet(SQL.make("SELECT * FROM blog_posts_comments, accounts, groups, avatars\n" +
                 "WHERE blog_posts_comments.account_id=accounts.id\n" +
@@ -52,7 +52,7 @@ public class GetComments extends Model {
         return this;
     }
 
-    public GetComments getBlogComment(String socket, int id) {
+    public GetComments getBlogComment(int id) {
         make.add(id);
         setGet(SQL.make("SELECT * FROM blog_posts_comments, accounts, groups, avatars\n" +
                 "WHERE blog_posts_comments.account_id=accounts.id\n" +
@@ -61,7 +61,7 @@ public class GetComments extends Model {
         return this;
     }
 
-    public GetComments getBlogCommentByPostId(String socket, int postId) {
+    public GetComments getBlogCommentByPostId(int postId) {
         make.add(postId);
         setGet(SQL.make("SELECT * FROM blog_posts_comments, accounts, groups, avatars\n" +
                 "WHERE blog_posts_comments.account_id=accounts.id\n" +
@@ -70,7 +70,7 @@ public class GetComments extends Model {
         return this;
     }
 
-    public GetComments getBlogCommentByAuthorName(String socket, String author) {
+    public GetComments getBlogCommentByAuthorName(String author) {
         make.add(author);
         setGet(SQL.make("SELECT * FROM blog_posts_comments, accounts, groups, avatars\n" +
                 "WHERE blog_posts_comments.account_id=accounts.id\n" +
@@ -79,7 +79,7 @@ public class GetComments extends Model {
         return this;
     }
 
-    public GetComments getBlogCommentByAuthorId(String socket, int authorId) {
+    public GetComments getBlogCommentByAuthorId(int authorId) {
         make.add(authorId);
         setGet(SQL.make("SELECT * FROM blog_posts_comments, accounts, groups, avatars\n" +
                 "WHERE blog_posts_comments.account_id=accounts.id\n" +

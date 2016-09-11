@@ -21,7 +21,7 @@ public class Oauth2Controller {
     @Route("/oauth")
     public Oauth2ComboModel getToken(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         new Oauth2Model().initUser(socket, oauth2);
-        return new Oauth2ComboModel().combo(socket, new GetAccount().getAccount(socket, UserSecuritySingleton.getInstance().getUserId(socket)));
+        return new Oauth2ComboModel().combo(socket, new GetAccount().getAccount(UserSecuritySingleton.getInstance().getUserId(socket)));
     }
 
     @Methode("DELETE")

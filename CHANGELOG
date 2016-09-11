@@ -3,6 +3,9 @@
 * Correction pour le multi db
 * Rajouts: de l'email, de l'user_id et de l'username quand on effectue une récupération de token (/oauh)
 * Ajout de la compression GZIP!!
+* Amélioration du logger d'erreur
+* Ajout du multi-token avec le maximum de token simultané pour un compte configurable dans le fichier de config
+* Ajout du keep-alive
 
 ## Plugins
 * Mise à jours de toutes les requêtes pour le support multi db (le SELECT * marche très bien ;))
@@ -13,6 +16,8 @@
 * Correction de la route pour le /revoke
 * Implementation du Forum
 * Implementation des CodeTemplates (ne pas utiliser!)
+* Fix check de l'email lors d'une inscription
+* Chngement de "group" à "power" dans la réponse de /oauth
 
 # V1.0.0 beta
 ## Database

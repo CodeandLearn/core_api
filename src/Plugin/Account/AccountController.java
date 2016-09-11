@@ -21,25 +21,25 @@ public class AccountController {
     @Methode("GET")
     @Route("/accounts")
     public GetAccount getAccounts(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new GetAccount().getAccounts(socket);
+        return new GetAccount().getAccounts();
     }
 
     @Methode("GET")
     @Route("/accounts/limit/{limit}")
     public GetAccount getAccountWithLimit(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new GetAccount().getAccountWithLimit(socket, args.getInt("limit"));
+        return new GetAccount().getAccountWithLimit(args.getInt("limit"));
     }
 
     @Methode("GET")
     @Route("/account")
     public GetAccount getAccount(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new GetAccount().getAccount(socket, UserSecuritySingleton.getInstance().getUserId(socket));
+        return new GetAccount().getAccount(UserSecuritySingleton.getInstance().getUserId(socket));
     }
 
     @Methode("GET")
     @Route("/account/{id}")
     public GetAccount getAccountById(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new GetAccount().getAccount(socket, args.getInt("id"));
+        return new GetAccount().getAccount(args.getInt("id"));
     }
 
     @Methode("POST")

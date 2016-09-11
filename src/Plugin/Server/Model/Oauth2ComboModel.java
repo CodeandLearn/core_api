@@ -1,5 +1,6 @@
 package Plugin.Server.Model;
 
+import Core.Http.Code;
 import Core.Http.Map;
 import Core.Http.Oauth2;
 import Core.Model;
@@ -13,9 +14,9 @@ import Plugin.Account.Obj.AccountObj;
 public class Oauth2ComboModel extends Model {
     public String access_token;
     public Long expires_in;
-    public String token_type = Oauth2.BEARER.toLowerCase();
-    public String scope = "read/write";
-    public Integer group;
+    public String token_type;
+    public String scope;
+    public Integer power;
     public String email;
     public Integer user_id;
     public String username;
@@ -29,12 +30,17 @@ public class Oauth2ComboModel extends Model {
         if (getAccount.getData().size() > 0) {
             AccountObj accountObj = (AccountObj) getAccount.getData().get(0);
             Map user = UserSecuritySingleton.getInstance().getUserObj(socket);
-            access_token = user.getString("token");
-            expires_in = user.getLong("expires_in");
-            group = user.getInt("group");
+            access_token = UserSecuritySingleton.getInstance().getUserToken(socket);
+            expires_in = UserSecuritySingleton.getInstance().getTokenExpires(socket);
+            power = user.getInt("group");
+            scope = "read/write";
+            token_type = Oauth2.BEARER.toLowerCase();
             email = accountObj.email;
             user_id = accountObj.id;
             username = accountObj.username;
+        } else {
+            setCode(socket, Code.UNAUTHORIZED);
+            setErrorMsg("username or password is incorrect!");
         }
         return this;
     }

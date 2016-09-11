@@ -5,7 +5,7 @@ package Plugin.Exercise.Obj;
  */
 public class LogObj {
     public int id;
-    public int user_exercice_id;
+    public int user_exercise_id;
     public String content;
     public long timestamp;
 }

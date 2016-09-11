@@ -6,7 +6,7 @@ import Core.Model;
 import org.json.JSONObject;
 
 public class PutCourse extends Model {
-    public PutCourse putCourse(String socket, int id, JSONObject jsonObject) {
+    public PutCourse putCourse(int id, JSONObject jsonObject) {
         make.add(jsonObject.getInt("locales_id"));
         make.add(jsonObject.getInt("language_id"));
         make.add(jsonObject.getString("title"));
@@ -17,7 +17,7 @@ public class PutCourse extends Model {
         return this;
     }
 
-    public PutCourse putCourseComment(String socket, int id, JSONObject jsonObject) {
+    public PutCourse putCourseComment(int id, JSONObject jsonObject) {
         make.add(jsonObject.getString("content"));
         make.add(getTimestamp());
         make.add(id);

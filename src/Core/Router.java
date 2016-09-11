@@ -10,6 +10,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -29,7 +31,7 @@ public class Router {
         for (Class<?> obj : ServerSingleton.getInstance().getAnnotated()) {
             String route = getGenericRoute(method, querryRoute, obj);
             error.setPath(route);
-            Oauth2 oauth2 = new Oauth2((headerField.containsKey("Authorization")) ? headerField.getString("Authorization") : null);
+            Oauth2 oauth2 = new Oauth2((headerField.containsKey("authorization")) ? headerField.getString("authorization") : null);
             Oauth2Permissions oauth2Permissions = new Oauth2Permissions();
             if (route != null && (!route.equals("/oauth") || (oauth2.getType() != null && oauth2.getType().equals(Oauth2.BASIC) && route.equals("/oauth")))) {
                 if (oauth2Permissions.checkPermsRoute(socket, oauth2, method, route, obj, oauth2.getType())) {
@@ -43,11 +45,9 @@ public class Router {
                                     ServerSingleton.getInstance().log(socket, "[SERVER] -> " + json);
                                     return json;
                                 } catch (IllegalAccessException | InstantiationException e) {
-                                    ServerSingleton.getInstance().log(socket, "[SERVER] -> error on route finder : " + e, true);
+                                    ServerSingleton.getInstance().log(socket, "[SERVER] -> error on route finder : ", e);
                                 } catch (InvocationTargetException e) {
-                                    error.setErrorMsg(e.getTargetException().getMessage());
-                                    e.printStackTrace();
-                                    ServerSingleton.getInstance().log(socket, "[SERVER] -> router: " + e.getTargetException().getMessage(), true);
+                                    ServerSingleton.getInstance().log(socket, "[SERVER] -> router: ", e);
                                 }
                             }
                         }
@@ -69,7 +69,7 @@ public class Router {
         error.setCode(socket, Code.METHOD_NOT_ALLOWED);
         String json = cleanJson(socket, method, error).toString();
         ServerSingleton.getInstance().log(socket, "[SERVER] -> " + json);
-        IpSingleton.getInstance().setIpFail(socket.split(":")[0].replace("/", ""));
+        IpSingleton.getInstance().setIpFail(socket);
         return json;
     }
 

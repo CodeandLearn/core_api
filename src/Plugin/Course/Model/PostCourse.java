@@ -6,7 +6,7 @@ import Core.Model;
 import org.json.JSONObject;
 
 public class PostCourse extends Model {
-    public PostCourse postCourse(String socket, int account_id, JSONObject jsonObject) {
+    public PostCourse postCourse(int account_id, JSONObject jsonObject) {
         make.add(account_id);
         make.add(jsonObject.getInt("locales_id"));
         make.add(jsonObject.getInt("language_id"));
@@ -18,7 +18,7 @@ public class PostCourse extends Model {
         return this;
     }
 
-    public PostCourse postCourseComment(String socket, int account_id, JSONObject jsonObject) {
+    public PostCourse postCourseComment(int account_id, JSONObject jsonObject) {
         make.add(jsonObject.getInt("course_id"));
         make.add(account_id);
         make.add(jsonObject.getString("content"));

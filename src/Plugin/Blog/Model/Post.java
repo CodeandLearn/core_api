@@ -9,13 +9,13 @@ import org.json.JSONObject;
  * Created by teddy on 08/04/2016.
  */
 public class Post extends Model {
-    public Post postBlogCategory(String socket, JSONObject jsonObject) {
+    public Post postBlogCategory(JSONObject jsonObject) {
         make.add(jsonObject.getString("name"));
         setPost(SQL.make("INSERT INTO blog_posts_category (name) VALUES (?)", make.toArray()));
         return this;
     }
 
-    public Post postBlog(String socket, int accountId, JSONObject jsonObject) {
+    public Post postBlog(int accountId, JSONObject jsonObject) {
         make.add(accountId);
         make.add(jsonObject.getInt("locales_id"));
         make.add(jsonObject.getInt("blog_category_id"));
@@ -27,7 +27,7 @@ public class Post extends Model {
         return this;
     }
 
-    public Post postBlogComment(String socket, int account_id, JSONObject jsonObject) {
+    public Post postBlogComment(int account_id, JSONObject jsonObject) {
         make.add(account_id);
         make.add(jsonObject.getInt("blog_post_id"));
         make.add(jsonObject.getString("content"));

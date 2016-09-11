@@ -14,7 +14,7 @@ public class AccountObj {
     public long create_timestamp;
     public long last_connect_timestamp;
     public int nb_courses_done;
-    public int nb_exercices_done;
+    public int nb_exercises_done;
     public GroupObj group = new GroupObj();
     public AvatarObj avatar = new AvatarObj();
 }
