@@ -51,11 +51,7 @@ public class ClientHandler implements Runnable {
                         if (!checkInitialData()) {
                             while ((buffer = userInput.readLine()).length() > 2) {
                                 ServerSingleton.getInstance().log(clientId, "[HEADER] -> " + buffer);
-                                if (buffer.contains("Authorization")) {
-                                    headerField.put(buffer.split(": ")[0], buffer.split(": ")[1]);
-                                } else {
-                                    headerField.put(buffer.split(": ")[0].toLowerCase(), buffer.split(": ")[1].toLowerCase());
-                                }
+                                headerField.put(buffer.split(": ")[0].toLowerCase(), buffer.split(": ")[1]);
                             }
                             if (!method.equals("OPTIONS")) {
                                 nbRequestKeepAlive--;

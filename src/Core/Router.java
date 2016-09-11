@@ -31,7 +31,7 @@ public class Router {
         for (Class<?> obj : ServerSingleton.getInstance().getAnnotated()) {
             String route = getGenericRoute(method, querryRoute, obj);
             error.setPath(route);
-            Oauth2 oauth2 = new Oauth2((headerField.containsKey("Authorization")) ? headerField.getString("Authorization") : null);
+            Oauth2 oauth2 = new Oauth2((headerField.containsKey("authorization")) ? headerField.getString("authorization") : null);
             Oauth2Permissions oauth2Permissions = new Oauth2Permissions();
             if (route != null && (!route.equals("/oauth") || (oauth2.getType() != null && oauth2.getType().equals(Oauth2.BASIC) && route.equals("/oauth")))) {
                 if (oauth2Permissions.checkPermsRoute(socket, oauth2, method, route, obj, oauth2.getType())) {
