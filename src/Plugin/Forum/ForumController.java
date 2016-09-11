@@ -102,13 +102,13 @@ public class ForumController {
     }
 
     @Methode("DELETE")
-    @Route("/forum_category/{id}")
+    @Route("/forum_subject/{id}")
     public ForumSubjectModel deleteSubject(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new ForumSubjectModel().delete(socket, args.getInt("id"));
     }
 
     @Methode("DELETE")
-    @Route("/forum_category/{id}")
+    @Route("/forum_post/{id}")
     public ForumPostModel deletePost(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new ForumPostModel().delete(socket, args.getInt("id"));
     }
