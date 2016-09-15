@@ -28,7 +28,7 @@ public class ExerciseController {
     }
 
     @Methode("GET")
-    @Route("/exercise/course/{course_id}")
+    @Route("/exercises/course/{course_id}")
     public ExerciseDAO getExercisesByCourseId(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new ExerciseDAO().getCourseExercise(args.getInt("course_id"));
     }
