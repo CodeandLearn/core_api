@@ -10,8 +10,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -33,6 +31,9 @@ public class Router {
             error.setPath(route);
             Oauth2 oauth2 = new Oauth2((headerField.containsKey("authorization")) ? headerField.getString("authorization") : null);
             Oauth2Permissions oauth2Permissions = new Oauth2Permissions();
+            if (!method.equals("OPTIONS") && oauth2.isToken()) {
+                UserSecuritySingleton.getInstance().updateSocketToken(socket, oauth2.getToken());
+            }
             if (route != null && (!route.equals("/oauth") || (oauth2.getType() != null && oauth2.getType().equals(Oauth2.BASIC) && route.equals("/oauth")))) {
                 if (oauth2Permissions.checkPermsRoute(socket, oauth2, method, route, obj, oauth2.getType())) {
                     for (Method methods : obj.getDeclaredMethods()) {

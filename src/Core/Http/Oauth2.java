@@ -73,6 +73,6 @@ public class Oauth2 {
     }
 
     public boolean isToken() {
-        return token.isEmpty();
+        return token != null && !token.equals("");
     }
 }

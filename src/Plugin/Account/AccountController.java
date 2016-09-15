@@ -7,10 +7,7 @@ import Core.Http.Oauth2;
 import Core.Methode;
 import Core.Route;
 import Core.Singleton.UserSecuritySingleton;
-import Plugin.Account.Model.DeleteAccount;
-import Plugin.Account.Model.GetAccount;
-import Plugin.Account.Model.PostAccount;
-import Plugin.Account.Model.PutAccount;
+import Plugin.Account.Model.*;
 import org.json.JSONObject;
 
 /**
@@ -40,6 +37,12 @@ public class AccountController {
     @Route("/account/{id}")
     public GetAccount getAccountById(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new GetAccount().getAccount(args.getInt("id"));
+    }
+
+    @Methode("GET")
+    @Route("/avatars")
+    public GetAvatar getAvatars(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
+        return new GetAvatar().getAvatars();
     }
 
     @Methode("POST")

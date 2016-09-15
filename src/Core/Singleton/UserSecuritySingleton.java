@@ -82,6 +82,17 @@ public class UserSecuritySingleton {
         }
     }
 
+    public void updateSocketToken(String socket, String token) {
+        for (Map user : users) {
+            for (Map currentToken : user.getArrayList("token_lib")) {
+                if (currentToken.containsKey("token") && currentToken.get("token").equals(token)) {
+                    currentToken.replace("socket", socket);
+                }
+            }
+        }
+    }
+
+
     public void updateFullUser(String socket, String username, String password) {
         for (Map user : users) {
             for (Map currentToken : user.getArrayList("token_lib")) {

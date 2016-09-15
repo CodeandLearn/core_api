@@ -51,6 +51,7 @@ public class GetAccount extends Model {
     }
 
     public GetAccount getAccount(int idUser) {
+        System.err.println(idUser);
         showEmail = true;
         make.add(idUser);
         setGet(SQL.make("SELECT * FROM accounts, groups, avatars\n" +

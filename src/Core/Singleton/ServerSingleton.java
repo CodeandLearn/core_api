@@ -95,7 +95,7 @@ public class ServerSingleton {
 
     public void removeHttpRequest(String socket) {
         for (int i = 0; i < httpRequest.size(); i++) {
-            if (httpRequest.get(i).get("socket").equals(socket)) {
+            if (!httpRequest.get(i).isEmpty() && httpRequest.get(i).get("socket").equals(socket)) {
                 httpRequest.remove(i);
             }
         }

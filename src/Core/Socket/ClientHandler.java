@@ -41,8 +41,8 @@ public class ClientHandler implements Runnable {
                 String tmp;
                 userInput = new BufferedReader(new InputStreamReader(clientSock.getInputStream(), ConfigSingleton.getInstance().getCharset()));
                 userOutput = new DataOutputStream(clientSock.getOutputStream());
-                keepConnect = ConfigSingleton.getInstance().getBoolean("keep-alive");
                 while (keepConnect && (tmp = userInput.readLine()) != null && tmp.length() > 0) {
+                    keepConnect = ConfigSingleton.getInstance().getBoolean("keep-alive");
                     String buffer;
                     String jsonClient = "";
                     ServerSingleton.getInstance().setHttpCode(clientId, Code.OK);
