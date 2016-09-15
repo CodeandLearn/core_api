@@ -33,6 +33,15 @@ public class ExerciseModerationDAO extends Model {
         return this;
     }
 
+    public  ExerciseModerationDAO generate(int exercise_id){
+        make.add(exercise_id);
+        make.add(0);
+        make.add("Content not reviewed yet");
+        setPost(SQL.make("INSERT INTO exercises_moderation (exercise_id, moderation_validate_id, commentary) VALUES (?, ?, ?)", make.toArray()));
+        return this;
+    }
+
+
     public ExerciseModerationDAO update(int id, JSONObject jsonObject) {
         make.add(jsonObject.getInt("exercise_id"));
         make.add(jsonObject.getInt("moderation_validate_id"));

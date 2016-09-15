@@ -26,7 +26,7 @@ public class ExerciseDAO extends Model {
         exerciseObj.instruction = result.getString("exercises.instruction");
         exerciseObj.title = result.getString("exercises.title");
         exerciseObj.moderation = new ExerciseModerationObj();
-        exerciseObj.codes= new ArrayList<CodeTemplateObj>();
+        exerciseObj.codes = new ArrayList<CodeTemplateObj>();
         return exerciseObj;
     }
 
@@ -72,6 +72,7 @@ public class ExerciseDAO extends Model {
         make.add(jsonObject.getString("instruction"));
         make.add(jsonObject.getInt("grade_max"));
         setPost(SQL.make("INSERT INTO exercises (account_id, course_id, title, instruction, grade_max) VALUES (?, ?, ?, ?, ?)", make.toArray()));
+        new ExerciseModerationDAO().generate(this.id);
         return this;
     }
 
