@@ -52,4 +52,10 @@ public class ExerciseCommentDAO extends Model {
         setDelete(SQL.make("DELETE FROM exercises_comments WHERE id=?", make.toArray()));
         return this;
     }
+
+    public ExerciseCommentDAO deleteByExercise(int id) {
+        make.add(id);
+        setDelete(SQL.make("DELETE FROM exercises_comments WHERE exercise_id=?", make.toArray()));
+        return this;
+    }
 }
