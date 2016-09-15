@@ -11,7 +11,7 @@ import org.json.JSONObject;
  */
 public class PutAccount extends Model {
     public PutAccount putAccount(String socket, int id, JSONObject jsonObject) {
-        if (jsonObject.isNull("password") || !jsonObject.getString("password").equals("")) {
+        if (jsonObject.isNull("password") || jsonObject.getString("password").equals("")) {
             putAccountWithoutMdp(socket, id, jsonObject);
         } else {
             putAccountWithMdp(socket, id, jsonObject);
