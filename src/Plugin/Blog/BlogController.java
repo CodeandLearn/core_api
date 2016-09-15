@@ -16,6 +16,12 @@ import org.json.JSONObject;
 @Controller
 public class BlogController {
     @Methode("GET")
+    @Route("/locales")
+    public Local getLocales(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
+        return new Local().getLocales();
+    }
+
+    @Methode("GET")
     @Route("/blog")
     public GetPosts getBlog(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new GetPosts().getBlog();
