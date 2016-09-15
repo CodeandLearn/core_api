@@ -77,12 +77,11 @@ public class ExerciseDAO extends Model {
     }
 
     public ExerciseDAO update(int id, JSONObject jsonObject) {
-        make.add(jsonObject.getInt("course_id"));
         make.add(jsonObject.getString("title"));
         make.add(jsonObject.getString("instruction"));
         make.add(jsonObject.getInt("grade_max"));
         make.add(id);
-        setPut(SQL.make("UPDATE exercises SET course_id=?, title=?, instruction=?, grade_max=? WHERE id=?", make.toArray()));
+        setPut(SQL.make("UPDATE exercises SET title=?, instruction=?, grade_max=? WHERE id=?", make.toArray()));
         return this;
     }
 
