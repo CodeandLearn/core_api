@@ -56,4 +56,11 @@ public class ExerciseModerationDAO extends Model {
         setDelete(SQL.make("DELETE FROM exercises_moderation WHERE id=?", make.toArray()));
         return this;
     }
+
+    public ExerciseModerationDAO deleteByExercise(int id) {
+        make.add(id);
+        setDelete(SQL.make("DELETE FROM exercises_moderation WHERE exercise_id=?", make.toArray()));
+        return this;
+    }
+
 }

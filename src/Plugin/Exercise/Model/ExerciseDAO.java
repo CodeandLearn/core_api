@@ -85,9 +85,17 @@ public class ExerciseDAO extends Model {
         return this;
     }
 
-    public ExerciseDAO delete(int id) {
-        make.add(id);
+    public ExerciseDAO delete(int exercise_id) {
+        make.add(exercise_id);
         setDelete(SQL.make("DELETE FROM exercises WHERE id=?", make.toArray()));
+
+        new ExerciseModerationDAO().deleteByExercise(exercise_id);
+        new ExerciseCorrectionDAO().deleteByExercise(exercise_id);
+        new ExerciseCorrectionDAO().deleteByExercise(exercise_id);
+        new ExerciseCommentDAO().deleteByExercise(exercise_id);
+        new CodeTemplateDAO().deleteAll(exercise_id);
+        new ScriptDAO().deleteByExercise(exercise_id);
+
         return this;
     }
 }

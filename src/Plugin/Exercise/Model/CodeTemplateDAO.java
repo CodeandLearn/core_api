@@ -54,6 +54,4 @@ public class CodeTemplateDAO extends Model {
         return this;
     }
 
-
-
 }

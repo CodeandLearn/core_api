@@ -50,4 +50,11 @@ public class ScriptDAO extends Model {
         setDelete(SQL.make("DELETE FROM scripts WHERE id=?", make.toArray()));
         return this;
     }
+
+    public ScriptDAO deleteByExercise(int id) {
+        make.add(id);
+        setDelete(SQL.make("DELETE FROM scripts WHERE exercise_id=?", make.toArray()));
+        return this;
+    }
+
 }
