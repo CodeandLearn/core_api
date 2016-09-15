@@ -45,7 +45,7 @@ public class Router {
                                     ServerSingleton.getInstance().log(socket, "[SERVER] -> " + json);
                                     return json;
                                 } catch (IllegalAccessException | InstantiationException e) {
-                                    ServerSingleton.getInstance().log(socket, "[SERVER] -> error on route finder : ", e);
+                                    ServerSingleton.getInstance().log(socket, "[SERVER] -> error route not founded: ", e);
                                 } catch (InvocationTargetException e) {
                                     ServerSingleton.getInstance().log(socket, "[SERVER] -> router: ", e);
                                 }

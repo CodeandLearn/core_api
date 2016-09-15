@@ -69,7 +69,7 @@ public class ThreadPool extends Thread {
         try {
             listenSocket.close();
         } catch (IOException e) {
-            ServerSingleton.getInstance().log("[SERVER] -> IOException : ", e);
+            ServerSingleton.getInstance().log("[SERVER] -> IOException: ", e);
         }
         ServerSingleton.getInstance().log("[SERVER] -> Stopped accepting incoming connections.");
     }
@@ -83,7 +83,7 @@ public class ThreadPool extends Thread {
         try {
             join();
         } catch (InterruptedException e) {
-            ServerSingleton.getInstance().log("[SERVER] -> Shutdown : ", e);
+            ServerSingleton.getInstance().log("[SERVER] -> Shutdown: ", e);
         }
     }
 }
