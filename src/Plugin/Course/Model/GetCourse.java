@@ -23,7 +23,11 @@ public class GetCourse extends Model {
             courseObj.course.content = result.getString("courses.content");
             courseObj.course.create_timestamp = result.getLong("courses.create_timestamp");
             courseObj.course.language_id = result.getInt("courses.language_id");
+            courseObj.course.language.language.id = result.getInt("languages.id");
+            courseObj.course.language.language.name = result.getString("languages.name");
             courseObj.course.locales_id = result.getInt("courses.locales_id");
+            courseObj.course.local.id = result.getInt("locales.id");
+            courseObj.course.local.name = result.getString("locales.name");
             courseObj.course.modify_timestamp = result.getLong("courses.modify_timestamp");
             courseObj.course.title = result.getString("courses.title");
             courseObj.course.account.id = result.getInt("accounts.id");
@@ -60,70 +64,84 @@ public class GetCourse extends Model {
     }
 
     public GetCourse getCourse() {
-        setGet("SELECT * FROM courses, accounts, avatars, groups\n" +
+        setGet("SELECT * FROM courses, accounts, avatars, groups, languages, locales\n" +
                 "WHERE accounts.id=courses.account_id\n" +
                 "AND avatars.id=accounts.avatar_id\n" +
                 "AND groups.id=accounts.group_id\n" +
+                "AND courses.locales_id=locales.id\n" +
+                "AND courses.language_id=languages.id\n" +
                 "ORDER BY courses.id ASC");
         return this;
     }
 
     public GetCourse getCourseWithId(int id) {
         make.add(id);
-        setGet(SQL.make("SELECT * FROM courses, accounts, avatars, groups\n" +
+        setGet(SQL.make("SELECT * FROM courses, accounts, avatars, groups, languages, locales\n" +
                 "WHERE accounts.id=courses.account_id\n" +
                 "AND avatars.id=accounts.avatar_id\n" +
                 "AND groups.id=accounts.group_id\n" +
+                "AND courses.locales_id=locales.id\n" +
+                "AND courses.language_id=languages.id\n" +
                 "AND courses.id=? ORDER BY courses.id ASC", make.toArray()));
         return this;
     }
 
     public GetCourse getCourseWithLimit(int limit) {
         make.add(limit);
-        setGet(SQL.make("SELECT * FROM courses, accounts, avatars, groups\n" +
+        setGet(SQL.make("SELECT * FROM courses, accounts, avatars, groups, languages, locales\n" +
                 "WHERE accounts.id=courses.account_id\n" +
                 "AND avatars.id=accounts.avatar_id\n" +
                 "AND groups.id=accounts.group_id\n" +
+                "AND courses.locales_id=locales.id\n" +
+                "AND courses.language_id=languages.id\n" +
                 "ORDER BY courses.id ASC LIMIT ?", make.toArray()));
         return this;
     }
 
     public GetCourse getCourseByAuthorId(int author_id) {
         make.add(author_id);
-        setGet(SQL.make("SELECT * FROM courses, accounts, avatars, groups\n" +
+        setGet(SQL.make("SELECT * FROM courses, accounts, avatars, groups, languages, locales\n" +
                 "WHERE accounts.id=courses.account_id\n" +
                 "AND avatars.id=accounts.avatar_id\n" +
                 "AND groups.id=accounts.group_id\n" +
+                "AND courses.locales_id=locales.id\n" +
+                "AND courses.language_id=languages.id\n" +
                 "AND courses.account_id=? ORDER BY courses.id ASC", make.toArray()));
         return this;
     }
 
     public GetCourse getCourseByLanguageId(int language_id) {
         make.add(language_id);
-        setGet(SQL.make("SELECT * FROM courses, accounts, avatars, groups\n" +
+        setGet(SQL.make("SELECT * FROM courses, accounts, avatars, groups, languages, locales\n" +
                 "WHERE accounts.id=courses.account_id\n" +
                 "AND avatars.id=accounts.avatar_id\n" +
                 "AND groups.id=accounts.group_id\n" +
+                "AND courses.locales_id=locales.id\n" +
+                "AND courses.language_id=languages.id\n" +
                 "AND courses.language_id=? ORDER BY courses.id ASC", make.toArray()));
         return this;
     }
 
     public GetCourse getCourseByLocalesId(int locales_id) {
         make.add(locales_id);
-        setGet(SQL.make("SELECT * FROM courses, accounts, avatars, groups\n" +
+        setGet(SQL.make("SELECT * FROM courses, accounts, avatars, groups, languages, locales\n" +
                 "WHERE accounts.id=courses.account_id\n" +
                 "AND avatars.id=accounts.avatar_id\n" +
                 "AND groups.id=accounts.group_id\n" +
+                "AND courses.locales_id=locales.id\n" +
+                "AND courses.language_id=languages.id\n" +
                 "AND courses.locales_id=? ORDER BY courses.id ASC", make.toArray()));
         return this;
     }
 
     public GetCourse getCourseByTitle(String title) {
         make.add(title);
-        setGet(SQL.make("SELECT * FROM courses, accounts, avatars, groups\n" +
+        setGet(SQL.make("SELECT * FROM courses, accounts, avatars, groups, languages, locales\n" +
                 "WHERE accounts.id=courses.account_id\n" +
                 "AND avatars.id=accounts.avatar_id\n" +
                 "AND groups.id=accounts.group_id\n" +
+                "AND courses.locales_id=locales.id\n" +
+                "AND courses.language_id=languages.id\n" +
                 "AND courses.title=? ORDER BY courses.id ASC", make.toArray()));
         return this;
     }
