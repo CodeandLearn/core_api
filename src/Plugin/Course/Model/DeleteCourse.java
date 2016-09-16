@@ -14,7 +14,7 @@ public class DeleteCourse extends Model {
 
     public DeleteCourse deleteCourseComment(int id) {
         make.add(id);
-        setDelete(SQL.make("DELETE FROM courses WHERE id=?", make.toArray()));
+        setDelete(SQL.make("DELETE FROM courses_comments WHERE id=?", make.toArray()));
         return this;
     }
 
