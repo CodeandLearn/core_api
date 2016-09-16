@@ -32,6 +32,13 @@ public class ExerciseCorrectionDAO extends Model {
         setPost(SQL.make("INSERT INTO exercises_corrections (exercise_id, content, timestamp) VALUES (?, ?, ?)", make.toArray()));
         return this;
     }
+    public ExerciseCorrectionDAO post(JSONObject jsonObject, int e_id) {
+        make.add(e_id);
+        make.add(jsonObject.getString("content"));
+        make.add(getTimestamp());
+        setPost(SQL.make("INSERT INTO exercises_corrections (exercise_id, content, timestamp) VALUES (?, ?, ?)", make.toArray()));
+        return this;
+    }
 
     public ExerciseCorrectionDAO update(int id, JSONObject jsonObject) {
         make.add(jsonObject.getInt("exercise_id"));

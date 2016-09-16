@@ -6,6 +6,8 @@ import Core.Model;
 import Plugin.Exercise.Obj.CodeTemplateObj;
 import org.json.JSONObject;
 
+import java.util.List;
+
 /**
  * Created by moran on 9/1/2016.
  */
@@ -32,6 +34,15 @@ public class CodeTemplateDAO extends Model {
         setPost(SQL.make("INSERT INTO code_templates (exercise_id, file_name, content) VALUES (?, ?, ?)", make.toArray()));
         return this;
     }
+
+    public CodeTemplateDAO post(JSONObject jsonObject, int e_id) {
+        make.add(e_id);
+        make.add(jsonObject.getString("file_name"));
+        make.add(jsonObject.getString("content"));
+        setPost(SQL.make("INSERT INTO code_templates (exercise_id, file_name, content) VALUES (?, ?, ?)", make.toArray()));
+        return this;
+    }
+
 
     public CodeTemplateDAO update(int id, JSONObject jsonObject) {
         make.add(jsonObject.getInt("user_exercise_id"));

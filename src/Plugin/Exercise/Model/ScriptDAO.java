@@ -36,6 +36,16 @@ public class ScriptDAO extends Model {
         return this;
     }
 
+    public ScriptDAO post(JSONObject jsonObject, int e_id) {
+        make.add(e_id);
+        make.add(jsonObject.getString("content"));
+        make.add(getTimestamp());
+        make.add(getTimestamp());
+        setPost(SQL.make("INSERT INTO scripts (exercise_id, content, create_timestamp, modify_timestamp) VALUES (?, ?, ?, ?)", make.toArray()));
+        return this;
+    }
+
+
     public ScriptDAO update(int id, JSONObject jsonObject) {
         make.add(jsonObject.getInt("exercise_id"));
         make.add(jsonObject.getString("content"));
