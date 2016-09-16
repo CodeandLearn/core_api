@@ -411,23 +411,9 @@ DROP TABLE IF EXISTS exercises_moderation ;
 
 CREATE TABLE IF NOT EXISTS exercises_moderation (
   exercise_id INT NOT NULL,
-  moderation_validate_id INT NULL,
+  validate INT NULL,
   commentary TEXT NULL,
   PRIMARY KEY (exercise_id))
-;
-
-
--- -----------------------------------------------------
--- Table `moderation_validate`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS moderation_validate ;
-
-CREATE SEQUENCE moderation_validate_seq;
-
-CREATE TABLE IF NOT EXISTS moderation_validate (
-  id INT NOT NULL DEFAULT NEXTVAL ('moderation_validate_seq'),
-  name VARCHAR(45) NULL,
-  PRIMARY KEY (id))
 ;
 
 
@@ -438,7 +424,7 @@ DROP TABLE IF EXISTS course_moderation ;
 
 CREATE TABLE IF NOT EXISTS course_moderation (
   course_id INT NOT NULL,
-  moderation_validate_id INT NULL,
+  validate INT NULL,
   commentary TEXT NULL,
   PRIMARY KEY (course_id))
 ;
@@ -456,8 +442,7 @@ CREATE TABLE IF NOT EXISTS code_templates (
   exercise_id INT NOT NULL,
   file_name VARCHAR(45) NOT NULL,
   content TEXT NOT NULL,
-  PRIMARY KEY (id),
-  CONSTRAINT id_UNIQUE UNIQUE  (id ASC))
+  PRIMARY KEY (id))
 ;
 
 

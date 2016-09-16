@@ -267,17 +267,9 @@ CREATE TABLE `badges` (
 -- -----------------------------------------------------
 CREATE TABLE `exercises_moderation` (
   `exercise_id` INTEGER NOT NULL,
-  `moderation_validate_id` INTEGER NULL,
+  `validate` INTEGER NULL,
   `commentary` TEXT NULL,
   PRIMARY KEY (`exercise_id`));
-
-
--- -----------------------------------------------------
--- Table `moderation_validate`
--- -----------------------------------------------------
-CREATE TABLE `moderation_validate` (
-  `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-  `name` VARCHAR(45) NULL);
 
 
 -- -----------------------------------------------------
@@ -285,7 +277,7 @@ CREATE TABLE `moderation_validate` (
 -- -----------------------------------------------------
 CREATE TABLE `course_moderation` (
   `course_id` INTEGER NOT NULL,
-  `moderation_validate_id` INTEGER NULL,
+  `validate` INTEGER NULL,
   `commentary` TEXT NULL,
   PRIMARY KEY (`course_id`));
 
@@ -294,7 +286,7 @@ CREATE TABLE `course_moderation` (
 -- Table `code_templates`
 -- -----------------------------------------------------
 CREATE TABLE `code_templates` (
-  `id` INTEGER UNSIGNED NOT NULL,
+  `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
   `exercise_id` INTEGER NOT NULL,
   `file_name` VARCHAR(45) NOT NULL,
   `content` TEXT NOT NULL);
