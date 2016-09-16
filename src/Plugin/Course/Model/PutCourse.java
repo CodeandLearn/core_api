@@ -17,6 +17,14 @@ public class PutCourse extends Model {
         return this;
     }
 
+    public PutCourse putModerationCourse(int course_id, JSONObject jsonObject) {
+        make.add(jsonObject.getString("validate"));
+        make.add(jsonObject.getString("commentary"));
+        make.add(course_id);
+        setPut(SQL.make("UPDATE course_moderation SET validate=?, commentary=? WHERE course_id=?", make.toArray()));
+        return this;
+    }
+
     public PutCourse putCourseComment(int id, JSONObject jsonObject) {
         make.add(jsonObject.getString("content"));
         make.add(getTimestamp());

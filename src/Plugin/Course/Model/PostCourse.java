@@ -15,6 +15,11 @@ public class PostCourse extends Model {
         make.add(getTimestamp());
         make.add(getTimestamp());
         setPost(SQL.make("INSERT INTO courses (account_id, locales_id, language_id, title, content, create_timestamp, modify_timestamp) VALUES (?, ?, ?, ?, ?, ?, ?)", make.toArray()));
+        make.clear();
+        make.add(id);
+        make.add(0);
+        make.add("");
+        setPost(SQL.make("INSERT INTO course_moderation (course_id, validate, commentary) VALUES (?, ?, ?)", make.toArray()));
         return this;
     }
 
