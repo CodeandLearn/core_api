@@ -15,7 +15,7 @@ public class ExerciseModerationDAO extends Model {
         ExerciseModerationObj exerciseModerationObj = new ExerciseModerationObj();
         exerciseModerationObj.commentary = result.getString("exercises_moderation.commentary");
         exerciseModerationObj.exercise_id = result.getInt("exercises_moderation.exercise_id");
-        exerciseModerationObj.moderation_validate_id = result.getInt("exercises_moderation.moderation_validate_id");
+        exerciseModerationObj.moderation_validate_id = result.getInt("exercises_moderation.validate");
         return exerciseModerationObj;
     }
 
@@ -27,9 +27,9 @@ public class ExerciseModerationDAO extends Model {
 
     public ExerciseModerationDAO post(JSONObject jsonObject) {
         make.add(jsonObject.getInt("exercise_id"));
-        make.add(jsonObject.getInt("moderation_validate_id"));
+        make.add(jsonObject.getInt("validate"));
         make.add(jsonObject.getString("commentary"));
-        setPost(SQL.make("INSERT INTO exercises_moderation (exercise_id, moderation_validate_id, commentary) VALUES (?, ?, ?)", make.toArray()));
+        setPost(SQL.make("INSERT INTO exercises_moderation (exercise_id, validate, commentary) VALUES (?, ?, ?)", make.toArray()));
         return this;
     }
 
@@ -37,17 +37,17 @@ public class ExerciseModerationDAO extends Model {
         make.add(exercise_id);
         make.add(0);
         make.add("Content not reviewed yet");
-        setPost(SQL.make("INSERT INTO exercises_moderation (exercise_id, moderation_validate_id, commentary) VALUES (?, ?, ?)", make.toArray()));
+        setPost(SQL.make("INSERT INTO exercises_moderation (exercise_id, validate, commentary) VALUES (?, ?, ?)", make.toArray()));
         return this;
     }
 
 
     public ExerciseModerationDAO update(int id, JSONObject jsonObject) {
         make.add(jsonObject.getInt("exercise_id"));
-        make.add(jsonObject.getInt("moderation_validate_id"));
+        make.add(jsonObject.getInt("validate"));
         make.add(jsonObject.getString("commentary"));
         make.add(id);
-        setPut(SQL.make("UPDATE exercises_moderation SET moderation_validate_id=?, commentary=? WHERE exercise_id=?", make.toArray()));
+        setPut(SQL.make("UPDATE exercises_moderation SET validate=?, commentary=? WHERE exercise_id=?", make.toArray()));
         return this;
     }
 
