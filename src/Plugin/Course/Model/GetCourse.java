@@ -101,7 +101,6 @@ public class GetCourse extends Model {
                 "AND courses.locales_id=locales.id\n" +
                 "AND courses.language_id=languages.id\n" +
                 "AND course_moderation.course_id=courses.id\n" +
-                "AND course_moderation.validate==0\n" +
                 "AND courses.id=? ORDER BY courses.id ASC", make.toArray()));
         return this;
     }
@@ -136,7 +135,7 @@ public class GetCourse extends Model {
 
     public GetCourse getAccountCourses(int author_id) {
         make.add(author_id);
-        setGet(SQL.make("SELECT * FROM courses, accounts, avatars, groups, languages, locales\n" +
+        setGet(SQL.make("SELECT * FROM courses, accounts, avatars, groups, languages, locales, course_moderation\n" +
                 "WHERE accounts.id=courses.account_id\n" +
                 "AND avatars.id=accounts.avatar_id\n" +
                 "AND groups.id=accounts.group_id\n" +
@@ -149,7 +148,7 @@ public class GetCourse extends Model {
 
     public GetCourse getCourseByAuthorId(int author_id) {
         make.add(author_id);
-        setGet(SQL.make("SELECT * FROM courses, accounts, avatars, groups, languages, locales\n" +
+        setGet(SQL.make("SELECT * FROM courses, accounts, avatars, groups, languages, locales, course_moderation\n" +
                 "WHERE accounts.id=courses.account_id\n" +
                 "AND avatars.id=accounts.avatar_id\n" +
                 "AND groups.id=accounts.group_id\n" +
@@ -163,7 +162,7 @@ public class GetCourse extends Model {
 
     public GetCourse getCourseByLanguageId(int language_id) {
         make.add(language_id);
-        setGet(SQL.make("SELECT * FROM courses, accounts, avatars, groups, languages, locales\n" +
+        setGet(SQL.make("SELECT * FROM courses, accounts, avatars, groups, languages, locales, course_moderation\n" +
                 "WHERE accounts.id=courses.account_id\n" +
                 "AND avatars.id=accounts.avatar_id\n" +
                 "AND groups.id=accounts.group_id\n" +
@@ -177,7 +176,7 @@ public class GetCourse extends Model {
 
     public GetCourse getCourseByLocalesId(int locales_id) {
         make.add(locales_id);
-        setGet(SQL.make("SELECT * FROM courses, accounts, avatars, groups, languages, locales\n" +
+        setGet(SQL.make("SELECT * FROM courses, accounts, avatars, groups, languages, locales, course_moderation\n" +
                 "WHERE accounts.id=courses.account_id\n" +
                 "AND avatars.id=accounts.avatar_id\n" +
                 "AND groups.id=accounts.group_id\n" +
@@ -191,7 +190,7 @@ public class GetCourse extends Model {
 
     public GetCourse getCourseByTitle(String title) {
         make.add(title);
-        setGet(SQL.make("SELECT * FROM courses, accounts, avatars, groups, languages, locales\n" +
+        setGet(SQL.make("SELECT * FROM courses, accounts, avatars, groups, languages, locales, course_moderation\n" +
                 "WHERE accounts.id=courses.account_id\n" +
                 "AND avatars.id=accounts.avatar_id\n" +
                 "AND groups.id=accounts.group_id\n" +
