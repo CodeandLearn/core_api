@@ -23,8 +23,8 @@ public class GetCourse extends Model {
             courseObj.course.content = result.getString("courses.content");
             courseObj.course.create_timestamp = result.getLong("courses.create_timestamp");
             courseObj.course.language_id = result.getInt("courses.language_id");
-            courseObj.course.language.language.id = result.getInt("languages.id");
-            courseObj.course.language.language.name = result.getString("languages.name");
+            courseObj.course.language.id = result.getInt("languages.id");
+            courseObj.course.language.name = result.getString("languages.name");
             courseObj.course.locales_id = result.getInt("courses.locales_id");
             courseObj.course.local.id = result.getInt("locales.id");
             courseObj.course.local.name = result.getString("locales.name");
@@ -64,12 +64,27 @@ public class GetCourse extends Model {
     }
 
     public GetCourse getCourse() {
-        setGet("SELECT * FROM courses, accounts, avatars, groups, languages, locales\n" +
+        setGet("SELECT * FROM courses, accounts, avatars, groups, languages, locales, course_moderation\n" +
                 "WHERE accounts.id=courses.account_id\n" +
                 "AND avatars.id=accounts.avatar_id\n" +
                 "AND groups.id=accounts.group_id\n" +
                 "AND courses.locales_id=locales.id\n" +
                 "AND courses.language_id=languages.id\n" +
+                "AND course_moderation.course_id=courses.id\n" +
+                "AND course_moderation.validate>0\n" +
+                "ORDER BY courses.id ASC");
+        return this;
+    }
+
+    public GetCourse getCourseModeration() {
+        setGet("SELECT * FROM courses, accounts, avatars, groups, languages, locales, course_moderation\n" +
+                "WHERE accounts.id=courses.account_id\n" +
+                "AND avatars.id=accounts.avatar_id\n" +
+                "AND groups.id=accounts.group_id\n" +
+                "AND courses.locales_id=locales.id\n" +
+                "AND courses.language_id=languages.id\n" +
+                "AND course_moderation.course_id=courses.id\n" +
+                "AND course_moderation.validate==0\n" +
                 "ORDER BY courses.id ASC");
         return this;
     }

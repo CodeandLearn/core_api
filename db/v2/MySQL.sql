@@ -367,21 +367,9 @@ DROP TABLE IF EXISTS `exercises_moderation` ;
 
 CREATE TABLE IF NOT EXISTS `exercises_moderation` (
   `exercise_id` INT NOT NULL,
-  `moderation_validate_id` INT NULL,
+  `validate` INT NULL,
   `commentary` TEXT NULL,
   PRIMARY KEY (`exercise_id`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `moderation_validate`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `moderation_validate` ;
-
-CREATE TABLE IF NOT EXISTS `moderation_validate` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NULL,
-  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
@@ -392,7 +380,7 @@ DROP TABLE IF EXISTS `course_moderation` ;
 
 CREATE TABLE IF NOT EXISTS `course_moderation` (
   `course_id` INT NOT NULL,
-  `moderation_validate_id` INT NULL,
+  `validate` INT NULL,
   `commentary` TEXT NULL,
   PRIMARY KEY (`course_id`))
 ENGINE = InnoDB;
@@ -408,8 +396,7 @@ CREATE TABLE IF NOT EXISTS `code_templates` (
   `exercise_id` INT NOT NULL,
   `file_name` VARCHAR(45) NOT NULL,
   `content` TEXT NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 

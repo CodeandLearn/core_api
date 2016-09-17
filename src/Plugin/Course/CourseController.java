@@ -22,6 +22,12 @@ public class CourseController {
     }
 
     @Methode("GET")
+    @Route("/course/moderation")
+    public GetCourse getCourseModeration(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
+        return new GetCourse().getCourseModeration();
+    }
+
+    @Methode("GET")
     @Route("/course/id/{id}")
     public GetCourse getCourseWithId(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new GetCourse().getCourseWithId(args.getInt("id"));
@@ -85,6 +91,12 @@ public class CourseController {
     @Route("/course/comment/{id}")
     public PutCourse putCourseComment(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new PutCourse().putCourseComment(args.getInt("id"), jsonObject);
+    }
+
+    @Methode("PUT")
+    @Route("/course/moderation/{course_id}")
+    public PutCourse putModerationCourse(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
+        return new PutCourse().putModerationCourse(args.getInt("course_id"), jsonObject);
     }
 
     @Methode("DELETE")

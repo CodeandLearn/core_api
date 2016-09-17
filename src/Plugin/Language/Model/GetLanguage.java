@@ -4,6 +4,7 @@ import Core.Database.SQL;
 import Core.Http.Map;
 import Core.Model;
 import Plugin.Language.Obj.LanguageObj;
+import Plugin.Language.Obj.LanguagePostObj;
 
 /**
  * Created by Fabien on 06/05/2016.
@@ -11,9 +12,9 @@ import Plugin.Language.Obj.LanguageObj;
 public class GetLanguage extends Model {
     @Override
     protected Object setData(Map result) {
-        LanguageObj languageObj = new LanguageObj();
-        languageObj.language.id = result.getInt("languages.id");
-        languageObj.language.name = result.getString("languages.name");
+        LanguagePostObj languageObj = new LanguagePostObj();
+        languageObj.id = result.getInt("languages.id");
+        languageObj.name = result.getString("languages.name");
         return languageObj;
     }
 
