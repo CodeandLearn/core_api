@@ -28,6 +28,12 @@ public class CourseController {
     }
 
     @Methode("GET")
+    @Route("/course/moderation/{course_id}")
+    public GetCourse getCourseModerationId(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
+        return new GetCourse().getCourseModerationId(args.getInt("course_id"));
+    }
+
+    @Methode("GET")
     @Route("/course/id/{id}")
     public GetCourse getCourseWithId(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new GetCourse().getCourseWithId(args.getInt("id"));
@@ -43,6 +49,18 @@ public class CourseController {
     @Route("/course/author/id/{author_id}")
     public GetCourse getCourseByAuthorId(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new GetCourse().getCourseByAuthorId(args.getInt("author_id"));
+    }
+
+    @Methode("GET")
+    @Route("/course/account")
+    public GetCourse getAccountCourses(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
+        return new GetCourse().getAccountCourses(UserSecuritySingleton.getInstance().getUserId(socket));
+    }
+
+    @Methode("GET")
+    @Route("/course/account/{account_id}")
+    public GetCourse getAccountCoursesId(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
+        return new GetCourse().getAccountCourses(args.getInt("account_id"));
     }
 
     @Methode("GET")

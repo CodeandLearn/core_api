@@ -4,6 +4,7 @@ import Plugin.Account.Obj.AccountObj;
 import Plugin.Blog.Obj.LocalObj;
 import Plugin.Language.Obj.LanguageObj;
 import Plugin.Language.Obj.LanguagePostObj;
+import Plugin.Language.Obj.ModerationObj;
 
 public class CoursePostObj {
     public int id;
@@ -17,4 +18,5 @@ public class CoursePostObj {
     public AccountObj account = new AccountObj();
     public LocalObj local = new LocalObj();
     public LanguagePostObj language = new LanguagePostObj();
+    public ModerationObj moderation = new ModerationObj();
 }

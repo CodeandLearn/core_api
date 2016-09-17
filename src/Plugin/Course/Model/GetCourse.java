@@ -30,6 +30,9 @@ public class GetCourse extends Model {
             courseObj.course.local.name = result.getString("locales.name");
             courseObj.course.modify_timestamp = result.getLong("courses.modify_timestamp");
             courseObj.course.title = result.getString("courses.title");
+            courseObj.course.moderation.course_id = result.getInt("course_moderation.course_id");
+            courseObj.course.moderation.validate = result.getInt("course_moderation.validate");
+            courseObj.course.moderation.commentary = result.getString("course_moderation.commentary");
             courseObj.course.account.id = result.getInt("accounts.id");
             courseObj.course.account.username = result.getString("accounts.username");
             courseObj.course.account.group.id = result.getInt("groups.id");
@@ -89,27 +92,58 @@ public class GetCourse extends Model {
         return this;
     }
 
-    public GetCourse getCourseWithId(int id) {
-        make.add(id);
-        setGet(SQL.make("SELECT * FROM courses, accounts, avatars, groups, languages, locales\n" +
+    public GetCourse getCourseModerationId(int course_id) {
+        make.add(course_id);
+        setGet(SQL.make("SELECT * FROM courses, accounts, avatars, groups, languages, locales, course_moderation\n" +
                 "WHERE accounts.id=courses.account_id\n" +
                 "AND avatars.id=accounts.avatar_id\n" +
                 "AND groups.id=accounts.group_id\n" +
                 "AND courses.locales_id=locales.id\n" +
                 "AND courses.language_id=languages.id\n" +
+                "AND course_moderation.course_id=courses.id\n" +
+                "AND course_moderation.validate==0\n" +
+                "AND courses.id=? ORDER BY courses.id ASC", make.toArray()));
+        return this;
+    }
+
+    public GetCourse getCourseWithId(int course_id) {
+        make.add(course_id);
+        setGet(SQL.make("SELECT * FROM courses, accounts, avatars, groups, languages, locales, course_moderation\n" +
+                "WHERE accounts.id=courses.account_id\n" +
+                "AND avatars.id=accounts.avatar_id\n" +
+                "AND groups.id=accounts.group_id\n" +
+                "AND courses.locales_id=locales.id\n" +
+                "AND courses.language_id=languages.id\n" +
+                "AND course_moderation.course_id=courses.id\n" +
+                "AND course_moderation.validate>0\n" +
                 "AND courses.id=? ORDER BY courses.id ASC", make.toArray()));
         return this;
     }
 
     public GetCourse getCourseWithLimit(int limit) {
         make.add(limit);
+        setGet(SQL.make("SELECT * FROM courses, accounts, avatars, groups, languages, locales, course_moderation\n" +
+                "WHERE accounts.id=courses.account_id\n" +
+                "AND avatars.id=accounts.avatar_id\n" +
+                "AND groups.id=accounts.group_id\n" +
+                "AND courses.locales_id=locales.id\n" +
+                "AND courses.language_id=languages.id\n" +
+                "AND course_moderation.course_id=courses.id\n" +
+                "AND course_moderation.validate>0\n" +
+                "ORDER BY courses.id ASC LIMIT ?", make.toArray()));
+        return this;
+    }
+
+    public GetCourse getAccountCourses(int author_id) {
+        make.add(author_id);
         setGet(SQL.make("SELECT * FROM courses, accounts, avatars, groups, languages, locales\n" +
                 "WHERE accounts.id=courses.account_id\n" +
                 "AND avatars.id=accounts.avatar_id\n" +
                 "AND groups.id=accounts.group_id\n" +
                 "AND courses.locales_id=locales.id\n" +
                 "AND courses.language_id=languages.id\n" +
-                "ORDER BY courses.id ASC LIMIT ?", make.toArray()));
+                "AND course_moderation.course_id=courses.id\n" +
+                "AND courses.account_id=? ORDER BY courses.id ASC", make.toArray()));
         return this;
     }
 
@@ -121,6 +155,8 @@ public class GetCourse extends Model {
                 "AND groups.id=accounts.group_id\n" +
                 "AND courses.locales_id=locales.id\n" +
                 "AND courses.language_id=languages.id\n" +
+                "AND course_moderation.course_id=courses.id\n" +
+                "AND course_moderation.validate>0\n" +
                 "AND courses.account_id=? ORDER BY courses.id ASC", make.toArray()));
         return this;
     }
@@ -133,6 +169,8 @@ public class GetCourse extends Model {
                 "AND groups.id=accounts.group_id\n" +
                 "AND courses.locales_id=locales.id\n" +
                 "AND courses.language_id=languages.id\n" +
+                "AND course_moderation.course_id=courses.id\n" +
+                "AND course_moderation.validate>0\n" +
                 "AND courses.language_id=? ORDER BY courses.id ASC", make.toArray()));
         return this;
     }
@@ -145,6 +183,8 @@ public class GetCourse extends Model {
                 "AND groups.id=accounts.group_id\n" +
                 "AND courses.locales_id=locales.id\n" +
                 "AND courses.language_id=languages.id\n" +
+                "AND course_moderation.course_id=courses.id\n" +
+                "AND course_moderation.validate>0\n" +
                 "AND courses.locales_id=? ORDER BY courses.id ASC", make.toArray()));
         return this;
     }
@@ -157,6 +197,8 @@ public class GetCourse extends Model {
                 "AND groups.id=accounts.group_id\n" +
                 "AND courses.locales_id=locales.id\n" +
                 "AND courses.language_id=languages.id\n" +
+                "AND course_moderation.course_id=courses.id\n" +
+                "AND course_moderation.validate>0\n" +
                 "AND courses.title=? ORDER BY courses.id ASC", make.toArray()));
         return this;
     }
