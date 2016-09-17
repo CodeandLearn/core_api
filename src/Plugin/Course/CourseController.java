@@ -64,6 +64,12 @@ public class CourseController {
     }
 
     @Methode("GET")
+    @Route("/course/account/{course_id}")
+    public GetCourse getAccountCourseId(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
+        return new GetCourse().getAccountCourseId(UserSecuritySingleton.getInstance().getUserId(socket), args.getInt("course_id"));
+    }
+
+    @Methode("GET")
     @Route("/course/language/id/{language_id}")
     public GetCourse getCourseByLanguageId(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new GetCourse().getCourseByLanguageId(args.getInt("language_id"));

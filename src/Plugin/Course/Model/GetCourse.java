@@ -105,6 +105,21 @@ public class GetCourse extends Model {
         return this;
     }
 
+    public GetCourse getAccountCourseId(int author_id, int course_id) {
+        make.add(author_id);
+        make.add(course_id);
+        setGet(SQL.make("SELECT * FROM courses, accounts, avatars, groups, languages, locales, course_moderation\n" +
+                "WHERE accounts.id=courses.account_id\n" +
+                "AND avatars.id=accounts.avatar_id\n" +
+                "AND groups.id=accounts.group_id\n" +
+                "AND courses.locales_id=locales.id\n" +
+                "AND courses.language_id=languages.id\n" +
+                "AND course_moderation.course_id=courses.id\n" +
+                "AND accounts.id=?\n" +
+                "AND courses.id=? ORDER BY courses.id ASC", make.toArray()));
+        return this;
+    }
+
     public GetCourse getCourseWithId(int course_id) {
         make.add(course_id);
         setGet(SQL.make("SELECT * FROM courses, accounts, avatars, groups, languages, locales, course_moderation\n" +
