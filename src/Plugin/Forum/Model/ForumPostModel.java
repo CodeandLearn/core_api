@@ -14,7 +14,7 @@ public class ForumPostModel extends Model {
     protected Object setData(Map result) {
         ForumPostObj fpObj = new ForumPostObj();
         fpObj.id = result.getInt("forum_posts.id");
-        fpObj.forums_subject_id = result.getInt("forum_posts.forum_subject_id");
+        fpObj.forums_subject_id = result.getInt("forum_posts.forums_subject_id");
         fpObj.account_id = result.getInt("forum_posts.account_id");
         fpObj.create_timestamp = result.getLong("forum_posts.create_timestamp");
         fpObj.modify_timestamp = result.getLong("forum_posts.modify_timestamp");
@@ -25,7 +25,7 @@ public class ForumPostModel extends Model {
 
     public ForumPostModel getPosts(int forum_subject_id) {
         make.add(forum_subject_id);
-        setGet(SQL.make("SELECT * FROM forum_posts WHERE forum_subject_id = ?", make.toArray()));
+        setGet(SQL.make("SELECT * FROM forum_posts WHERE forums_subject_id = ?", make.toArray()));
         return this;
     }
 
@@ -57,7 +57,7 @@ public class ForumPostModel extends Model {
 
     public ForumPostModel deleteAll(int forum_subject_id){
         make.add(forum_subject_id);
-        setDelete(SQL.make("DELETE FROM forum_posts WHERE forum_subject_id=?", make.toArray()));
+        setDelete(SQL.make("DELETE FROM forum_posts WHERE forums_subject_id=?", make.toArray()));
         return this;
     }
 

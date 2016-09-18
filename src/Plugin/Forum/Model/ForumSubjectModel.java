@@ -13,14 +13,14 @@ public class ForumSubjectModel extends Model {
     @Override
     protected Object setData(Map result) {
         ForumSubjectObj fsObj = new ForumSubjectObj();
-        fsObj.id = result.getInt("forum_posts.id");
-        fsObj.forums_forum_id = result.getInt("forum_posts.forums_forum_id");
-        fsObj.locales_id = result.getInt("forum_posts.locales_id");
-        fsObj.account_id = result.getInt("forum_posts.account_id");
-        fsObj.timestamp =  result.getLong("forum_posts.timestamp");
-        fsObj.replies =  result.getInt("forum_posts.replies");
-        fsObj.views = result.getInt("forum_posts.views");
-        fsObj.subject = result.getString("forum_posts.subject");
+        fsObj.id = result.getInt("forum_subjects.id");
+        fsObj.forums_forum_id = result.getInt("forum_subjects.forums_forum_id");
+        fsObj.locales_id = result.getInt("forum_subjects.locales_id");
+        fsObj.account_id = result.getInt("forum_subjects.account_id");
+        fsObj.timestamp =  result.getLong("forum_subjects.timestamp");
+        fsObj.replies =  result.getInt("forum_subjects.replies");
+        fsObj.views = result.getInt("forum_subjects.views");
+        fsObj.subject = result.getString("forum_subjects.subject");
         return fsObj;
     }
 

@@ -13,13 +13,14 @@ import org.json.JSONObject;
 public class ForumCategoryModel extends Model {
     protected Object setData(Map results) {
         ForumCategoryObj fcObj = new ForumCategoryObj();
-        fcObj.id = results.getInt("id");
-        fcObj.name = results.getString("name");
+        fcObj.id = results.getInt("forum_category.id");
+        fcObj.name = results.getString("forum_category.name");
         return fcObj;
     }
 
     public ForumCategoryModel getForumCategories() {
-        setGet(SQL.make("SELECT * FROM forum_category", make.toArray()));
+        make.add(1);
+        setGet(SQL.make("SELECT * FROM forum_category ORDER BY id", make.toArray()));
         return this;
     }
 
