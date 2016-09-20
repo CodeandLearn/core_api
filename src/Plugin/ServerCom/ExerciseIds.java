@@ -1,5 +1,6 @@
 package Plugin.ServerCom;
 
+import Core.Singleton.ServerSingleton;
 import com.esotericsoftware.kryonet.Server;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class ExerciseIds {
 
     public void addId(int id) {
         list.add(id);
+        ServerSingleton.getInstance().log("[COM] -> new exercise in queue " + id);
     }
 
     public int getLastId() {

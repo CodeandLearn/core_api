@@ -63,6 +63,7 @@ CREATE TABLE `scripts` (
 CREATE TABLE `codes` (
   `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
   `user_exercise_id` INTEGER NOT NULL,
+  `name` VARCHAR(45) NULL,
   `content` TEXT NULL,
   `create_timestamp` TIMESTAMP NULL,
   `modify_timestamp` TIMESTAMP NULL);

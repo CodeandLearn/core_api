@@ -98,6 +98,7 @@ CREATE SEQUENCE codes_seq;
 CREATE TABLE IF NOT EXISTS codes (
   id INT NOT NULL DEFAULT NEXTVAL ('codes_seq'),
   user_exercise_id INT NOT NULL,
+  name VARCHAR(250) NULL,
   content TEXT NULL,
   create_timestamp TIMESTAMP(0) NULL,
   modify_timestamp TIMESTAMP(0) NULL,
