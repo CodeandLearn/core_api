@@ -5,6 +5,7 @@ import Core.Http.Error;
 import Core.Singleton.IpSingleton;
 import Core.Singleton.ServerSingleton;
 import Core.Singleton.UserSecuritySingleton;
+import Plugin.Server.Model.Server;
 import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,10 +41,12 @@ public class Router {
                         if (methods.isAnnotationPresent(Route.class) && methods.isAnnotationPresent(Methode.class)) {
                             if (methods.getAnnotation(Route.class).value().equals(route) && methods.getAnnotation(Methode.class).value().equals(method)) {
                                 try {
+                                    ServerSingleton.getInstance().log(socket, "[SERVER] -> response " + error.getCode() + " " + error.getError() + " | " + ServerSingleton.getInstance().getHttpCode(socket));
                                     ServerSingleton.getInstance().log(socket, "[SERVER] -> execute " + route);
                                     Object[] params = {socket, oauth2, headerField, jsonObject, args};
                                     String json = cleanJson(socket, method, methods.invoke(obj.newInstance(), params)).toString();
                                     ServerSingleton.getInstance().log(socket, "[SERVER] -> " + json);
+                                    ServerSingleton.getInstance().log(socket, "[SERVER] -> response " + error.getCode() + " " + error.getError() + " | " + ServerSingleton.getInstance().getHttpCode(socket));
                                     return json;
                                 } catch (IllegalAccessException | InstantiationException e) {
                                     ServerSingleton.getInstance().log(socket, "[SERVER] -> error route not founded: ", e);
