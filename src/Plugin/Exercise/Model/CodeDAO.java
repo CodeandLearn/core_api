@@ -1,14 +1,13 @@
 package Plugin.Exercise.Model;
 
 import Core.Database.SQL;
-import Core.Database.SQLRequest;
 import Core.Http.Map;
 import Core.Model;
 import Plugin.Exercise.Obj.CodeObj;
 import Plugin.ServerCom.ExerciseIds;
-import org.json.JSONObject;
+import org.json.JSONArray;
 
-import java.util.HashMap;
+import org.json.JSONObject;
 
 /**
  * Created by HallElouia on 04/25/2016.
@@ -33,13 +32,26 @@ public class CodeDAO extends Model {
     }
 
     public CodeDAO post(JSONObject jsonObject) {
-        make.add(jsonObject.getInt("user_exercise_id"));
-        make.add(jsonObject.getString("content"));
-        make.add(getTimestamp());
-        make.add(getTimestamp());
-        make.add(jsonObject.getString("name"));
-        setPost(SQL.make("INSERT INTO codes (user_exercise_id, content, create_timestamp, modify_timestamp, name) VALUES (?, ?, ?, ?,?)", make.toArray()));
-        ExerciseIds.getInstance().addId(jsonObject.getInt("user_exercise_id"));
+
+        if (jsonObject.has("codes")) {
+            JSONArray array = (JSONArray) jsonObject.get("codes");
+
+            JSONObject object;
+            int id = 0;
+            for (int n = 0; n < array.length(); ++n) {
+                object = array.getJSONObject(n);
+                id = object.getInt("user_exercise_id");
+
+                make.add(id);
+                make.add(object.getString("content"));
+                make.add(getTimestamp());
+                make.add(getTimestamp());
+                make.add(object.getString("name"));
+                setPost(SQL.make("INSERT INTO codes (user_exercise_id, content, create_timestamp, modify_timestamp, name) VALUES (?, ?, ?, ?,?)", make.toArray()));
+                make.clear();
+                }
+            ExerciseIds.getInstance().addId(id);
+        }
         return this;
     }
 
