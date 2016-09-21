@@ -88,7 +88,7 @@ DROP TABLE IF EXISTS `codes` ;
 CREATE TABLE IF NOT EXISTS `codes` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_exercise_id` INT NOT NULL,
-  `username` VARCHAR(45) NULL,
+  `name` VARCHAR(45) NULL,
   `content` TEXT NULL,
   `create_timestamp` LONG NULL,
   `modify_timestamp` LONG NULL,
