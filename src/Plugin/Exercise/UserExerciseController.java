@@ -85,9 +85,9 @@ public class UserExerciseController {
     }
 
     @Methode("PUT")
-    @Route("/user_exercise/code/{id}")
+    @Route("/user_exercise/code/{id_exercise}")
     public CodeDAO putUserExerciseCode(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new CodeDAO().update(args.getInt("id"), jsonObject);
+        return new CodeDAO().update(args.getInt("id_exercise"), jsonObject);
     }
 
     @Methode("PUT")

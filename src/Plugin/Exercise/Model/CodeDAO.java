@@ -6,7 +6,6 @@ import Core.Model;
 import Plugin.Exercise.Obj.CodeObj;
 import Plugin.ServerCom.ExerciseIds;
 import org.json.JSONArray;
-
 import org.json.JSONObject;
 
 /**
@@ -32,16 +31,12 @@ public class CodeDAO extends Model {
     }
 
     public CodeDAO post(JSONObject jsonObject) {
-
         if (jsonObject.has("codes")) {
             JSONArray array = (JSONArray) jsonObject.get("codes");
-
-            JSONObject object;
             int id = 0;
             for (int n = 0; n < array.length(); ++n) {
-                object = array.getJSONObject(n);
+                JSONObject object = array.getJSONObject(n);
                 id = object.getInt("user_exercise_id");
-
                 make.add(id);
                 make.add(object.getString("content"));
                 make.add(getTimestamp());
@@ -49,20 +44,32 @@ public class CodeDAO extends Model {
                 make.add(object.getString("name"));
                 setPost(SQL.make("INSERT INTO codes (user_exercise_id, content, create_timestamp, modify_timestamp, name) VALUES (?, ?, ?, ?,?)", make.toArray()));
                 make.clear();
-                }
-            ExerciseIds.getInstance().addId(id);
+            }
+            if (!ExerciseIds.getInstance().inQueue(id)) {
+                ExerciseIds.getInstance().addId(id);
+            }
         }
         return this;
     }
 
-    public CodeDAO update(int id, JSONObject jsonObject) {
-        make.add(jsonObject.getInt("user_exercise_id"));
-        make.add(jsonObject.getString("content"));
-        make.add(getTimestamp());
-        make.add(jsonObject.getString("name"));
-        make.add(id);
-        setPut(SQL.make("UPDATE codes SET user_exercise_id=?, content=?, modify_timestamp=?, name=? WHERE id=?", make.toArray()));
-        ExerciseIds.getInstance().addId(jsonObject.getInt("user_exercise_id"));
+    public CodeDAO update(int user_exercise_id, JSONObject jsonObject) {
+        if (jsonObject.has("codes")) {
+            JSONArray array = (JSONArray) jsonObject.get("codes");
+            for (int n = 0; n < array.length(); ++n) {
+                JSONObject object = array.getJSONObject(n);
+                System.err.println(array.toString());
+                make.add(user_exercise_id);
+                make.add(object.getString("content"));
+                make.add(getTimestamp());
+                make.add(object.getString("name"));
+                make.add(object.getInt("id"));
+                setPut(SQL.make("UPDATE codes SET user_exercise_id=?, content=?, modify_timestamp=?, name=? WHERE id=?", make.toArray()));
+                make.clear();
+            }
+            if (!ExerciseIds.getInstance().inQueue(user_exercise_id)) {
+                ExerciseIds.getInstance().addId(user_exercise_id);
+            }
+        }
         return this;
     }
 

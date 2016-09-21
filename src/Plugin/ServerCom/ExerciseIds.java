@@ -20,6 +20,15 @@ public class ExerciseIds {
         return SingletonHolder.instance;
     }
 
+    public boolean inQueue(int id) {
+        for (int id_ex : list) {
+            if (id_ex == id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void addId(int id) {
         list.add(id);
         ServerSingleton.getInstance().log("[COM] -> new exercise in queue " + id);
