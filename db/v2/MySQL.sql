@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `grades` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_exercise_id` INT NOT NULL,
   `value` INT NULL,
-  `timestamp` TIMESTAMP NULL,
+  `timestamp` LONG NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -45,8 +45,8 @@ CREATE TABLE IF NOT EXISTS `exercises_comments` (
   `exercise_id` INT NOT NULL,
   `account_id` INT NOT NULL,
   `content` TEXT NULL,
-  `create_timestamp` TIMESTAMP NULL,
-  `modify_timestamp` TIMESTAMP NULL,
+  `create_timestamp` LONG NULL,
+  `modify_timestamp` LONG NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `logs` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_exercise_id` INT NOT NULL,
   `content` TEXT NULL,
-  `timestamp` TIMESTAMP NULL,
+  `timestamp` LONG NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -74,8 +74,8 @@ CREATE TABLE IF NOT EXISTS `scripts` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `exercise_id` INT NOT NULL,
   `content` TEXT NULL,
-  `create_timestamp` TIMESTAMP NULL,
-  `modify_timestamp` TIMESTAMP NULL,
+  `create_timestamp` LONG NULL,
+  `modify_timestamp` LONG NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -90,8 +90,8 @@ CREATE TABLE IF NOT EXISTS `codes` (
   `user_exercise_id` INT NOT NULL,
   `username` VARCHAR(45) NULL,
   `content` TEXT NULL,
-  `create_timestamp` TIMESTAMP NULL,
-  `modify_timestamp` TIMESTAMP NULL,
+  `create_timestamp` LONG NULL,
+  `modify_timestamp` LONG NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -118,7 +118,7 @@ CREATE TABLE IF NOT EXISTS `exercises_corrections` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `exercise_id` INT NOT NULL,
   `content` TEXT NULL,
-  `timestamp` TIMESTAMP NULL,
+  `timestamp` LONG NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -135,8 +135,8 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   `email` VARCHAR(100) NULL,
   `group_id` INT NULL,
   `avatar_id` INT NULL,
-  `create_timestamp` TIMESTAMP NULL,
-  `last_connect_timestamp` TIMESTAMP NULL,
+  `create_timestamp` LONG NULL,
+  `last_connect_timestamp` LONG NULL,
   `nb_courses_done` INT NULL DEFAULT 0,
   `nb_exercises_done` INT NULL DEFAULT 0,
   PRIMARY KEY (`id`))
@@ -168,8 +168,8 @@ CREATE TABLE IF NOT EXISTS `courses` (
   `language_id` INT NULL,
   `title` VARCHAR(45) NULL,
   `content` TEXT NULL,
-  `create_timestamp` TIMESTAMP NULL,
-  `modify_timestamp` TIMESTAMP NULL,
+  `create_timestamp` LONG NULL,
+  `modify_timestamp` LONG NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -208,8 +208,8 @@ CREATE TABLE IF NOT EXISTS `courses_comments` (
   `course_id` INT NULL,
   `account_id` INT NULL,
   `content` TEXT NULL,
-  `create_timestamp` TIMESTAMP NULL,
-  `modify_timestamp` TIMESTAMP NULL,
+  `create_timestamp` LONG NULL,
+  `modify_timestamp` LONG NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -226,8 +226,8 @@ CREATE TABLE IF NOT EXISTS `blog_posts` (
   `blog_category_id` INT NULL,
   `title` VARCHAR(45) NULL,
   `content` TEXT NULL,
-  `create_timestamp` TIMESTAMP NULL,
-  `modify_timestamp` TIMESTAMP NULL,
+  `create_timestamp` LONG NULL,
+  `modify_timestamp` LONG NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -242,8 +242,8 @@ CREATE TABLE IF NOT EXISTS `blog_posts_comments` (
   `account_id` INT NULL,
   `blog_post_id` INT NULL,
   `content` TEXT NULL,
-  `create_timestamp` TIMESTAMP NULL,
-  `modify_timestamp` TIMESTAMP NULL,
+  `create_timestamp` LONG NULL,
+  `modify_timestamp` LONG NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -270,7 +270,7 @@ CREATE TABLE IF NOT EXISTS `forum_subjects` (
   `forums_forum_id` INT NULL,
   `locales_id` INT NULL,
   `account_id` INT NULL,
-  `timestamp` TIMESTAMP NULL,
+  `timestamp` LONG NULL,
   `replies` INT NULL,
   `views` INT NULL,
   `subject` VARCHAR(140) NULL,
@@ -313,8 +313,8 @@ CREATE TABLE IF NOT EXISTS `forum_posts` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `forums_subject_id` INT NULL,
   `account_id` INT NULL,
-  `create_timestamp` TIMESTAMP NULL,
-  `modify_timestamp` TIMESTAMP NULL,
+  `create_timestamp` LONG NULL,
+  `modify_timestamp` LONG NULL,
   `content` TEXT NULL,
   `likes` INT NULL,
   PRIMARY KEY (`id`))
@@ -341,7 +341,7 @@ DROP TABLE IF EXISTS `users_badges` ;
 CREATE TABLE IF NOT EXISTS `users_badges` (
   `account_id` INT NOT NULL,
   `badge_id` INT NULL,
-  `timestamp` TIMESTAMP NULL,
+  `timestamp` LONG NULL,
   PRIMARY KEY (`account_id`))
 ENGINE = InnoDB;
 

@@ -87,7 +87,7 @@ public class GetCourse extends Model {
                 "AND courses.locales_id=locales.id\n" +
                 "AND courses.language_id=languages.id\n" +
                 "AND course_moderation.course_id=courses.id\n" +
-                "AND course_moderation.validate==0\n" +
+                "AND course_moderation.validate=='0'\n" +
                 "ORDER BY courses.id ASC");
         return this;
     }
