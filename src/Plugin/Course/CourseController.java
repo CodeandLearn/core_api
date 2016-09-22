@@ -58,7 +58,7 @@ public class CourseController {
     }
 
     @Methode("GET")
-    @Route("/course/account/{account_id}")
+    @Route("/course/account/user/{account_id}")
     public GetCourse getAccountCoursesId(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new GetCourse().getAccountCourses(args.getInt("account_id"));
     }

@@ -16,12 +16,16 @@ public class UserExerciseDAO extends Model {
         userExerciseObj.account_id = result.getInt("user_exercises.account_id");
         userExerciseObj.exercise_id = result.getInt("user_exercises.exercise_id");
         userExerciseObj.id = result.getInt("user_exercises.id");
+        userExerciseObj.exercise.title = result.getString("exercises.title");
+        userExerciseObj.exercise.course_id = result.getInt("exercises.course_id");
+        userExerciseObj.course.language.name = result.getString("languages.name");
+        userExerciseObj.course.title = result.getString("courses.title");
         return userExerciseObj;
     }
 
     public UserExerciseDAO getUserExercises(int account_id) {
         make.add(account_id);
-        setGet(SQL.make("SELECT * FROM user_exercises WHERE account_id=?", make.toArray()));
+        setGet(SQL.make("SELECT * FROM user_exercises, exercises, courses, languages WHERE user_exercises.exercise_id=exercises.id AND exercises.course_id=courses.id AND courses.language_id=languages.id AND user_exercises.account_id=?", make.toArray()));
         return this;
     }
 
