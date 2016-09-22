@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS grades (
   id INT NOT NULL DEFAULT NEXTVAL ('grades_seq'),
   user_exercise_id INT NOT NULL,
   value INT NULL,
-  timestamp TIMESTAMP(0) NULL,
+  timestamp BIGINT NULL,
   PRIMARY KEY (id))
 ;
 
@@ -49,8 +49,8 @@ CREATE TABLE IF NOT EXISTS exercises_comments (
   exercise_id INT NOT NULL,
   account_id INT NOT NULL,
   content TEXT NULL,
-  create_timestamp TIMESTAMP(0) NULL,
-  modify_timestamp TIMESTAMP(0) NULL,
+  create_timestamp BIGINT NULL,
+  modify_timestamp BIGINT NULL,
   PRIMARY KEY (id))
 ;
 
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS logs (
   id INT NOT NULL DEFAULT NEXTVAL ('logs_seq'),
   user_exercise_id INT NOT NULL,
   content TEXT NULL,
-  timestamp TIMESTAMP(0) NULL,
+  timestamp BIGINT NULL,
   PRIMARY KEY (id))
 ;
 
@@ -82,8 +82,8 @@ CREATE TABLE IF NOT EXISTS scripts (
   id INT NOT NULL DEFAULT NEXTVAL ('scripts_seq'),
   exercise_id INT NOT NULL,
   content TEXT NULL,
-  create_timestamp TIMESTAMP(0) NULL,
-  modify_timestamp TIMESTAMP(0) NULL,
+  create_timestamp BIGINT NULL,
+  modify_timestamp BIGINT NULL,
   PRIMARY KEY (id))
 ;
 
@@ -100,8 +100,8 @@ CREATE TABLE IF NOT EXISTS codes (
   user_exercise_id INT NOT NULL,
   name VARCHAR(250) NULL,
   content TEXT NULL,
-  create_timestamp TIMESTAMP(0) NULL,
-  modify_timestamp TIMESTAMP(0) NULL,
+  create_timestamp BIGINT NULL,
+  modify_timestamp BIGINT NULL,
   PRIMARY KEY (id))
 ;
 
@@ -132,7 +132,7 @@ CREATE TABLE IF NOT EXISTS exercises_corrections (
   id INT NOT NULL DEFAULT NEXTVAL ('exercises_corrections_seq'),
   exercise_id INT NOT NULL,
   content TEXT NULL,
-  timestamp TIMESTAMP(0) NULL,
+  timestamp BIGINT NULL,
   PRIMARY KEY (id))
 ;
 
@@ -151,8 +151,8 @@ CREATE TABLE IF NOT EXISTS accounts (
   email VARCHAR(100) NULL,
   group_id INT NULL,
   avatar_id INT NULL,
-  create_timestamp TIMESTAMP(0) NULL,
-  last_connect_timestamp TIMESTAMP(0) NULL,
+  create_timestamp BIGINT NULL,
+  last_connect_timestamp BIGINT NULL,
   nb_courses_done INT NULL DEFAULT 0,
   nb_exercises_done INT NULL DEFAULT 0,
   PRIMARY KEY (id))
@@ -188,8 +188,8 @@ CREATE TABLE IF NOT EXISTS courses (
   language_id INT NULL,
   title VARCHAR(45) NULL,
   content TEXT NULL,
-  create_timestamp TIMESTAMP(0) NULL,
-  modify_timestamp TIMESTAMP(0) NULL,
+  create_timestamp BIGINT NULL,
+  modify_timestamp BIGINT NULL,
   PRIMARY KEY (id))
 ;
 
@@ -234,8 +234,8 @@ CREATE TABLE IF NOT EXISTS courses_comments (
   course_id INT NULL,
   account_id INT NULL,
   content TEXT NULL,
-  create_timestamp TIMESTAMP(0) NULL,
-  modify_timestamp TIMESTAMP(0) NULL,
+  create_timestamp BIGINT NULL,
+  modify_timestamp BIGINT NULL,
   PRIMARY KEY (id))
 ;
 
@@ -254,8 +254,8 @@ CREATE TABLE IF NOT EXISTS blog_posts (
   blog_category_id INT NULL,
   title VARCHAR(45) NULL,
   content TEXT NULL,
-  create_timestamp TIMESTAMP(0) NULL,
-  modify_timestamp TIMESTAMP(0) NULL,
+  create_timestamp BIGINT NULL,
+  modify_timestamp BIGINT NULL,
   PRIMARY KEY (id))
 ;
 
@@ -272,8 +272,8 @@ CREATE TABLE IF NOT EXISTS blog_posts_comments (
   account_id INT NULL,
   blog_post_id INT NULL,
   content TEXT NULL,
-  create_timestamp TIMESTAMP(0) NULL,
-  modify_timestamp TIMESTAMP(0) NULL,
+  create_timestamp BIGINT NULL,
+  modify_timestamp BIGINT NULL,
   PRIMARY KEY (id))
 ;
 
@@ -304,7 +304,7 @@ CREATE TABLE IF NOT EXISTS forum_subjects (
   forums_forum_id INT NULL,
   locales_id INT NULL,
   account_id INT NULL,
-  timestamp TIMESTAMP(0) NULL,
+  timestamp BIGINT NULL,
   replies INT NULL,
   views INT NULL,
   subject VARCHAR(140) NULL,
@@ -353,8 +353,8 @@ CREATE TABLE IF NOT EXISTS forum_posts (
   id INT NOT NULL DEFAULT NEXTVAL ('forum_posts_seq'),
   forums_subject_id INT NULL,
   account_id INT NULL,
-  create_timestamp TIMESTAMP(0) NULL,
-  modify_timestamp TIMESTAMP(0) NULL,
+  create_timestamp BIGINT NULL,
+  modify_timestamp BIGINT NULL,
   content TEXT NULL,
   likes INT NULL,
   PRIMARY KEY (id))
@@ -383,7 +383,7 @@ DROP TABLE IF EXISTS users_badges ;
 CREATE TABLE IF NOT EXISTS users_badges (
   account_id INT NOT NULL,
   badge_id INT NULL,
-  timestamp TIMESTAMP(0) NULL,
+  timestamp BIGINT NULL,
   PRIMARY KEY (account_id))
 ;
 
@@ -451,12 +451,12 @@ CREATE TABLE IF NOT EXISTS code_templates (
 -- Set base record
 -- -----------------------------------------------------
 INSERT INTO avatars (path)
-VALUES ("http%3A%2F%2Fwww.freakingnews.com%2Fpictures%2F97500%2FKorean-Elephant-Rocket--97543.jpg");
-INSERT INTO groups (name, parent_id) VALUES ("member", 10);
-INSERT INTO groups (name, parent_id) VALUES ("moderator", 30);
-INSERT INTO groups (name, parent_id) VALUES ("administrator", 50);
-INSERT INTO locales (name) VALUES ("FR");
-INSERT INTO locales (name) VALUES ("EN");
+VALUES ('http%3A%2F%2Fwww.freakingnews.com%2Fpictures%2F97500%2FKorean-Elephant-Rocket--97543.jpg');
+INSERT INTO groups (name, parent_id) VALUES ('member', 10);
+INSERT INTO groups (name, parent_id) VALUES ('moderator', 30);
+INSERT INTO groups (name, parent_id) VALUES ('administrator', 50);
+INSERT INTO locales (name) VALUES ('FR');
+INSERT INTO locales (name) VALUES ('EN');
 
 
 -- -----------------------------------------------------
@@ -464,8 +464,8 @@ INSERT INTO locales (name) VALUES ("EN");
 -- -----------------------------------------------------
 INSERT INTO accounts (username, password, email, group_id, avatar_id, create_timestamp, last_connect_timestamp, nb_courses_done, nb_exercises_done)
 VALUES
-  ("Admin", "5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8", "admin%40codeandlear.com", 3, 1, 1464262190085, 1464262190085, 0, 0);
-INSERT INTO blog_posts_category (name) VALUES ("Default");
-INSERT INTO languages (name) VALUES ("C%23");
-INSERT INTO languages (name) VALUES ("JAVA");
-INSERT INTO languages (name) VALUES ("C");
+  ('Admin', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 'admin%40codeandlear.com', 3, 1, 1464262190085, 1464262190085, 0, 0);
+INSERT INTO blog_posts_category (name) VALUES ('Default');
+INSERT INTO languages (name) VALUES ('C%23');
+INSERT INTO languages (name) VALUES ('JAVA');
+INSERT INTO languages (name) VALUES ('C');
