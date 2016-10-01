@@ -20,7 +20,7 @@ develop:
     - 'ssh -i ssh_keys/ssh_key_codeandlearn.fr cldeploybackend@5.196.67.156 "rm -rf /home/cldeploybackend/develop"'
     - "scp -i ssh_keys/ssh_key_codeandlearn.fr -r target/ cldeploybackend@5.196.67.156:/home/cldeploybackend/develop"
     - "scp -i ssh_keys/ssh_key_codeandlearn.fr configs/develop.properties cldeploybackend@5.196.67.156:/home/cldeploybackend/develop/config.properties"
-    - 'ssh -i ssh_keys/ssh_key_codeandlearn.fr -t cldeploybackend@5.196.67.156 "screen -S api_develop -d -m java -jar ./cl_api.jar"'
+    - 'ssh -i ssh_keys/ssh_key_codeandlearn.fr -t cldeploybackend@5.196.67.156 "cd ./develop && screen -S api_develop -d -m java -jar ./cl_api.jar"'
   environment: develop
   stage: deploy
   only:
@@ -40,7 +40,7 @@ beta:
     - 'ssh -i ssh_keys/ssh_key_codeandlearn.fr cldeploybackend@5.196.67.156 "rm -rf /home/cldeploybackend/beta"'
     - "scp -i ssh_keys/ssh_key_codeandlearn.fr -r target/ cldeploybackend@5.196.67.156:/home/cldeploybackend/beta"
     - "scp -i ssh_keys/ssh_key_codeandlearn.fr configs/beta.properties cldeploybackend@5.196.67.156:/home/cldeploybackend/beta/config.properties"
-    - 'ssh -i ssh_keys/ssh_key_codeandlearn.fr -t cldeploybackend@5.196.67.156 "screen -S api_beta -d -m java -jar ./cl_api.jar"'
+    - 'ssh -i ssh_keys/ssh_key_codeandlearn.fr -t cldeploybackend@5.196.67.156 "cd ./beta && screen -S api_beta -d -m java -jar ./cl_api.jar"'
   environment: beta
   stage: deploy
   only:
@@ -60,7 +60,7 @@ production:
     - 'ssh -i ssh_keys/ssh_key_codeandlearn.fr cldeploybackend@5.196.67.156 "rm -rf /home/cldeploybackend/production"'
     - "scp -i ssh_keys/ssh_key_codeandlearn.fr -r target/ cldeploybackend@5.196.67.156:/home/cldeploybackend/production"
     - "scp -i ssh_keys/ssh_key_codeandlearn.fr configs/production.properties cldeploybackend@5.196.67.156:/home/cldeploybackend/production/config.properties"
-    - 'ssh -i ssh_keys/ssh_key_codeandlearn.fr -t cldeploybackend@5.196.67.156 "screen -S api_production -d -m java -jar ./cl_api.jar"'
+    - 'ssh -i ssh_keys/ssh_key_codeandlearn.fr -t cldeploybackend@5.196.67.156 "cd ./production && screen -S api_production -d -m java -jar ./cl_api.jar"'
   environment: production
   stage: deploy
   only:
