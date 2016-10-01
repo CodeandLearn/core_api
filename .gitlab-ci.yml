@@ -15,7 +15,7 @@ develop:
     - mkdir -p ~/.ssh
     - chmod 600 ssh_keys/ssh_key_codeandlearn.fr
     - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
-    - 'ssh -i ssh_keys/ssh_key_codeandlearn.fr cldeploybackend@5.196.67.156 "screen -S api_develop -p 0 -X quit"'
+    - 'ssh -i ssh_keys/ssh_key_codeandlearn.fr cldeploybackend@5.196.67.156 "screen -S api_develop -p 0 -X quit || true"'
   script:
     - 'ssh -i ssh_keys/ssh_key_codeandlearn.fr cldeploybackend@5.196.67.156 "rm -rf /home/cldeploybackend/develop"'
     - "scp -i ssh_keys/ssh_key_codeandlearn.fr -r target/ cldeploybackend@5.196.67.156:/home/cldeploybackend/develop"
@@ -35,7 +35,7 @@ beta:
     - mkdir -p ~/.ssh
     - chmod 600 ssh_keys/ssh_key_codeandlearn.fr
     - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
-    - 'ssh -i ssh_keys/ssh_key_codeandlearn.fr cldeploybackend@5.196.67.156 "screen -S api_beta -p 0 -X quit"'
+    - 'ssh -i ssh_keys/ssh_key_codeandlearn.fr cldeploybackend@5.196.67.156 "screen -S api_beta -p 0 -X quit || true"'
   script:
     - 'ssh -i ssh_keys/ssh_key_codeandlearn.fr cldeploybackend@5.196.67.156 "rm -rf /home/cldeploybackend/beta"'
     - "scp -i ssh_keys/ssh_key_codeandlearn.fr -r target/ cldeploybackend@5.196.67.156:/home/cldeploybackend/beta"
@@ -55,7 +55,7 @@ production:
     - mkdir -p ~/.ssh
     - chmod 600 ssh_keys/ssh_key_codeandlearn.fr
     - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
-    - 'ssh -i ssh_keys/ssh_key_codeandlearn.fr cldeploybackend@5.196.67.156 "screen -S api_production -p 0 -X quit"'
+    - 'ssh -i ssh_keys/ssh_key_codeandlearn.fr cldeploybackend@5.196.67.156 "screen -S api_production -p 0 -X quit || true"'
   script:
     - 'ssh -i ssh_keys/ssh_key_codeandlearn.fr cldeploybackend@5.196.67.156 "rm -rf /home/cldeploybackend/production"'
     - "scp -i ssh_keys/ssh_key_codeandlearn.fr -r target/ cldeploybackend@5.196.67.156:/home/cldeploybackend/production"
