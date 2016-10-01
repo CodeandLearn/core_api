@@ -64,7 +64,7 @@ production:
   environment: production
   stage: deploy
   only:
-    - production
+    - master
   except:
     - develop
     - beta
