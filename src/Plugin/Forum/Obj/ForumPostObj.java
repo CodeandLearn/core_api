@@ -5,10 +5,11 @@ package Plugin.Forum.Obj;
  */
 public class ForumPostObj {
     public int id;
-    public int forums_subject_id;
     public int account_id;
-    public long create_timestamp;
-    public long modify_timestamp;
+    public int forum_subject_id;
     public String content;
+    public long created_at;
+    public long last_updated;
     public int likes;
+    public ForumSubjectObj fsObj = new ForumSubjectObj();
 }
