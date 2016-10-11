@@ -21,7 +21,16 @@
 
 LOCK TABLES `accounts` WRITE;
 /*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
-INSERT  IGNORE INTO `accounts` VALUES (1,'Admin','5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8','admin%40codeandlearn.com',3,2,'1464262190085','1464262190085',0,0),(2,'hirsch','403926033d001b5279df37cbbe5287b7c7c267fa','lol%40lol.lol',1,1,'1474537334716','1474537334716',0,0),(3,'serguei','c9ddb6c25a8f77bd31ba26bb8332c4e1aa2c6778','serguei%40epitech.eu',1,1,'1474626677280','1474626677280',0,0),(4,'test2','c636e8e238fd7af97e2e500f8c6f0f4c0bedafb0','test2%40test.fr',1,1,'1474626720811','1474626720811',0,0),(5,'YellowLight1','51abb9636078defbf888d8457a7c76f85c8f114c','horiot.benjamin%40gmail.con',1,1,'1474630702161','1474630702161',0,0),(6,'Serguei12345','76902c9406dc341cbfda251bf01728f30eec0a41','mail%40mail.fr',1,1,'1474730275696','1474730275696',0,0),(7,'test10','6d48177594b1db78e1684ac2118dc7eafda81c70','test%40test.fr',1,1,'1474730304565','1474730304565',0,0),(8,'Serguei123456','1b8e85ee024a4375de2e4f10f21f1ccc281141ed','serguei%40epitech.de',1,1,'1474733763767','1474733763767',0,0),(9,'YellowLight2','51abb9636078defbf888d8457a7c76f85c8f114c','horiot.benjamin%40gmail.com',1,1,'1474738075111','1474738075111',0,0),(10,'Sheol','42339c579b1f9f3d748b59c65cf4d48640034c7f','tf.sheol%40gmail.com',1,3,'1475394299476','1475394299476',0,0);
+INSERT  IGNORE INTO `accounts` VALUES (1,0,'Admin','5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8','admin%40codeandlearn.com',3,2,'1464262190085','1464262190085',0,0),
+(2,0,'hirsch','403926033d001b5279df37cbbe5287b7c7c267fa','lol%40lol.lol',1,1,'1474537334716','1474537334716',0,0),
+(3,0,'serguei','c9ddb6c25a8f77bd31ba26bb8332c4e1aa2c6778','serguei%40epitech.eu',1,1,'1474626677280','1474626677280',0,0),
+(4,0,'test2','c636e8e238fd7af97e2e500f8c6f0f4c0bedafb0','test2%40test.fr',1,1,'1474626720811','1474626720811',0,0),
+(5,0,'YellowLight1','51abb9636078defbf888d8457a7c76f85c8f114c','horiot.benjamin%40gmail.con',1,1,'1474630702161','1474630702161',0,0),
+(6,0,'Serguei12345','76902c9406dc341cbfda251bf01728f30eec0a41','mail%40mail.fr',1,1,'1474730275696','1474730275696',0,0),
+(7,0,'test10','6d48177594b1db78e1684ac2118dc7eafda81c70','test%40test.fr',1,1,'1474730304565','1474730304565',0,0),
+(8,0,'Serguei123456','1b8e85ee024a4375de2e4f10f21f1ccc281141ed','serguei%40epitech.de',1,1,'1474733763767','1474733763767',0,0),
+(9,0,'YellowLight2','51abb9636078defbf888d8457a7c76f85c8f114c','horiot.benjamin%40gmail.com',1,1,'1474738075111','1474738075111',0,0),
+(10,0,'Sheol','42339c579b1f9f3d748b59c65cf4d48640034c7f','tf.sheol%40gmail.com',1,3,'1475394299476','1475394299476',0,0);
 /*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -31,7 +40,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `avatars` WRITE;
 /*!40000 ALTER TABLE `avatars` DISABLE KEYS */;
-INSERT  IGNORE INTO `avatars` VALUES (1,'http%3A%2F%2Fwww.freakingnews.com%2Fpictures%2F97500%2FKorean-Elephant-Rocket--97543.jpg'),(2,'https://byuc.files.wordpress.com/2012/07/avat-2.jpg'),(3,'https://chivethethrottle.files.wordpress.com/2012/11/random-t-11_16_12-920-44.jpg?w=920&h=689');
+INSERT  IGNORE INTO `avatars` VALUES (1,'name_1','http%3A%2F%2Fwww.freakingnews.com%2Fpictures%2F97500%2FKorean-Elephant-Rocket--97543.jpg'),(2,'name_2','https://byuc.files.wordpress.com/2012/07/avat-2.jpg'),(3,'name_3','https://chivethethrottle.files.wordpress.com/2012/11/random-t-11_16_12-920-44.jpg?w=920&h=689');
 /*!40000 ALTER TABLE `avatars` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -164,12 +173,12 @@ INSERT  IGNORE INTO `exercises_moderation` VALUES (1,1,' '),(2,0,'Content+not+re
 UNLOCK TABLES;
 
 --
--- Dumping data for table `forum_category`
+-- Dumping data for table `forum_categories`
 --
 
-LOCK TABLES `forum_category` WRITE;
-/*!40000 ALTER TABLE `forum_category` DISABLE KEYS */;
-/*!40000 ALTER TABLE `forum_category` ENABLE KEYS */;
+LOCK TABLES `forum_categories` WRITE;
+/*!40000 ALTER TABLE `forum_categories` DISABLE KEYS */;
+/*!40000 ALTER TABLE `forum_categories` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --

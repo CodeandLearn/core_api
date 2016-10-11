@@ -130,6 +130,7 @@ DROP TABLE IF EXISTS `accounts` ;
 
 CREATE TABLE IF NOT EXISTS `accounts` (
   `id` INT NOT NULL AUTO_INCREMENT,
+  `key_id` INT NOT NULL,
   `username` VARCHAR(45) NULL,
   `password` VARCHAR(255) NULL,
   `email` VARCHAR(100) NULL,
@@ -139,6 +140,32 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   `last_connect_timestamp` LONG NULL,
   `nb_courses_done` INT NULL DEFAULT 0,
   `nb_exercises_done` INT NULL DEFAULT 0,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `keys`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `keys` ;
+
+CREATE TABLE IF NOT EXISTS `keys` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `key` VARCHAR(45) NOT NULL,
+  `type` INT NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `history`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `history` ;
+
+CREATE TABLE IF NOT EXISTS `history` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `action` TEXT NULL,
+  `type` INT NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -281,13 +308,12 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `forum_category`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `forum_category` ;
+DROP TABLE IF EXISTS `forum_categories` ;
 
-CREATE TABLE IF NOT EXISTS `forum_category` (
+CREATE TABLE IF NOT EXISTS `forum_categories` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(45) NULL,
   `description` VARCHAR(250) NULL,
-  `last_updated` LONG NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -302,7 +328,6 @@ CREATE TABLE IF NOT EXISTS `forum_subcategories` (
   `forum_category_id` INT NULL,
   `title` VARCHAR(45) NULL,
   `description` VARCHAR(250) NULL,
-  `last_updated` LONG NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -331,6 +356,7 @@ DROP TABLE IF EXISTS `avatars` ;
 
 CREATE TABLE IF NOT EXISTS `avatars` (
   `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(50) NOT NULL,
   `path` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
@@ -360,6 +386,7 @@ CREATE TABLE IF NOT EXISTS `badges` (
   `path_img` VARCHAR(255) NULL,
   `nb_courses_done` INT NULL,
   `nb_exercises_done` INT NULL,
+  `type` INT NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
