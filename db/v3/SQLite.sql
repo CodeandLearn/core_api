@@ -93,6 +93,7 @@ CREATE TABLE `exercises_corrections` (
 -- -----------------------------------------------------
 CREATE TABLE `accounts` (
   `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+  `key_id` INTEGER NOT NULL,
   `username` VARCHAR(45) NULL,
   `password` VARCHAR(255) NULL,
   `email` VARCHAR(100) NULL,
@@ -102,6 +103,24 @@ CREATE TABLE `accounts` (
   `last_connect_timestamp` TIMESTAMP NULL,
   `nb_courses_done` INTEGER NULL DEFAULT 0,
   `nb_exercises_done` INTEGER NULL DEFAULT 0);
+
+
+-- -----------------------------------------------------
+-- Table `keys`
+-- -----------------------------------------------------
+CREATE TABLE `keys` (
+  `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+  `key` VARCHAR(45) NOT NULL,
+  `type` INTEGER NOT NULL);
+
+
+-- -----------------------------------------------------
+-- Table `history`
+-- -----------------------------------------------------
+CREATE TABLE `history` (
+  `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+  `action` TEXT NULL,
+  `type` INTEGER NOT NULL);
 
 
 -- -----------------------------------------------------
@@ -204,9 +223,9 @@ CREATE TABLE `forum_subjects` (
 
 
 -- -----------------------------------------------------
--- Table `forum_category`
+-- Table `forum_categories`
 -- -----------------------------------------------------
-CREATE TABLE `forum_category` (
+CREATE TABLE `forum_categories` (
   `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
   `title` VARCHAR(45) NULL,
   `description` VARCHAR(250) NULL,
@@ -242,6 +261,7 @@ CREATE TABLE `forum_posts` (
 -- -----------------------------------------------------
 CREATE TABLE `avatars` (
   `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+  `name` VARCHAR(50) NOT NULL,
   `path` VARCHAR(255) NOT NULL);
 
 
@@ -252,6 +272,7 @@ CREATE TABLE `users_badges` (
   `account_id` INTEGER NOT NULL,
   `badge_id` INTEGER NULL,
   `timestamp` TIMESTAMP NULL,
+  `type` INT NOT NULL,
   PRIMARY KEY (`account_id`));
 
 
@@ -311,9 +332,9 @@ INSERT INTO locales (name) VALUES ("EN");
 -- -----------------------------------------------------
 -- Set default values
 -- -----------------------------------------------------
-INSERT INTO accounts (username, password, email, group_id, avatar_id, create_timestamp, last_connect_timestamp, nb_courses_done, nb_exercises_done)
+INSERT INTO accounts (key_id, username, password, email, group_id, avatar_id, create_timestamp, last_connect_timestamp, nb_courses_done, nb_exercises_done)
 VALUES
-  ("Admin", "5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8", "admin%40codeandlearn.com", 3, 1, 1464262190085, 1464262190085, 0, 0);
+  (0, "Admin", "5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8", "admin%40codeandlearn.com", 3, 1, 1464262190085, 1464262190085, 0, 0);
 INSERT INTO blog_posts_category (name) VALUES ("Default");
 INSERT INTO languages (name) VALUES ("C%23");
 INSERT INTO languages (name) VALUES ("JAVA");

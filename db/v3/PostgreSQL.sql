@@ -146,6 +146,7 @@ CREATE SEQUENCE accounts_seq;
 
 CREATE TABLE IF NOT EXISTS accounts (
   id INT NOT NULL DEFAULT NEXTVAL ('accounts_seq'),
+  key_id INT NOT NULL,
   username VARCHAR(45) NULL,
   password VARCHAR(255) NULL,
   email VARCHAR(100) NULL,
@@ -155,6 +156,36 @@ CREATE TABLE IF NOT EXISTS accounts (
   last_connect_timestamp BIGINT NULL,
   nb_courses_done INT NULL DEFAULT 0,
   nb_exercises_done INT NULL DEFAULT 0,
+  PRIMARY KEY (id))
+;
+
+
+-- -----------------------------------------------------
+-- Table `keys`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS keys ;
+
+CREATE SEQUENCE keys_seq;
+
+CREATE TABLE IF NOT EXISTS keys (
+  id INT NOT NULL DEFAULT NEXTVAL ('keys_seq'),
+  key VARCHAR(45) NOT NULL,
+  type INT NOT NULL,
+  PRIMARY KEY (id))
+;
+
+
+-- -----------------------------------------------------
+-- Table `history`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS history ;
+
+CREATE SEQUENCE history_seq;
+
+CREATE TABLE IF NOT EXISTS history (
+  id INT NOT NULL DEFAULT NEXTVAL ('history_seq'),
+  action TEXT NULL,
+  type INT NOT NULL,
   PRIMARY KEY (id))
 ;
 
@@ -315,12 +346,12 @@ CREATE TABLE IF NOT EXISTS forum_subjects (
 -- -----------------------------------------------------
 -- Table `forum_category`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS forum_category ;
+DROP TABLE IF EXISTS forum_categories ;
 
-CREATE SEQUENCE forum_category_seq;
+CREATE SEQUENCE forum_categories_seq;
 
-CREATE TABLE IF NOT EXISTS forum_category (
-  id INT NOT NULL DEFAULT NEXTVAL ('forum_category_seq'),
+CREATE TABLE IF NOT EXISTS forum_categories (
+  id INT NOT NULL DEFAULT NEXTVAL ('forum_categories_seq'),
   title VARCHAR(45) NULL,
   description VARCHAR(250) NULL,
   last_updated BIGINT NULL,
@@ -373,6 +404,7 @@ CREATE SEQUENCE avatars_seq;
 
 CREATE TABLE IF NOT EXISTS avatars (
   id INT NOT NULL DEFAULT NEXTVAL ('avatars_seq'),
+  name VARCHAR(50) NOT NULL,
   path VARCHAR(255) NOT NULL,
   PRIMARY KEY (id))
 ;
@@ -404,6 +436,7 @@ CREATE TABLE IF NOT EXISTS badges (
   path_img VARCHAR(255) NULL,
   nb_courses_done INT NULL,
   nb_exercises_done INT NULL,
+  type INT NOT NULL,
   PRIMARY KEY (id))
 ;
 
@@ -465,9 +498,9 @@ INSERT INTO locales (name) VALUES ('EN');
 -- -----------------------------------------------------
 -- Set default values
 -- -----------------------------------------------------
-INSERT INTO accounts (username, password, email, group_id, avatar_id, create_timestamp, last_connect_timestamp, nb_courses_done, nb_exercises_done)
+INSERT INTO accounts (key_id, username, password, email, group_id, avatar_id, create_timestamp, last_connect_timestamp, nb_courses_done, nb_exercises_done)
 VALUES
-  ('Admin', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 'admin%40codeandlearn.com', 3, 1, 1464262190085, 1464262190085, 0, 0);
+  (0, 'Admin', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 'admin%40codeandlearn.com', 3, 1, 1464262190085, 1464262190085, 0, 0);
 INSERT INTO blog_posts_category (name) VALUES ('Default');
 INSERT INTO languages (name) VALUES ('C%23');
 INSERT INTO languages (name) VALUES ('JAVA');
