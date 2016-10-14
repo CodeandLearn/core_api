@@ -14,5 +14,4 @@ public class ForumSubjectObj {
     public int last_account_id;
     public int forum_subcategory_id;
     public int likes;
-    public ForumSubCategoryObj fscObj = new ForumSubCategoryObj();
 }
