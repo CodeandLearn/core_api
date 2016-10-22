@@ -306,7 +306,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `forum_category`
+-- Table `forum_categories`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `forum_categories` ;
 
