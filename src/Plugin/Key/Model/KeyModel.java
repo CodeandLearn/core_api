@@ -33,7 +33,7 @@ public class KeyModel extends Model {
 
     public void getKey(String key) {
         make.add(key);
-        setGet(SQL.make("SELECT * FROM `keys` WHERE key=?", make.toArray()));
+        setGet(SQL.make("SELECT * FROM `keys` WHERE `key`=?", make.toArray()));
         make.clear();
     }
 
@@ -57,7 +57,7 @@ public class KeyModel extends Model {
         make.add(0);
         make.add(key);
         make.add(type);
-        setPost(SQL.make("INSERT INTO `keys` (account_id, key, type) VALUES (?, ?, ?)", make.toArray()));
+        setPost(SQL.make("INSERT INTO `keys` (account_id, `key`, type) VALUES (?, ?, ?)", make.toArray()));
         make.clear();
     }
 
