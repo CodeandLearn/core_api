@@ -22,7 +22,7 @@ public class HistoryController {
     }
 
     @Methode("GET")
-    @Route("/account/history")
+    @Route("/account/history/list")
     public HistoryModel getAccountHistory(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new HistoryModel().getHistoryAccountById(UserSecuritySingleton.getInstance().getUserId(socket));
     }
