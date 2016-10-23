@@ -4,6 +4,7 @@ import Core.Database.SQL;
 import Core.Database.SQLRequest;
 import Core.Http.Map;
 import Core.Model;
+import Core.Singleton.ConfigSingleton;
 import Plugin.Blog.Obj.BlogCommentObj;
 import Plugin.Blog.Obj.BlogObj;
 
@@ -40,7 +41,7 @@ public class GetPosts extends Model {
             blogObj.article.account.group.name = result.getString("groups.name");
             blogObj.article.account.group.parent_id = result.getInt("groups.parent_id");
             blogObj.article.account.avatar.id = result.getInt("avatars.id");
-            blogObj.article.account.avatar.path = result.getString("avatars.path");
+            blogObj.article.account.avatar.path = ConfigSingleton.getInstance().getString("url_assets_protocol") + "://" + ConfigSingleton.getInstance().getString("url_assets") + "/assets/images/avatar/" + result.getString("avatars.path");
             SQLRequest commentSql = new SQLRequest("SELECT * FROM blog_posts_comments, accounts, groups, avatars\n" +
                     "WHERE blog_posts_comments.account_id=accounts.id\n" +
                     "AND groups.id=accounts.group_id\n" +
@@ -58,7 +59,7 @@ public class GetPosts extends Model {
                 blogCommentObj.user.group.name = comment.getString("groups.name");
                 blogCommentObj.user.group.parent_id = comment.getInt("groups.parent_id");
                 blogCommentObj.user.avatar.id = comment.getInt("avatars.id");
-                blogCommentObj.user.avatar.path = comment.getString("avatars.path");
+                blogCommentObj.user.avatar.path = ConfigSingleton.getInstance().getString("url_assets_protocol") + "://" + ConfigSingleton.getInstance().getString("url_assets") + "/assets/images/avatar/" + result.getString("avatars.path");
                 blogObj.comments.add(blogCommentObj);
             }
             data.add(blogObj);
@@ -71,7 +72,7 @@ public class GetPosts extends Model {
                 "AND locales.id=blog_posts.locales_id\n" +
                 "AND accounts.id=blog_posts.account_id\n" +
                 "AND avatars.id=accounts.avatar_id\n" +
-                "AND groups.id=accounts.group_id");
+                "AND groups.id=accounts.group_id ORDER BY blog_posts.id DESC");
         return this;
     }
 
@@ -82,7 +83,7 @@ public class GetPosts extends Model {
                 "AND locales.id=blog_posts.locales_id\n" +
                 "AND accounts.id=blog_posts.account_id\n" +
                 "AND avatars.id=accounts.avatar_id\n" +
-                "AND groups.id=accounts.group_id LIMIT ?", make.toArray()));
+                "AND groups.id=accounts.group_id ORDER BY blog_posts.id DESC LIMIT ?", make.toArray()));
         return this;
     }
 
@@ -93,7 +94,7 @@ public class GetPosts extends Model {
                 "AND locales.id=blog_posts.locales_id\n" +
                 "AND accounts.id=blog_posts.account_id\n" +
                 "AND avatars.id=accounts.avatar_id\n" +
-                "AND groups.id=accounts.group_id AND accounts.username=?", make.toArray()));
+                "AND groups.id=accounts.group_id AND accounts.username=? ORDER BY blog_posts.id DESC", make.toArray()));
         return this;
     }
 
@@ -104,7 +105,7 @@ public class GetPosts extends Model {
                 "AND locales.id=blog_posts.locales_id\n" +
                 "AND accounts.id=blog_posts.account_id\n" +
                 "AND avatars.id=accounts.avatar_id\n" +
-                "AND groups.id=accounts.group_id AND accounts.id=?", make.toArray()));
+                "AND groups.id=accounts.group_id AND accounts.id=? ORDER BY blog_posts.id DESC", make.toArray()));
         return this;
     }
 
@@ -115,7 +116,7 @@ public class GetPosts extends Model {
                 "AND locales.id=blog_posts.locales_id\n" +
                 "AND accounts.id=blog_posts.account_id\n" +
                 "AND avatars.id=accounts.avatar_id\n" +
-                "AND groups.id=accounts.group_id AND blog_posts_category.name=?", make.toArray()));
+                "AND groups.id=accounts.group_id AND blog_posts_category.name=? ORDER BY blog_posts.id DESC", make.toArray()));
         return this;
     }
 
@@ -126,7 +127,7 @@ public class GetPosts extends Model {
                 "AND locales.id=blog_posts.locales_id\n" +
                 "AND accounts.id=blog_posts.account_id\n" +
                 "AND avatars.id=accounts.avatar_id\n" +
-                "AND groups.id=accounts.group_id AND blog_posts_category.id=?", make.toArray()));
+                "AND groups.id=accounts.group_id AND blog_posts_category.id=? ORDER BY blog_posts.id DESC", make.toArray()));
         return this;
     }
 
@@ -137,7 +138,7 @@ public class GetPosts extends Model {
                 "AND locales.id=blog_posts.locales_id\n" +
                 "AND accounts.id=blog_posts.account_id\n" +
                 "AND avatars.id=accounts.avatar_id\n" +
-                "AND groups.id=accounts.group_id AND blog_posts.id=?", make.toArray()));
+                "AND groups.id=accounts.group_id AND blog_posts.id=? ORDER BY blog_posts.id DESC", make.toArray()));
         return this;
     }
 }

@@ -3,6 +3,7 @@ package Plugin.Blog.Model;
 import Core.Database.SQL;
 import Core.Http.Map;
 import Core.Model;
+import Core.Singleton.ConfigSingleton;
 import Plugin.Blog.Obj.BlogCommentObj;
 
 /**
@@ -31,7 +32,7 @@ public class GetComments extends Model {
         blogCommentObj.user.group.name = result.getString("groups.name");
         blogCommentObj.user.group.parent_id = result.getInt("groups.parent_id");
         blogCommentObj.user.avatar.id = result.getInt("avatars.id");
-        blogCommentObj.user.avatar.path = result.getString("avatars.path");
+        blogCommentObj.user.avatar.path = ConfigSingleton.getInstance().getString("url_assets_protocol") + "://" + ConfigSingleton.getInstance().getString("url_assets") + "/assets/images/avatar/" + result.getString("avatars.path");
         return blogCommentObj;
     }
 

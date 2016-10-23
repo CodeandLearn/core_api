@@ -151,6 +151,7 @@ DROP TABLE IF EXISTS `keys` ;
 
 CREATE TABLE IF NOT EXISTS `keys` (
   `id` INT NOT NULL AUTO_INCREMENT,
+  `account_id` INT NULL,
   `key` VARCHAR(45) NOT NULL,
   `type` INT NOT NULL,
   PRIMARY KEY (`id`))
@@ -164,8 +165,11 @@ DROP TABLE IF EXISTS `history` ;
 
 CREATE TABLE IF NOT EXISTS `history` (
   `id` INT NOT NULL AUTO_INCREMENT,
+  `account_id` INT NOT NULL,
+  `category` VARCHAR(255) NULL,
   `action` TEXT NULL,
   `type` INT NOT NULL,
+  `timestamp` LONG NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -371,7 +375,7 @@ CREATE TABLE IF NOT EXISTS `users_badges` (
   `account_id` INT NOT NULL,
   `badge_id` INT NULL,
   `timestamp` LONG NULL,
-  PRIMARY KEY (`account_id`))
+  `type` INT NOT NULL)
 ENGINE = InnoDB;
 
 

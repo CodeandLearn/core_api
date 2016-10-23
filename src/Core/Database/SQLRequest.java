@@ -17,11 +17,17 @@ import java.util.ArrayList;
 public class SQLRequest {
     private ArrayList<Map> entities = new ArrayList<>();
     private String request;
+    private int accountId = -1;
     private JDBCLib sql = new MyJDBC().load();
     private int generatedId = -1;
 
     public SQLRequest(String request) {
         this.request = request;
+    }
+
+    public SQLRequest(int user_id, String request) {
+        this.request = request;
+        this.accountId = user_id;
     }
 
     public ArrayList<Map> getResultSet() {
@@ -61,17 +67,26 @@ public class SQLRequest {
     }
 
     public void insert() {
-        sql.insertDB(request);
+        if (accountId != -1) {
+            sql.requestDB("");
+        }
+        sql.requestDB(request);
         generatedId = sql.getGeneratedId();
     }
 
     public void update() {
-        sql.updateDB(request);
+        if (accountId != -1) {
+            sql.requestDB("");
+        }
+        sql.requestDB(request);
         generatedId = sql.getGeneratedId();
     }
 
     public void delete() {
-        sql.deleteDB(request);
+        if (accountId != -1) {
+            sql.requestDB("");
+        }
+        sql.requestDB(request);
         generatedId = sql.getGeneratedId();
     }
 

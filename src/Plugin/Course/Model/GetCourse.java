@@ -4,6 +4,7 @@ import Core.Database.SQL;
 import Core.Database.SQLRequest;
 import Core.Http.Map;
 import Core.Model;
+import Core.Singleton.ConfigSingleton;
 import Plugin.Course.Obj.CourseCommentObj;
 import Plugin.Course.Obj.CourseObj;
 
@@ -39,7 +40,7 @@ public class GetCourse extends Model {
             courseObj.course.account.group.name = result.getString("groups.name");
             courseObj.course.account.group.parent_id = result.getInt("groups.parent_id");
             courseObj.course.account.avatar.id = result.getInt("avatars.id");
-            courseObj.course.account.avatar.path = result.getString("avatars.path");
+            courseObj.course.account.avatar.path = ConfigSingleton.getInstance().getString("url_assets_protocol") + "://" + ConfigSingleton.getInstance().getString("url_assets") + "/assets/images/avatar/" + result.getString("avatars.path");
             SQLRequest commentSql = new SQLRequest("SELECT * FROM courses_comments, accounts, groups, avatars\n" +
                     "WHERE courses_comments.account_id=accounts.id\n" +
                     "AND groups.id=accounts.group_id\n" +
@@ -59,7 +60,7 @@ public class GetCourse extends Model {
                 courseCommentObj.user.group.name = comment.getString("groups.name");
                 courseCommentObj.user.group.parent_id = comment.getInt("groups.parent_id");
                 courseCommentObj.user.avatar.id = comment.getInt("avatars.id");
-                courseCommentObj.user.avatar.path = comment.getString("avatars.path");
+                courseCommentObj.user.avatar.path = ConfigSingleton.getInstance().getString("url_assets_protocol") + "://" + ConfigSingleton.getInstance().getString("url_assets") + "/assets/images/avatar/" + result.getString("avatars.path");
                 courseObj.comments.add(courseCommentObj);
             }
             data.add(courseObj);
@@ -75,7 +76,7 @@ public class GetCourse extends Model {
                 "AND courses.language_id=languages.id\n" +
                 "AND course_moderation.course_id=courses.id\n" +
                 "AND course_moderation.validate>0\n" +
-                "ORDER BY courses.id ASC");
+                "ORDER BY courses.id DESC");
         return this;
     }
 
@@ -88,7 +89,7 @@ public class GetCourse extends Model {
                 "AND courses.language_id=languages.id\n" +
                 "AND course_moderation.course_id=courses.id\n" +
                 "AND course_moderation.validate=0\n" +
-                "ORDER BY courses.id ASC");
+                "ORDER BY courses.id DESC");
         return this;
     }
 
@@ -101,7 +102,7 @@ public class GetCourse extends Model {
                 "AND courses.locales_id=locales.id\n" +
                 "AND courses.language_id=languages.id\n" +
                 "AND course_moderation.course_id=courses.id\n" +
-                "AND courses.id=? ORDER BY courses.id ASC", make.toArray()));
+                "AND courses.id=? ORDER BY courses.id DESC", make.toArray()));
         return this;
     }
 
@@ -116,7 +117,7 @@ public class GetCourse extends Model {
                 "AND courses.language_id=languages.id\n" +
                 "AND course_moderation.course_id=courses.id\n" +
                 "AND accounts.id=?\n" +
-                "AND courses.id=? ORDER BY courses.id ASC", make.toArray()));
+                "AND courses.id=? ORDER BY courses.id DESC", make.toArray()));
         return this;
     }
 
@@ -130,7 +131,7 @@ public class GetCourse extends Model {
                 "AND courses.language_id=languages.id\n" +
                 "AND course_moderation.course_id=courses.id\n" +
                 "AND course_moderation.validate>0\n" +
-                "AND courses.id=? ORDER BY courses.id ASC", make.toArray()));
+                "AND courses.id=? ORDER BY courses.id DESC", make.toArray()));
         return this;
     }
 
@@ -144,7 +145,7 @@ public class GetCourse extends Model {
                 "AND courses.language_id=languages.id\n" +
                 "AND course_moderation.course_id=courses.id\n" +
                 "AND course_moderation.validate>0\n" +
-                "ORDER BY courses.id ASC LIMIT ?", make.toArray()));
+                "ORDER BY courses.id DESC LIMIT ?", make.toArray()));
         return this;
     }
 
@@ -157,7 +158,7 @@ public class GetCourse extends Model {
                 "AND courses.locales_id=locales.id\n" +
                 "AND courses.language_id=languages.id\n" +
                 "AND course_moderation.course_id=courses.id\n" +
-                "AND courses.account_id=? ORDER BY courses.id ASC", make.toArray()));
+                "AND courses.account_id=? ORDER BY courses.id DESC", make.toArray()));
         return this;
     }
 
@@ -171,7 +172,7 @@ public class GetCourse extends Model {
                 "AND courses.language_id=languages.id\n" +
                 "AND course_moderation.course_id=courses.id\n" +
                 "AND course_moderation.validate>0\n" +
-                "AND courses.account_id=? ORDER BY courses.id ASC", make.toArray()));
+                "AND courses.account_id=? ORDER BY courses.id DESC", make.toArray()));
         return this;
     }
 
@@ -185,7 +186,7 @@ public class GetCourse extends Model {
                 "AND courses.language_id=languages.id\n" +
                 "AND course_moderation.course_id=courses.id\n" +
                 "AND course_moderation.validate>0\n" +
-                "AND courses.language_id=? ORDER BY courses.id ASC", make.toArray()));
+                "AND courses.language_id=? ORDER BY courses.id DESC", make.toArray()));
         return this;
     }
 
@@ -199,7 +200,7 @@ public class GetCourse extends Model {
                 "AND courses.language_id=languages.id\n" +
                 "AND course_moderation.course_id=courses.id\n" +
                 "AND course_moderation.validate>0\n" +
-                "AND courses.locales_id=? ORDER BY courses.id ASC", make.toArray()));
+                "AND courses.locales_id=? ORDER BY courses.id DESC", make.toArray()));
         return this;
     }
 
@@ -213,7 +214,7 @@ public class GetCourse extends Model {
                 "AND courses.language_id=languages.id\n" +
                 "AND course_moderation.course_id=courses.id\n" +
                 "AND course_moderation.validate>0\n" +
-                "AND courses.title=? ORDER BY courses.id ASC", make.toArray()));
+                "AND courses.title=? ORDER BY courses.id DESC", make.toArray()));
         return this;
     }
 }

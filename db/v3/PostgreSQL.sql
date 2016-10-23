@@ -169,6 +169,7 @@ CREATE SEQUENCE keys_seq;
 
 CREATE TABLE IF NOT EXISTS keys (
   id INT NOT NULL DEFAULT NEXTVAL ('keys_seq'),
+  account_id INT NULL,
   key VARCHAR(45) NOT NULL,
   type INT NOT NULL,
   PRIMARY KEY (id))
@@ -184,8 +185,11 @@ CREATE SEQUENCE history_seq;
 
 CREATE TABLE IF NOT EXISTS history (
   id INT NOT NULL DEFAULT NEXTVAL ('history_seq'),
+  account_id INT NOT NULL,
+  category VARCHAR(255) NULL,
   action TEXT NULL,
   type INT NOT NULL,
+  timestamp BIGINT NOT NULL,
   PRIMARY KEY (id))
 ;
 
@@ -419,7 +423,7 @@ CREATE TABLE IF NOT EXISTS users_badges (
   account_id INT NOT NULL,
   badge_id INT NULL,
   timestamp BIGINT NULL,
-  PRIMARY KEY (account_id))
+  type INT NOT NULL)
 ;
 
 
