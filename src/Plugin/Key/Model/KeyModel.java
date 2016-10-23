@@ -27,7 +27,7 @@ public class KeyModel extends Model {
     }
 
     public KeyModel getKeys() {
-        setGet("SELECT * FROM keys ORDER BY keys.id DESC");
+        setGet("SELECT * FROM keys, accounts WHERE keys.account_id=accounts.id ORDER BY keys.id DESC");
         return this;
     }
 
