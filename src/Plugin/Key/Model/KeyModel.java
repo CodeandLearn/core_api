@@ -27,13 +27,13 @@ public class KeyModel extends Model {
     }
 
     public KeyModel getKeys() {
-        setGet("SELECT * FROM keys, accounts WHERE keys.account_id=accounts.id ORDER BY keys.id DESC");
+        setGet("SELECT * FROM `keys`, accounts WHERE `keys`.account_id=accounts.id ORDER BY `keys`.id DESC");
         return this;
     }
 
     public void getKey(String key) {
         make.add(key);
-        setGet(SQL.make("SELECT * FROM keys WHERE key=?", make.toArray()));
+        setGet(SQL.make("SELECT * FROM `keys` WHERE key=?", make.toArray()));
         make.clear();
     }
 
@@ -57,13 +57,13 @@ public class KeyModel extends Model {
         make.add(0);
         make.add(key);
         make.add(type);
-        setPost(SQL.make("INSERT INTO keys (account_id, key, type) VALUES (?, ?, ?)", make.toArray()));
+        setPost(SQL.make("INSERT INTO `keys` (account_id, key, type) VALUES (?, ?, ?)", make.toArray()));
         make.clear();
     }
 
     public KeyModel deleteKey(int id) {
         make.add(id);
-        setDelete(SQL.make("DELETE FROM keys WHERE id=?", make.toArray()));
+        setDelete(SQL.make("DELETE FROM `keys` WHERE id=?", make.toArray()));
         return this;
     }
 }
