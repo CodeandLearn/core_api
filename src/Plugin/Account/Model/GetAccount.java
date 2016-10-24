@@ -57,7 +57,7 @@ public class GetAccount extends Model {
         if (ConfigSingleton.getInstance().getBoolean("beta_key")) {
             setGet(SQL.make("SELECT * FROM accounts, groups, avatars\n" +
                     "WHERE accounts.avatar_id=avatars.id\n" +
-                    "AND accounts.group_id=groups.id AND accounts.id=? AND (accounts.key_id>1 OR accounts.group_id>1)", make.toArray()));
+                    "AND accounts.group_id=groups.id AND accounts.id=? AND (accounts.access_key_id>1 OR accounts.group_id>1)", make.toArray()));
         } else {
             setGet(SQL.make("SELECT * FROM accounts, groups, avatars\n" +
                     "WHERE accounts.avatar_id=avatars.id\n" +
