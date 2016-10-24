@@ -130,7 +130,7 @@ DROP TABLE IF EXISTS `accounts` ;
 
 CREATE TABLE IF NOT EXISTS `accounts` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `key_id` INT NOT NULL,
+  `access_key_id` INT NOT NULL,
   `username` VARCHAR(45) NULL,
   `password` VARCHAR(255) NULL,
   `email` VARCHAR(100) NULL,
@@ -145,14 +145,14 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `keys`
+-- Table `access_keys`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `keys` ;
+DROP TABLE IF EXISTS `access_keys` ;
 
-CREATE TABLE IF NOT EXISTS `keys` (
+CREATE TABLE IF NOT EXISTS `access_keys` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `account_id` INT NULL,
-  `key` VARCHAR(45) NOT NULL,
+  `key_value` VARCHAR(45) NOT NULL,
   `type` INT NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;

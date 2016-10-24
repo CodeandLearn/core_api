@@ -19,21 +19,21 @@ public class KeyModel extends Model {
     @Override
     protected Object setData(Map result) {
         KeyObj keyObj = new KeyObj();
-        keyObj.id = result.getInt("keys.id");
-        keyObj.account_id = result.getInt("keys.account_id");
-        keyObj.key = result.getString("keys.key");
-        keyObj.type = result.getInt("keys.type");
+        keyObj.id = result.getInt("access_key.id");
+        keyObj.account_id = result.getInt("access_key.account_id");
+        keyObj.key_value = result.getString("access_key.key_value");
+        keyObj.type = result.getInt("access_key.type");
         return keyObj;
     }
 
     public KeyModel getKeys() {
-        setGet("SELECT * FROM `keys` ORDER BY `keys`.id DESC");
+        setGet("SELECT * FROM access_key ORDER BY id DESC");
         return this;
     }
 
     public void getKey(String key) {
         make.add(key);
-        setGet(SQL.make("SELECT * FROM `keys` WHERE `key`=?", make.toArray()));
+        setGet(SQL.make("SELECT * FROM access_key WHERE key_value=?", make.toArray()));
         make.clear();
     }
 
@@ -57,13 +57,13 @@ public class KeyModel extends Model {
         make.add(0);
         make.add(key);
         make.add(type);
-        setPost(SQL.make("INSERT INTO `keys` (account_id, `key`, type) VALUES (?, ?, ?)", make.toArray()));
+        setPost(SQL.make("INSERT INTO access_key (account_id, key_value, type) VALUES (?, ?, ?)", make.toArray()));
         make.clear();
     }
 
     public KeyModel deleteKey(int id) {
         make.add(id);
-        setDelete(SQL.make("DELETE FROM `keys` WHERE id=?", make.toArray()));
+        setDelete(SQL.make("DELETE FROM access_key WHERE id=?", make.toArray()));
         return this;
     }
 }

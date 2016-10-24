@@ -58,7 +58,7 @@ public class PostAccount extends Model {
         make.add(getTimestamp());
         make.add(0);
         make.add(0);
-        setPost(SQL.make("INSERT INTO accounts (key_id, username, password, email, group_id, avatar_id, create_timestamp, last_connect_timestamp, nb_courses_done, nb_exercises_done) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", make.toArray()));
+        setPost(SQL.make("INSERT INTO accounts (access_keys_id, username, password, email, group_id, avatar_id, create_timestamp, last_connect_timestamp, nb_courses_done, nb_exercises_done) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", make.toArray()));
         make.clear();
         if (id != -1) {
             UserSecuritySingleton.getInstance().addUser(id, jsonObject.getString("username"), UserSecuritySingleton.hashSHA1(jsonObject.getString("password")), 10);
@@ -68,9 +68,9 @@ public class PostAccount extends Model {
     }
 
     private void registerBeta(String socket, JSONObject jsonObject) {
-        if (jsonObject.has("key")) {
-            make.add(jsonObject.getString("key"));
-            setGet(SQL.make("SELECT * FROM keys WHERE key=? AND account_id=0", make.toArray()));
+        if (jsonObject.has("key_value")) {
+            make.add(jsonObject.getString("key_value"));
+            setGet(SQL.make("SELECT * FROM access_keys WHERE key_value=? AND account_id=0", make.toArray()));
             make.clear();
             if (data.size() > 0 && ((KeyObj)data.get(0)).id != 1) {
                 registerNormal(socket, jsonObject, ((KeyObj)data.get(0)).id);
@@ -78,7 +78,7 @@ public class PostAccount extends Model {
                     int account_id = id;
                     make.add(id);
                     make.add(((KeyObj) data.get(0)).id);
-                    setPut(SQL.make("UPDATE keys SET account_id=? WHERE id=?", make.toArray()));
+                    setPut(SQL.make("UPDATE access_keys SET account_id=? WHERE id=?", make.toArray()));
                     make.clear();
                     new UserBadgeModel().postAccountBadge(account_id, 1);
                 }
@@ -95,10 +95,10 @@ public class PostAccount extends Model {
     @Override
     protected Object setData(Map result) {
         KeyObj keyObj = new KeyObj();
-        keyObj.type = result.getInt("keys.type");
-        keyObj.account_id = result.getInt("keys.account_id");
-        keyObj.id = result.getInt("keys.id");
-        keyObj.key = result.getString("keys.key");
+        keyObj.type = result.getInt("access_keys.type");
+        keyObj.account_id = result.getInt("access_keys.account_id");
+        keyObj.id = result.getInt("access_keys.id");
+        keyObj.key_value = result.getString("access_keys.key_value");
         return keyObj;
     }
 }

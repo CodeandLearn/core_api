@@ -93,7 +93,7 @@ CREATE TABLE `exercises_corrections` (
 -- -----------------------------------------------------
 CREATE TABLE `accounts` (
   `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-  `key_id` INTEGER NOT NULL,
+  `access_key_id` INTEGER NOT NULL,
   `username` VARCHAR(45) NULL,
   `password` VARCHAR(255) NULL,
   `email` VARCHAR(100) NULL,
@@ -106,12 +106,12 @@ CREATE TABLE `accounts` (
 
 
 -- -----------------------------------------------------
--- Table `keys`
+-- Table `access_keys`
 -- -----------------------------------------------------
-CREATE TABLE `keys` (
+CREATE TABLE `access_keys` (
   `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
   `account_id` INTEGER NULL,
-  `key` VARCHAR(45) NOT NULL,
+  `key_value` VARCHAR(45) NOT NULL,
   `type` INTEGER NOT NULL);
 
 
@@ -330,13 +330,13 @@ INSERT INTO groups (name, parent_id) VALUES ("moderator", 30);
 INSERT INTO groups (name, parent_id) VALUES ("administrator", 50);
 INSERT INTO locales (name) VALUES ("FR");
 INSERT INTO locales (name) VALUES ("EN");
-INSERT INTO keys (account_id, key, type) VALUES (0, "XXXXXX-XXXXXX-XXXXXX-XXXXXX", 0);
+INSERT INTO access_keys (account_id, key_value, type) VALUES (0, "XXXXXX-XXXXXX-XXXXXX-XXXXXX", 0);
 
 
 -- -----------------------------------------------------
 -- Set default values
 -- -----------------------------------------------------
-INSERT INTO accounts (key_id, username, password, email, group_id, avatar_id, create_timestamp, last_connect_timestamp, nb_courses_done, nb_exercises_done)
+INSERT INTO accounts (access_key_id, username, password, email, group_id, avatar_id, create_timestamp, last_connect_timestamp, nb_courses_done, nb_exercises_done)
   VALUES (1, "Admin", "5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8", "admin%40codeandlearn.com", 3, 1, 1464262190085, 1464262190085, 0, 0);
 INSERT INTO blog_posts_category (name) VALUES ("Default");
 INSERT INTO languages (name) VALUES ("C%23");

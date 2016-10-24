@@ -146,7 +146,7 @@ CREATE SEQUENCE accounts_seq;
 
 CREATE TABLE IF NOT EXISTS accounts (
   id INT NOT NULL DEFAULT NEXTVAL ('accounts_seq'),
-  key_id INT NOT NULL,
+  access_key_id INT NOT NULL,
   username VARCHAR(45) NULL,
   password VARCHAR(255) NULL,
   email VARCHAR(100) NULL,
@@ -161,16 +161,16 @@ CREATE TABLE IF NOT EXISTS accounts (
 
 
 -- -----------------------------------------------------
--- Table `keys`
+-- Table `access_keys`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS keys ;
+DROP TABLE IF EXISTS access_keys ;
 
-CREATE SEQUENCE keys_seq;
+CREATE SEQUENCE access_keys_seq;
 
-CREATE TABLE IF NOT EXISTS keys (
-  id INT NOT NULL DEFAULT NEXTVAL ('keys_seq'),
+CREATE TABLE IF NOT EXISTS access_keys (
+  id INT NOT NULL DEFAULT NEXTVAL ('access_keys_seq'),
   account_id INT NULL,
-  key VARCHAR(45) NOT NULL,
+  key_value VARCHAR(45) NOT NULL,
   type INT NOT NULL,
   PRIMARY KEY (id))
 ;
@@ -490,22 +490,27 @@ CREATE TABLE IF NOT EXISTS code_templates (
 -- -----------------------------------------------------
 -- Set base record
 -- -----------------------------------------------------
-INSERT INTO avatars (path)
-VALUES ('http%3A%2F%2Fwww.freakingnews.com%2Fpictures%2F97500%2FKorean-Elephant-Rocket--97543.jpg');
+INSERT INTO avatars (name, path) VALUES ('Default', 'default.png');
 INSERT INTO groups (name, parent_id) VALUES ('member', 10);
 INSERT INTO groups (name, parent_id) VALUES ('moderator', 30);
 INSERT INTO groups (name, parent_id) VALUES ('administrator', 50);
 INSERT INTO locales (name) VALUES ('FR');
 INSERT INTO locales (name) VALUES ('EN');
+INSERT INTO access_keys (account_id, key_value, type) VALUES (0, 'XXXXXX-XXXXXX-XXXXXX-XXXXXX', 0);
 
 
 -- -----------------------------------------------------
 -- Set default values
 -- -----------------------------------------------------
-INSERT INTO accounts (key_id, username, password, email, group_id, avatar_id, create_timestamp, last_connect_timestamp, nb_courses_done, nb_exercises_done)
-VALUES
-  (0, 'Admin', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 'admin%40codeandlearn.com', 3, 1, 1464262190085, 1464262190085, 0, 0);
+INSERT INTO accounts (access_key_id, username, password, email, group_id, avatar_id, create_timestamp, last_connect_timestamp, nb_courses_done, nb_exercises_done)
+  VALUES (1, 'Admin', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8"', 'admin%40codeandlearn.com', 3, 1, 1464262190085, 1464262190085, 0, 0);
 INSERT INTO blog_posts_category (name) VALUES ('Default');
 INSERT INTO languages (name) VALUES ('C%23');
 INSERT INTO languages (name) VALUES ('JAVA');
 INSERT INTO languages (name) VALUES ('C');
+INSERT INTO avatars (name, path) VALUES ('Zynga', 'zynga.png');
+INSERT INTO badges (name, path_img, nb_courses_done, nb_exercises_done, type) VALUES ('testeur', 'test.png', 0, 0, 50);
+INSERT INTO badges (name, path_img, nb_courses_done, nb_exercises_done, type) VALUES ('5', '5.png', 0, 0, 0);
+INSERT INTO badges (name, path_img, nb_courses_done, nb_exercises_done, type) VALUES ('10', '10.png', 0, 0, 0);
+INSERT INTO badges (name, path_img, nb_courses_done, nb_exercises_done, type) VALUES ('30', '30.png', 0, 0, 0);
+INSERT INTO badges (name, path_img, nb_courses_done, nb_exercises_done, type) VALUES ('50', '50.png', 0, 0, 0);

@@ -6,6 +6,6 @@ package Plugin.Key.Obj;
 public class KeyObj {
     public int id;
     public int account_id;
-    public String key;
+    public String key_value;
     public int type;
 }
