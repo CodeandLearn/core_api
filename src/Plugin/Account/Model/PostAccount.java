@@ -58,7 +58,7 @@ public class PostAccount extends Model {
         make.add(getTimestamp());
         make.add(0);
         make.add(0);
-        setPost(SQL.make("INSERT INTO accounts (access_keys_id, username, password, email, group_id, avatar_id, create_timestamp, last_connect_timestamp, nb_courses_done, nb_exercises_done) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", make.toArray()));
+        setPost(SQL.make("INSERT INTO accounts (access_key_id, username, password, email, group_id, avatar_id, create_timestamp, last_connect_timestamp, nb_courses_done, nb_exercises_done) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", make.toArray()));
         make.clear();
         if (id != -1) {
             UserSecuritySingleton.getInstance().addUser(id, jsonObject.getString("username"), UserSecuritySingleton.hashSHA1(jsonObject.getString("password")), 10);
