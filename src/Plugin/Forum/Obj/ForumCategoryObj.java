@@ -5,5 +5,6 @@ package Plugin.Forum.Obj;
  */
 public class ForumCategoryObj {
     public int id;
-    public String name;
+    public String title;
+    public String description;
 }

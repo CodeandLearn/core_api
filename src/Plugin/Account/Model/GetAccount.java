@@ -3,6 +3,7 @@ package Plugin.Account.Model;
 import Core.Database.SQL;
 import Core.Http.Map;
 import Core.Model;
+import Core.Singleton.ConfigSingleton;
 import Core.Singleton.UserSecuritySingleton;
 import Plugin.Account.Obj.AccountObj;
 
@@ -31,7 +32,7 @@ public class GetAccount extends Model {
         accountObj.group.name = result.getString("groups.name");
         accountObj.group.parent_id = result.getInt("groups.parent_id");
         accountObj.avatar.id = result.getInt("avatars.id");
-        accountObj.avatar.path = result.getString("avatars.path");
+        accountObj.avatar.path = ConfigSingleton.getInstance().getString("url_assets_protocol") + "://" + ConfigSingleton.getInstance().getString("url_assets") + "/assets/images/avatar/" + result.getString("avatars.path");
         return accountObj;
     }
 
@@ -53,9 +54,15 @@ public class GetAccount extends Model {
     public GetAccount getAccount(int idUser) {
         showEmail = true;
         make.add(idUser);
-        setGet(SQL.make("SELECT * FROM accounts, groups, avatars\n" +
-                "WHERE accounts.avatar_id=avatars.id\n" +
-                "AND accounts.group_id=groups.id AND accounts.id=?", make.toArray()));
+        if (ConfigSingleton.getInstance().getBoolean("beta_key")) {
+            setGet(SQL.make("SELECT * FROM accounts, groups, avatars\n" +
+                    "WHERE accounts.avatar_id=avatars.id\n" +
+                    "AND accounts.group_id=groups.id AND accounts.id=? AND (accounts.access_key_id>1 OR accounts.group_id>1)", make.toArray()));
+        } else {
+            setGet(SQL.make("SELECT * FROM accounts, groups, avatars\n" +
+                    "WHERE accounts.avatar_id=avatars.id\n" +
+                    "AND accounts.group_id=groups.id AND accounts.id=?", make.toArray()));
+        }
         return this;
     }
 }

@@ -15,8 +15,13 @@ public class ConfigSingleton {
     private File configFile = new File("config.properties");
 
     private ConfigSingleton() {
+        reload();
+    }
+
+    public void reload() {
         try {
             FileReader reader = new FileReader(configFile);
+            props.clear();
             props.load(reader);
             reader.close();
         } catch (IOException e) {

@@ -8,6 +8,7 @@ import Core.Methode;
 import Core.Route;
 import Core.Singleton.UserSecuritySingleton;
 import Plugin.Blog.Model.*;
+import Plugin.History.Model.HistoryModel;
 import org.json.JSONObject;
 
 /**
@@ -108,6 +109,7 @@ public class BlogController {
     @Methode("POST")
     @Route("/blog")
     public Post postBlog(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
+        new HistoryModel().postHistory(UserSecuritySingleton.getInstance().getUserId(socket), "blog", "ajouté un nouveau post.", 0);
         return new Post().postBlog(UserSecuritySingleton.getInstance().getUserId(socket), jsonObject);
     }
 
@@ -120,12 +122,14 @@ public class BlogController {
     @Methode("POST")
     @Route("/blog/comment")
     public Post postBlogComment(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
+        new HistoryModel().postHistory(UserSecuritySingleton.getInstance().getUserId(socket), "blog", "posté un nouveau commentaire.", 0);
         return new Post().postBlogComment(UserSecuritySingleton.getInstance().getUserId(socket), jsonObject);
     }
 
     @Methode("PUT")
     @Route("/blog/{id}")
     public Put putBlog(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
+        new HistoryModel().postHistory(UserSecuritySingleton.getInstance().getUserId(socket), "blog", "modifié un post.", 0);
         return new Put().putBlog(args.getInt("id"), jsonObject);
     }
 
@@ -138,12 +142,14 @@ public class BlogController {
     @Methode("PUT")
     @Route("/blog/comment/{id}")
     public Put putBlogComment(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
+        new HistoryModel().postHistory(UserSecuritySingleton.getInstance().getUserId(socket), "blog", "modifié un commentaire.", 0);
         return new Put().putBlogComment(args.getInt("id"), jsonObject);
     }
 
     @Methode("DELETE")
     @Route("/blog/{id}")
     public Delete deleteBlog(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
+        new HistoryModel().postHistory(UserSecuritySingleton.getInstance().getUserId(socket), "blog", "supprimé un post.", 0);
         return new Delete().deleteBlog(args.getInt("id"));
     }
 
@@ -156,6 +162,7 @@ public class BlogController {
     @Methode("DELETE")
     @Route("/blog/comment/{id}")
     public Delete deleteBlogComment(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
+        new HistoryModel().postHistory(UserSecuritySingleton.getInstance().getUserId(socket), "blog", "à supprimé un commentaire.", 0);
         return new Delete().deleteBlogComment(args.getInt("id"));
     }
 

@@ -1,16 +1,17 @@
 package Plugin.Forum.Obj;
 
+import Plugin.Forum.Model.ForumSubCategoryModel;
+
 /**
  * Created by moran on 9/1/2016.
  */
 public class ForumSubjectObj {
     public int id;
-    public int forums_forum_id;
-    public int locales_id;
+    public String title;
     public int account_id;
-    public long timestamp;
-    //public long last_reply_timestamp; //?
-    public int replies;
-    public int views;
-    public String subject;
+    public long created_at;
+    public long last_updated;
+    public int last_account_id;
+    public int forum_subcategory_id;
+    public int likes;
 }

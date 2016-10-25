@@ -7,7 +7,7 @@ import Core.Http.Oauth2;
 import Core.Methode;
 import Core.Route;
 import Plugin.Forum.Model.ForumCategoryModel;
-import Plugin.Forum.Model.ForumModel;
+import Plugin.Forum.Model.ForumSubCategoryModel;
 import Plugin.Forum.Model.ForumPostModel;
 import Plugin.Forum.Model.ForumSubjectModel;
 import org.json.JSONObject;
@@ -25,9 +25,9 @@ public class ForumController {
     }
 
     @Methode("GET")
-    @Route("/forums/{category_id}")
-    public ForumModel getForumsInCategory(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new ForumModel().getForums(args.getInt("category_id"));
+    @Route("/forum_subcategories/{category_id}")
+    public ForumSubCategoryModel getForumsInCategory(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
+        return new ForumSubCategoryModel().getForums(args.getInt("category_id"));
     }
     @Methode("GET")
     @Route("/forum_subjects/{forum_id}")
@@ -48,9 +48,9 @@ public class ForumController {
     }
 
     @Methode("POST")
-    @Route("/forum")
-    public ForumModel addForum(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new ForumModel().insert(jsonObject);
+    @Route("/forum_subcategory")
+    public ForumSubCategoryModel addForum(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
+        return new ForumSubCategoryModel().insert(jsonObject);
     }
 
     @Methode("POST")
@@ -72,9 +72,9 @@ public class ForumController {
     }
 
     @Methode("PUT")
-    @Route("/forum/{id}")
-    public ForumModel updateForum(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new ForumModel().update(args.getInt("id"), jsonObject);
+    @Route("/forum_subcategory/{id}")
+    public ForumSubCategoryModel updateForum(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
+        return new ForumSubCategoryModel().update(args.getInt("id"), jsonObject);
     }
 
     @Methode("PUT")
@@ -96,9 +96,9 @@ public class ForumController {
     }
 
     @Methode("DELETE")
-    @Route("/forum/{id}")
-    public ForumModel deleteForum(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new ForumModel().delete(args.getInt("id"));
+    @Route("/forum_subcategory/{id}")
+    public ForumSubCategoryModel deleteForum(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
+        return new ForumSubCategoryModel().delete(args.getInt("id"));
     }
 
     @Methode("DELETE")
