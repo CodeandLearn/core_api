@@ -14,38 +14,50 @@ public class ForumPostModel extends Model {
     protected Object setData(Map result) {
         ForumPostObj fpObj = new ForumPostObj();
         fpObj.id = result.getInt("forum_posts.id");
-        fpObj.forums_subject_id = result.getInt("forum_posts.forums_subject_id");
         fpObj.account_id = result.getInt("forum_posts.account_id");
-        fpObj.create_timestamp = result.getLong("forum_posts.create_timestamp");
-        fpObj.modify_timestamp = result.getLong("forum_posts.modify_timestamp");
+        fpObj.forum_subject_id= result.getInt("forum_posts.subject_id");
         fpObj.content = result.getString("forum_posts.content");
+        fpObj.created_at = result.getLong("forum_posts.created_at");
+        fpObj.last_updated = result.getLong("forum_posts.last_updated");
         fpObj.likes = result.getInt("forum_posts.likes");
         return fpObj;
     }
 
     public ForumPostModel getPosts(int forum_subject_id) {
         make.add(forum_subject_id);
-        setGet(SQL.make("SELECT * FROM forum_posts WHERE forums_subject_id = ?", make.toArray()));
+        setGet(SQL.make("SELECT * FROM forum_posts WHERE forum_subject_id=? ORDER BY created_at ASC", make.toArray()));
         return this;
     }
 
-    public ForumPostModel insert(JSONObject jsonObject){
-        make.add(jsonObject.getInt("forums_subject_id"));
+    public ForumPostModel insert(JSONObject jsonObject)
+    {
         make.add(jsonObject.getInt("account_id"));
-        long t = getTimestamp();
-        make.add(t);
-        make.add(t);
-        make.add(jsonObject.getString("content"));
-        setPost(SQL.make("INSERT INTO forum_posts (forums_subject_id, account_id, create_timestamp, modify_timestamp, content) VALUES (?,?,?,?,?)", make.toArray()));
+        make.add(jsonObject.getInt("subject_id"));
+        make.add(jsonObject.getInt("content"));
+        make.add(getTimestamp());
+        make.add(getTimestamp());
+        make.add(0);
+        setPost(SQL.make("INSERT INTO forum_posts (account_id, subject_id, content, created_at, last_updated, likes) VALUES (?,?,?,?,?,?)", make.toArray()));
         return this;
     }
 
-    public ForumPostModel update(int id, JSONObject jsonObject) {
+    public ForumPostModel insertWithid(JSONObject jsonObject, int id)
+    {
+        make.add(jsonObject.getInt("account_id"));
+        make.add(id);
+        make.add(jsonObject.getInt("content"));
         make.add(getTimestamp());
-        make.add(jsonObject.getString("content"));
+        make.add(getTimestamp());
+        make.add(0);
+        setPost(SQL.make("INSERT INTO forum_posts (account_id, subject_id, content, created_at, last_updated, likes) VALUES (?,?,?,?,?,?)", make.toArray()));
+        return this;
+    }
+    public ForumPostModel update(int id, JSONObject jsonObject) {
+        make.add(jsonObject.getInt("content"));
+        make.add(getTimestamp());
         make.add(jsonObject.getInt("likes"));
         make.add(id);
-        setPut(SQL.make("UPDATE forum_posts SET modify_timestamp=?, content=?, likes=? WHERE id=?", make.toArray()));
+        setPost(SQL.make("INSERT INTO forum_posts SET content=?, last_updated=?, likes=? WHERE id=?", make.toArray()));
         return this;
     }
 
@@ -57,7 +69,7 @@ public class ForumPostModel extends Model {
 
     public ForumPostModel deleteAll(int forum_subject_id){
         make.add(forum_subject_id);
-        setDelete(SQL.make("DELETE FROM forum_posts WHERE forums_subject_id=?", make.toArray()));
+        setDelete(SQL.make("DELETE FROM forum_posts WHERE forum_subject_id=?", make.toArray()));
         return this;
     }
 

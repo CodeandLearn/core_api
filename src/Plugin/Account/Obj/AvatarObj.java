@@ -5,5 +5,6 @@ package Plugin.Account.Obj;
  */
 public class AvatarObj {
     public int id;
+    public String name;
     public String path;
 }

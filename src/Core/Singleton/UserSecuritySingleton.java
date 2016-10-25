@@ -7,13 +7,14 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Created by teddy on 05/05/2016.
  */
 public class UserSecuritySingleton {
     private static UserSecuritySingleton instance = new UserSecuritySingleton();
-    private ArrayList<Map> users = new ArrayList<>();
+    private CopyOnWriteArrayList<Map> users = new CopyOnWriteArrayList<>();
     private int nbUsers = 0;
 
     public static UserSecuritySingleton getInstance() {
@@ -54,6 +55,10 @@ public class UserSecuritySingleton {
             } while (two_halfs++ < 1);
         }
         return buf.toString();
+    }
+
+    public CopyOnWriteArrayList<Map> getUsers() {
+        return users;
     }
 
     public int getNbUsers() {
