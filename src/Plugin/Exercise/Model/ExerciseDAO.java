@@ -72,20 +72,22 @@ public class ExerciseDAO extends Model {
         make.add(jsonObject.getInt("grade_max"));
         setPost(SQL.make("INSERT INTO exercises (account_id, course_id, title, instruction, grade_max) VALUES (?, ?, ?, ?, ?)", make.toArray()));
 
-        new ExerciseModerationDAO().generate(this.id);
+        new ExerciseModerationDAO().generate(id);
 
-        JSONArray codes;
-        if ((codes = (JSONArray) jsonObject.get("codes")) != null)
-        {
-            for (int n = 0; n < codes.length(); ++n)
-                new CodeTemplateDAO().post(codes.getJSONObject(n), this.id);
+        if (jsonObject.has("codes")) {
+            JSONArray codes = jsonObject.getJSONArray("codes");
+            for (int n = 0; n < codes.length(); ++n) {
+                new CodeTemplateDAO().post(codes.getJSONObject(n), id);
+            }
         }
 
-        if ((jsonObject.get("script")) != null)
-            new ScriptDAO().post(jsonObject.getJSONObject("script"), this.id);
+        if ((jsonObject.has("script"))) {
+            new ScriptDAO().post(jsonObject.getJSONObject("script"), id);
+        }
 
-        if (jsonObject.get("correction") != null)
-            new ExerciseCorrectionDAO().post(jsonObject.getJSONObject("correction"), this.id);
+        if (jsonObject.has("correction")) {
+            new ExerciseCorrectionDAO().post(jsonObject.getJSONObject("correction"), id);
+        }
 
         return this;
     }
