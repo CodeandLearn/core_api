@@ -47,11 +47,10 @@ public class ScriptDAO extends Model {
 
 
     public ScriptDAO update(int id, JSONObject jsonObject) {
-        make.add(jsonObject.getInt("exercise_id"));
         make.add(jsonObject.getString("content"));
         make.add(getTimestamp());
         make.add(id);
-        setPut(SQL.make("UPDATE scripts SET exercise_id=?, content=?, modify_timestamp=? WHERE id=?", make.toArray()));
+        setPut(SQL.make("UPDATE scripts SET content=?, modify_timestamp=? WHERE id=?", make.toArray()));
         return this;
     }
 
