@@ -39,13 +39,11 @@ public class ExerciseController {
         return new CodeTemplateDAO().getTemplates(args.getInt("exercise_id"));
     }
 
-    /*
     @Methode("GET")
     @Route("/exercise/{exercise_id}/script")
     public ScriptDAO getExerciseScript(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new ScriptDAO().getExerciseScript(args.getInt("exercise_id"));
     }
-    */
 
     @Methode("GET")
     @Route("/exercise/{exercise_id}/correction")

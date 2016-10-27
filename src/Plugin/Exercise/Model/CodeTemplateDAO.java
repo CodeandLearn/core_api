@@ -46,11 +46,10 @@ public class CodeTemplateDAO extends Model {
 
 
     public CodeTemplateDAO update(int id, JSONObject jsonObject) {
-        make.add(jsonObject.getInt("user_exercise_id"));
         make.add(jsonObject.getString("file_name"));
         make.add(jsonObject.getString("content"));
         make.add(id);
-        setPut(SQL.make("UPDATE code_templates SET exercise_id=?, file_name=?, content=? WHERE id=?", make.toArray()));
+        setPut(SQL.make("UPDATE code_templates SET file_name=?, content=? WHERE id=?", make.toArray()));
         return this;
     }
 
