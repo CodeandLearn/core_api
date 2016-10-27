@@ -4,12 +4,14 @@ import Core.Database.SQL;
 import Core.Database.SQLRequest;
 import Core.Http.Map;
 import Core.Model;
-import Plugin.Exercise.Obj.*;
+import Plugin.Exercise.Obj.CodeObj;
+import Plugin.Exercise.Obj.CodeTemplateObj;
+import Plugin.Exercise.Obj.ExerciseModerationObj;
+import Plugin.Exercise.Obj.ExerciseObj;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 /**
  * Created by HallElouia on 04/25/2016.
@@ -72,20 +74,22 @@ public class ExerciseDAO extends Model {
         make.add(jsonObject.getInt("grade_max"));
         setPost(SQL.make("INSERT INTO exercises (account_id, course_id, title, instruction, grade_max) VALUES (?, ?, ?, ?, ?)", make.toArray()));
 
-        new ExerciseModerationDAO().generate(this.id);
+        new ExerciseModerationDAO().generate(id);
 
-        JSONArray codes;
-        if ((codes = (JSONArray) jsonObject.get("codes")) != null)
-        {
-            for (int n = 0; n < codes.length(); ++n)
-                new CodeTemplateDAO().post(codes.getJSONObject(n), this.id);
+        if (jsonObject.has("codes")) {
+            JSONArray codes = jsonObject.getJSONArray("codes");
+            for (int n = 0; n < codes.length(); ++n) {
+                new CodeTemplateDAO().post(codes.getJSONObject(n), id);
+            }
         }
 
-        if ((jsonObject.get("script")) != null)
-            new ScriptDAO().post(jsonObject.getJSONObject("script"), this.id);
+        if ((jsonObject.has("script"))) {
+            new ScriptDAO().post(jsonObject.getJSONObject("script"), id);
+        }
 
-        if (jsonObject.get("correction") != null)
-            new ExerciseCorrectionDAO().post(jsonObject.getJSONObject("correction"), this.id);
+        if (jsonObject.has("correction")) {
+            new ExerciseCorrectionDAO().post(jsonObject.getJSONObject("correction"), id);
+        }
 
         return this;
     }
@@ -96,6 +100,25 @@ public class ExerciseDAO extends Model {
         make.add(jsonObject.getInt("grade_max"));
         make.add(id);
         setPut(SQL.make("UPDATE exercises SET title=?, instruction=?, grade_max=? WHERE id=?", make.toArray()));
+
+        if (jsonObject.has("codes")) {
+            JSONArray codes = jsonObject.getJSONArray("codes");
+            for (int n = 0; n < codes.length(); ++n) {
+                JSONObject code = codes.getJSONObject(n);
+                new CodeTemplateDAO().update(code.getInt("id"), code);
+            }
+        }
+
+        if ((jsonObject.has("script"))) {
+            JSONObject script = jsonObject.getJSONObject("script");
+            new ScriptDAO().update(script.getInt("id"), script);
+        }
+
+        if (jsonObject.has("correction")) {
+            JSONObject correction = jsonObject.getJSONObject("correction");
+            new ExerciseCorrectionDAO().update(correction.getInt("id"), correction);
+        }
+
         return this;
     }
 
