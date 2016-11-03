@@ -30,9 +30,9 @@ public class ForumController {
         return new ForumSubCategoryModel().getForums(args.getInt("category_id"));
     }
     @Methode("GET")
-    @Route("/forum_subjects/{forum_id}")
+    @Route("/forum_subjects/{subcategory_id}")
     public ForumSubjectModel getSubjectsInForum(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        return new ForumSubjectModel().getSubjects(args.getInt("forum_id"));
+        return new ForumSubjectModel().getSubjects(args.getInt("subcategory_id"));
     }
 
     @Methode("GET")
