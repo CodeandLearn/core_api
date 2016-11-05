@@ -29,7 +29,7 @@ public class ForumSubjectModel extends Model {
 
     public ForumSubjectModel getSubjects(int forum_subcategory_id){
         make.add(forum_subcategory_id);
-        setGet(SQL.make("SELECT * FROM forum_subjects WHERE forums_forum_id = ? ORDER BY last_updated DESC", make.toArray()));
+        setGet(SQL.make("SELECT * FROM forum_subjects WHERE forums_subcategory_id = ? ORDER BY last_updated DESC", make.toArray()));
         return this;
     }
 
