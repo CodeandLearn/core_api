@@ -19,7 +19,7 @@ public class ForumSubjectModel extends Model {
         fsObj.id = result.getInt("forum_subjects.id");
         fsObj.title = result.getString("forum_subjects.title");
         fsObj.account_id = result.getInt("forum_subjects.account_id");
-        fsObj.created_at =  result.getLong("forum_subjects.created_at");
+        fsObj.created_at =  result.getLong("forum_subjects.create_at");
         fsObj.last_updated =  result.getLong("forum_subjects.last_updated");
         fsObj.last_account_id = result.getInt("forum_subjects.last_account_id");
         fsObj.forum_subcategory_id = result.getInt("forum_subjects.forum_subcategory_id");
