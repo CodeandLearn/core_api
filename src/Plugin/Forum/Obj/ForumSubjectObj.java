@@ -1,5 +1,6 @@
 package Plugin.Forum.Obj;
 
+import Plugin.Account.Obj.AccountObj;
 import Plugin.Forum.Model.ForumSubCategoryModel;
 
 /**
@@ -14,4 +15,7 @@ public class ForumSubjectObj {
     public int last_account_id;
     public int forum_subcategory_id;
     public int likes;
+    public AccountObj o_poster;
+    public AccountObj l_poster;
+
 }

@@ -1,9 +1,13 @@
 package Plugin.Forum.Model;
 
 import Core.Database.SQL;
+import Core.Database.SQLRequest;
 import Core.Http.Map;
 import Core.Model;
+import Plugin.Account.Model.GetAccount;
+import Plugin.Account.Obj.AccountObj;
 import Plugin.Forum.Obj.ForumPostObj;
+import Plugin.Forum.Obj.ForumSubjectObj;
 import org.json.JSONObject;
 
 /**
@@ -21,6 +25,20 @@ public class ForumPostModel extends Model {
         fpObj.last_updated = result.getLong("forum_posts.last_updated");
         fpObj.likes = result.getInt("forum_posts.likes");
         return fpObj;
+    }
+    
+    @Override
+    protected void setGet(String request) {
+        SQLRequest sql = new SQLRequest(request);
+        sql.select();
+        for (Map result : sql.getResultSet()) {
+            Object ret = setData(result);
+            if (ret != null) {
+                ForumPostObj r = (ForumPostObj) ret;
+                r.poster = (AccountObj) new GetAccount().getAccount(r.account_id).getData().get(0);
+                data.add(r);
+            }
+        }
     }
 
     public ForumPostModel getPosts(int forum_subject_id) {

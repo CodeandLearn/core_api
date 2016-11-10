@@ -4,6 +4,8 @@ import Core.Database.SQL;
 import Core.Database.SQLRequest;
 import Core.Http.Map;
 import Core.Model;
+import Plugin.Account.Model.GetAccount;
+import Plugin.Account.Obj.AccountObj;
 import Plugin.Forum.Obj.ForumSubjectObj;
 import org.json.JSONObject;
 
@@ -25,6 +27,21 @@ public class ForumSubjectModel extends Model {
         fsObj.forum_subcategory_id = result.getInt("forum_subjects.forum_subcategory_id");
         fsObj.likes = result.getInt("forum_subjects.likes");
         return fsObj;
+    }
+
+    @Override
+    protected void setGet(String request) {
+        SQLRequest sql = new SQLRequest(request);
+        sql.select();
+        for (Map result : sql.getResultSet()) {
+            Object ret = setData(result);
+            if (ret != null) {
+                ForumSubjectObj r = (ForumSubjectObj) ret;
+                r.o_poster = (AccountObj) new GetAccount().getAccount(r.account_id).getData().get(0);
+                r.l_poster = (AccountObj) new GetAccount().getAccount(r.last_account_id).getData().get(0);
+                data.add(r);
+            }
+        }
     }
 
     public ForumSubjectModel getSubjects(int forum_subcategory_id){

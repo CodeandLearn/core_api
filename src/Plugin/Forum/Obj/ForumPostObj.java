@@ -1,5 +1,7 @@
 package Plugin.Forum.Obj;
 
+import Plugin.Account.Obj.AccountObj;
+
 /**
  * Created by moran on 9/1/2016.
  */
@@ -11,5 +13,5 @@ public class ForumPostObj {
     public long created_at;
     public long last_updated;
     public int likes;
-    public ForumSubjectObj fsObj = new ForumSubjectObj();
+    public AccountObj poster;
 }
