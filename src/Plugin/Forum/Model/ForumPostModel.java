@@ -55,7 +55,7 @@ public class ForumPostModel extends Model {
         make.add(getTimestamp());
         make.add(getTimestamp());
         make.add(0);
-        setPost(SQL.make("INSERT INTO forum_posts (account_id, subject_id, content, created_at, last_updated, likes) VALUES (?,?,?,?,?,?)", make.toArray()));
+        setPost(SQL.make("INSERT INTO forum_posts (account_id, forum_subject_id, content, created_at, last_updated, likes) VALUES (?,?,?,?,?,?)", make.toArray()));
         return this;
     }
 
@@ -67,7 +67,7 @@ public class ForumPostModel extends Model {
         make.add(getTimestamp());
         make.add(getTimestamp());
         make.add(0);
-        setPost(SQL.make("INSERT INTO forum_posts (account_id, subject_id, content, created_at, last_updated, likes) VALUES (?,?,?,?,?,?)", make.toArray()));
+        setPost(SQL.make("INSERT INTO forum_posts (account_id, forum_subject_id, content, created_at, last_updated, likes) VALUES (?,?,?,?,?,?)", make.toArray()));
         return this;
     }
     public ForumPostModel update(int id, JSONObject jsonObject) {
