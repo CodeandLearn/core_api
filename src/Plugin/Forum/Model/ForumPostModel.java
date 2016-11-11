@@ -26,7 +26,7 @@ public class ForumPostModel extends Model {
         fpObj.likes = result.getInt("forum_posts.likes");
         return fpObj;
     }
-    
+
     @Override
     protected void setGet(String request) {
         SQLRequest sql = new SQLRequest(request);
@@ -50,8 +50,8 @@ public class ForumPostModel extends Model {
     public ForumPostModel insert(JSONObject jsonObject)
     {
         make.add(jsonObject.getInt("account_id"));
-        make.add(jsonObject.getInt("subject_id"));
-        make.add(jsonObject.getInt("content"));
+        make.add(jsonObject.getInt("forum_subject_id"));
+        make.add(jsonObject.getString("content"));
         make.add(getTimestamp());
         make.add(getTimestamp());
         make.add(0);
