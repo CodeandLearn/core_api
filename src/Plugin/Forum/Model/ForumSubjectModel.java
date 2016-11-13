@@ -59,7 +59,7 @@ public class ForumSubjectModel extends Model {
         make.add(jsonObject.getInt("forum_subcategory_id"));
         make.add(0);
         new ForumPostModel().insertWithid(jsonObject.getJSONObject("post"), this.id);
-        setPost(SQL.make("INSERT INTO forum_subjects (title, account_id, created_at, last_updated, last_account_id, forum_subcategory_id, likes) VALUES (?,?,?,?,?,?,?)", make.toArray()));
+        setPost(SQL.make("INSERT INTO forum_subjects (title, account_id, create_at, last_updated, last_account_id, forum_subcategory_id, likes) VALUES (?,?,?,?,?,?,?)", make.toArray()));
         return this;
     }
 

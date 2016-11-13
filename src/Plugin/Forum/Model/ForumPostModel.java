@@ -19,7 +19,7 @@ public class ForumPostModel extends Model {
         ForumPostObj fpObj = new ForumPostObj();
         fpObj.id = result.getInt("forum_posts.id");
         fpObj.account_id = result.getInt("forum_posts.account_id");
-        fpObj.forum_subject_id= result.getInt("forum_posts.forum_subject_id");
+        fpObj.forum_subject_id = result.getInt("forum_posts.forum_subject_id");
         fpObj.content = result.getString("forum_posts.content");
         fpObj.created_at = result.getLong("forum_posts.created_at");
         fpObj.last_updated = result.getLong("forum_posts.last_updated");
