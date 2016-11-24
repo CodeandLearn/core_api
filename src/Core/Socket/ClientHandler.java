@@ -50,7 +50,9 @@ public class ClientHandler implements Runnable {
                     if (!setInitialData(clientId, tmp)) {
                         if (!checkInitialData()) {
                             while ((buffer = userInput.readLine()).length() > 2) {
-                                ServerSingleton.getInstance().log(clientId, "[HEADER] -> " + buffer);
+                                if (!buffer.contains("Basic")) {
+                                    ServerSingleton.getInstance().log(clientId, "[HEADER] -> " + buffer);
+                                }
                                 headerField.put(buffer.split(": ")[0].toLowerCase(), buffer.split(": ")[1]);
                             }
                             if (!method.equals("OPTIONS")) {
@@ -72,7 +74,9 @@ public class ClientHandler implements Runnable {
                                     JSONObject jsonObject = new JSONObject();
                                     if (Router.isJSONValid(jsonClient)) {
                                         jsonObject = new JSONObject(jsonClient);
-                                        ServerSingleton.getInstance().log(clientId, "[USER] -> " + jsonClient);
+                                        if (!jsonClient.contains("password")) {
+                                            ServerSingleton.getInstance().log(clientId, "[USER] -> " + jsonClient);
+                                        }
                                     }
                                     String jsonReturn = router.find(clientId, method, route, headerField, jsonObject);
                                     userOutput.write(makeResult(clientId, jsonReturn));
