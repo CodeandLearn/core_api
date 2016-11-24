@@ -97,28 +97,28 @@ public class CourseController {
     @Methode("POST")
     @Route("/course")
     public PostCourse postCourse(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        new HistoryModel().postHistory(UserSecuritySingleton.getInstance().getUserId(socket), "cours", "à ajouté un cours.", 0);
+        new HistoryModel().postHistory(UserSecuritySingleton.getInstance().getUserId(socket), "cours", "ajouté un cours.", 0);
         return new PostCourse().postCourse(UserSecuritySingleton.getInstance().getUserId(socket), jsonObject);
     }
 
     @Methode("POST")
     @Route("/course/comment")
     public PostCourse postCourseComment(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        new HistoryModel().postHistory(UserSecuritySingleton.getInstance().getUserId(socket), "cours", "à posté un commentaire.", 0);
+        new HistoryModel().postHistory(UserSecuritySingleton.getInstance().getUserId(socket), "cours", "posté un commentaire.", 0);
         return new PostCourse().postCourseComment(UserSecuritySingleton.getInstance().getUserId(socket), jsonObject);
     }
 
     @Methode("PUT")
     @Route("/course/{id}")
     public PutCourse putCourse(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        new HistoryModel().postHistory(UserSecuritySingleton.getInstance().getUserId(socket), "cours", "à modifié un cours.", 0);
+        new HistoryModel().postHistory(UserSecuritySingleton.getInstance().getUserId(socket), "cours", "modifié un cours.", 0);
         return new PutCourse().putCourse(args.getInt("id"), jsonObject);
     }
 
     @Methode("PUT")
     @Route("/course/comment/{id}")
     public PutCourse putCourseComment(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        new HistoryModel().postHistory(UserSecuritySingleton.getInstance().getUserId(socket), "cours", "à modifié un commentaire.", 0);
+        new HistoryModel().postHistory(UserSecuritySingleton.getInstance().getUserId(socket), "cours", "modifié un commentaire.", 0);
         return new PutCourse().putCourseComment(args.getInt("id"), jsonObject);
     }
 
@@ -131,14 +131,14 @@ public class CourseController {
     @Methode("DELETE")
     @Route("/course/{id}")
     public DeleteCourse deleteCourse(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        new HistoryModel().postHistory(UserSecuritySingleton.getInstance().getUserId(socket), "cours", "à supprimé un cours.", 0);
+        new HistoryModel().postHistory(UserSecuritySingleton.getInstance().getUserId(socket), "cours", "supprimé un cours.", 0);
         return new DeleteCourse().deleteCourse(args.getInt("id"));
     }
 
     @Methode("DELETE")
     @Route("/course/comment/{id}")
     public DeleteCourse deleteCourseComment(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        new HistoryModel().postHistory(UserSecuritySingleton.getInstance().getUserId(socket), "cours", "à supprimé un commentaire.", 0);
+        new HistoryModel().postHistory(UserSecuritySingleton.getInstance().getUserId(socket), "cours", "supprimé un commentaire.", 0);
         return new DeleteCourse().deleteCourseComment(args.getInt("id"));
     }
 }

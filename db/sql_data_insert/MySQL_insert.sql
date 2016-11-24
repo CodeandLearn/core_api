@@ -25,12 +25,26 @@ UNLOCK TABLES;
 -- -----------------------------------------------------
 -- Avatars
 -- -----------------------------------------------------
-LOCK TABLES `avatars` WRITE;
+/*LOCK TABLES `avatars` WRITE;
 /*!40000 ALTER TABLE `avatars` DISABLE KEYS */;
 INSERT INTO `avatars` VALUES
   (1,'http%3A%2F%2Fwww.freakingnews.com%2Fpictures%2F97500%2FKorean-Elephant-Rocket--97543.jpg'),
   (2,'https://byuc.files.wordpress.com/2012/07/avat-2.jpg'),
   (3,'https://chivethethrottle.files.wordpress.com/2012/11/random-t-11_16_12-920-44.jpg?w=920&h=689');
+/*!40000 ALTER TABLE `avatars` ENABLE KEYS */;
+UNLOCK TABLES;*/
+
+LOCK TABLES `avatars` WRITE;
+/*!40000 ALTER TABLE `avatars` DISABLE KEYS */;
+INSERT  IGNORE INTO `avatars` VALUES
+  (1,'Default','default.png'),
+  (2,'Zynga','zynga.png'),
+  (3,'Readernaut','readernaut.png'),
+  (4,'Girl1','female.png'),
+  (5,'Girl2','maturewoman.png'),
+  (6,'Boy1','male.png'),
+  (7,'Boy2','malecostume.png'),
+  (8,'Boy3','matureman2.png');
 /*!40000 ALTER TABLE `avatars` ENABLE KEYS */;
 UNLOCK TABLES;
 

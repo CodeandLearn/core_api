@@ -8,6 +8,7 @@ import Core.Methode;
 import Core.Route;
 import Core.Singleton.UserSecuritySingleton;
 import Plugin.Account.Model.*;
+import Plugin.History.Model.HistoryModel;
 import org.json.JSONObject;
 
 /**
@@ -54,6 +55,7 @@ public class AccountController {
     @Methode("PUT")
     @Route("/account")
     public PutAccount putAccount(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
+        new HistoryModel().postHistory(UserSecuritySingleton.getInstance().getUserId(socket), "account", "modifié les informations de son compte.", 0);
         return new PutAccount().putAccount(socket, UserSecuritySingleton.getInstance().getUserId(socket), jsonObject);
     }
 

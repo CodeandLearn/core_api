@@ -58,6 +58,8 @@ public class ThreadPool extends Thread {
                     NbClientsSingleton.getInstance().addClient();
                     ClientHandler handler = new ClientHandler(clientSocket);
                     workers.execute(handler);
+                } else {
+                    clientSocket.close();
                 }
             } catch (SocketTimeoutException te) {
                 System.err.print("");

@@ -8,5 +8,4 @@ public class ForumSubCategoryObj {
     public int forum_category_id;
     public String title;
     public String description;
-    public ForumCategoryObj fcobj = new ForumCategoryObj();
 }

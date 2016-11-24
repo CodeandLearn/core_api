@@ -3,14 +3,10 @@ package Plugin.Key.Model;
 import Core.Database.SQL;
 import Core.Http.Map;
 import Core.Model;
-import Core.Singleton.ConfigSingleton;
-import Core.Singleton.UserSecuritySingleton;
 import Plugin.Key.Obj.KeyObj;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
-import java.util.Random;
-import java.util.UUID;
 
 /**
  * Created by teddy on 22/10/2016.
@@ -59,6 +55,36 @@ public class KeyModel extends Model {
         make.add(type);
         setPost(SQL.make("INSERT INTO access_keys (account_id, key_value, type) VALUES (?, ?, ?)", make.toArray()));
         make.clear();
+    }
+
+    public KeyModel setRandgeDistributed(int id_start, int id_end) {
+        make.add(1); // distributed status
+        make.add(id_start);
+        make.add(id_end);
+        setPut(SQL.make("UPDATE access_keys SET type=? WHERE id>=? AND id<=?", make.toArray()));
+        return this;
+    }
+
+    public KeyModel setDistributed(int id) {
+        make.add(1); // distributed status
+        make.add(id);
+        setPut(SQL.make("UPDATE access_keys SET type=? WHERE id=?", make.toArray()));
+        return this;
+    }
+
+    public KeyModel resetRandge(int id_start, int id_end) {
+        make.add(0);
+        make.add(id_start);
+        make.add(id_end);
+        setPut(SQL.make("UPDATE access_keys SET type=? WHERE id>=? AND id<=?", make.toArray()));
+        return this;
+    }
+
+    public KeyModel reset(int id) {
+        make.add(0);
+        make.add(id);
+        setPut(SQL.make("UPDATE access_keys SET type=? WHERE id=?", make.toArray()));
+        return this;
     }
 
     public KeyModel deleteKey(int id) {
