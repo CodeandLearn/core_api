@@ -106,4 +106,16 @@ public class IpSingleton {
             ServerSingleton.getInstance().log("[SERVER BAN IP] -> Exception occurred while unban ip " + ip, e);
         }
     }
+
+    public void whiteListIp(String ip) {
+        try {
+            props.setProperty(ip, String.valueOf(true));
+            FileWriter writer = new FileWriter(ipFile);
+            props.store(writer, "IP");
+            writer.close();
+            ServerSingleton.getInstance().log("[SERVER BAN IP] -> " + ip + " as been white listed!");
+        } catch (IOException e) {
+            ServerSingleton.getInstance().log("[SERVER BAN IP] -> Exception occurred while white listed ip " + ip, e);
+        }
+    }
 }

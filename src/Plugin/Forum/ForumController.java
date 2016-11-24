@@ -7,8 +7,8 @@ import Core.Http.Oauth2;
 import Core.Methode;
 import Core.Route;
 import Plugin.Forum.Model.ForumCategoryModel;
-import Plugin.Forum.Model.ForumSubCategoryModel;
 import Plugin.Forum.Model.ForumPostModel;
+import Plugin.Forum.Model.ForumSubCategoryModel;
 import Plugin.Forum.Model.ForumSubjectModel;
 import org.json.JSONObject;
 
@@ -17,7 +17,6 @@ import org.json.JSONObject;
  */
 @Controller
 public class ForumController {
-
     @Methode("GET")
     @Route("/forum_categories")
     public ForumCategoryModel getForumCategories(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
@@ -29,6 +28,7 @@ public class ForumController {
     public ForumSubCategoryModel getForumsInCategory(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new ForumSubCategoryModel().getForums(args.getInt("category_id"));
     }
+
     @Methode("GET")
     @Route("/forum_subjects/{subcategory_id}")
     public ForumSubjectModel getSubjectsInForum(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
@@ -112,5 +112,4 @@ public class ForumController {
     public ForumPostModel deletePost(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new ForumPostModel().delete(args.getInt("id"));
     }
-
 }
