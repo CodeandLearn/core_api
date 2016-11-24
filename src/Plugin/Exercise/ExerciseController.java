@@ -8,6 +8,7 @@ import Core.Methode;
 import Core.Route;
 import Core.Singleton.UserSecuritySingleton;
 import Plugin.Exercise.Model.*;
+import Plugin.History.Model.HistoryModel;
 import org.json.JSONObject;
 
 /**
@@ -66,6 +67,7 @@ public class ExerciseController {
     @Methode("POST")
     @Route("/exercise")
     public ExerciseDAO postExercise(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
+        new HistoryModel().postHistory(UserSecuritySingleton.getInstance().getUserId(socket), "exercise", "ajouté un nouvel exercice.", 0);
         return new ExerciseDAO().post(UserSecuritySingleton.getInstance().getUserId(socket), jsonObject);
     }
 
@@ -90,6 +92,7 @@ public class ExerciseController {
     @Methode("POST")
     @Route("/exercise/comment")
     public ExerciseCommentDAO postExerciseComment(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
+        new HistoryModel().postHistory(UserSecuritySingleton.getInstance().getUserId(socket), "exercise", "posté un nouveau commentaire.", 0);
         return new ExerciseCommentDAO().post(UserSecuritySingleton.getInstance().getUserId(socket), jsonObject);
     }
 
@@ -104,6 +107,7 @@ public class ExerciseController {
     @Methode("PUT")
     @Route("/exercise/{id}")
     public ExerciseDAO putExercise(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
+        new HistoryModel().postHistory(UserSecuritySingleton.getInstance().getUserId(socket), "exercise", "modifié un exercice.", 0);
         return new ExerciseDAO().update(args.getInt("id"), jsonObject);
     }
 
@@ -140,6 +144,7 @@ public class ExerciseController {
     @Methode("DELETE")
     @Route("/exercise/{id}")
     public ExerciseDAO deleteExercise(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
+        new HistoryModel().postHistory(UserSecuritySingleton.getInstance().getUserId(socket), "exercise", "supprimé un exercice.", 0);
         return new ExerciseDAO().delete(args.getInt("id"));
     }
 
@@ -171,6 +176,7 @@ public class ExerciseController {
     @Methode("DELETE")
     @Route("/exercise/comments/{comment_id}")
     public ExerciseCommentDAO deleteExerciseComment(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
+        new HistoryModel().postHistory(UserSecuritySingleton.getInstance().getUserId(socket), "exercise", "supprimé un commentaire sur un exercice.", 0);
         return new ExerciseCommentDAO().delete(args.getInt("comment_id"));
     }
 

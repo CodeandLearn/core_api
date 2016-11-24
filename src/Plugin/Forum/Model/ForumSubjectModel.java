@@ -4,6 +4,8 @@ import Core.Database.SQL;
 import Core.Database.SQLRequest;
 import Core.Http.Map;
 import Core.Model;
+import Plugin.Account.Model.GetAccount;
+import Plugin.Account.Obj.AccountObj;
 import Plugin.Forum.Obj.ForumSubjectObj;
 import org.json.JSONObject;
 
@@ -19,7 +21,7 @@ public class ForumSubjectModel extends Model {
         fsObj.id = result.getInt("forum_subjects.id");
         fsObj.title = result.getString("forum_subjects.title");
         fsObj.account_id = result.getInt("forum_subjects.account_id");
-        fsObj.created_at =  result.getLong("forum_subjects.created_at");
+        fsObj.created_at =  result.getLong("forum_subjects.create_at");
         fsObj.last_updated =  result.getLong("forum_subjects.last_updated");
         fsObj.last_account_id = result.getInt("forum_subjects.last_account_id");
         fsObj.forum_subcategory_id = result.getInt("forum_subjects.forum_subcategory_id");
@@ -27,9 +29,24 @@ public class ForumSubjectModel extends Model {
         return fsObj;
     }
 
+    @Override
+    protected void setGet(String request) {
+        SQLRequest sql = new SQLRequest(request);
+        sql.select();
+        for (Map result : sql.getResultSet()) {
+            Object ret = setData(result);
+            if (ret != null) {
+                ForumSubjectObj r = (ForumSubjectObj) ret;
+                r.o_poster = (AccountObj) new GetAccount().getAccount(r.account_id).getData().get(0);
+                r.l_poster = (AccountObj) new GetAccount().getAccount(r.last_account_id).getData().get(0);
+                data.add(r);
+            }
+        }
+    }
+
     public ForumSubjectModel getSubjects(int forum_subcategory_id){
         make.add(forum_subcategory_id);
-        setGet(SQL.make("SELECT * FROM forum_subjects WHERE forums_forum_id = ? ORDER BY last_updated DESC", make.toArray()));
+        setGet(SQL.make("SELECT * FROM forum_subjects WHERE forum_subcategory_id = ? ORDER BY last_updated DESC", make.toArray()));
         return this;
     }
 
@@ -41,8 +58,8 @@ public class ForumSubjectModel extends Model {
         make.add(jsonObject.getInt("last_account_id"));
         make.add(jsonObject.getInt("forum_subcategory_id"));
         make.add(0);
-        setPost(SQL.make("INSERT INTO forum_subjects (title, account_id, created_at, last_updated, last_account_id, forum_subcategory_id, likes) VALUES (?,?,?,?,?,?,?)", make.toArray()));
         new ForumPostModel().insertWithid(jsonObject.getJSONObject("post"), this.id);
+        setPost(SQL.make("INSERT INTO forum_subjects (title, account_id, create_at, last_updated, last_account_id, forum_subcategory_id, likes) VALUES (?,?,?,?,?,?,?)", make.toArray()));
         return this;
     }
 

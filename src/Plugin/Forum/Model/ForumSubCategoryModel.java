@@ -17,7 +17,7 @@ public class ForumSubCategoryModel extends Model {
     protected Object setData(Map result) {
         ForumSubCategoryObj fObj = new ForumSubCategoryObj();
         fObj.id = result.getInt("forum_subcategories.id");
-        fObj.forum_category_id = result.getInt("forum_subcategories.forum_category.id");
+        fObj.forum_category_id = result.getInt("forum_subcategories.forum_category_id");
         fObj.title = result.getString("forum_subcategories.title");
         fObj.description = result.getString("forum_subcategories.description");
         return fObj;

@@ -28,7 +28,7 @@ public class Oauth2 {
                     if (value.matches("^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$")) {
                         tmp = new String(Base64.getDecoder().decode(value)).split(":");
                         if (tmp.length == 2) {
-                            username = tmp[0];
+                            username = tmp[0].toLowerCase();
                             password = tmp[1];
                         }
                     }
