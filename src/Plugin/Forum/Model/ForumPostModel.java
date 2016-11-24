@@ -1,13 +1,9 @@
 package Plugin.Forum.Model;
 
 import Core.Database.SQL;
-import Core.Database.SQLRequest;
 import Core.Http.Map;
 import Core.Model;
-import Plugin.Account.Model.GetAccount;
-import Plugin.Account.Obj.AccountObj;
 import Plugin.Forum.Obj.ForumPostObj;
-import Plugin.Forum.Obj.ForumSubjectObj;
 import org.json.JSONObject;
 
 /**
@@ -24,10 +20,11 @@ public class ForumPostModel extends Model {
         fpObj.created_at = result.getLong("forum_posts.created_at");
         fpObj.last_updated = result.getLong("forum_posts.last_updated");
         fpObj.likes = result.getInt("forum_posts.likes");
+        fpObj.account.username = result.getString("accounts.username");
         return fpObj;
     }
 
-    @Override
+/*    @Override
     protected void setGet(String request) {
         SQLRequest sql = new SQLRequest(request);
         sql.select();
@@ -39,16 +36,15 @@ public class ForumPostModel extends Model {
                 data.add(r);
             }
         }
-    }
+    }*/
 
     public ForumPostModel getPosts(int forum_subject_id) {
         make.add(forum_subject_id);
-        setGet(SQL.make("SELECT * FROM forum_posts WHERE forum_subject_id=? ORDER BY created_at ASC", make.toArray()));
+        setGet(SQL.make("SELECT * FROM forum_posts, accounts WHERE forum_posts.account_id=accounts.id AND forum_subject_id=? ORDER BY created_at DESC", make.toArray()));
         return this;
     }
 
-    public ForumPostModel insert(JSONObject jsonObject)
-    {
+    public ForumPostModel insert(JSONObject jsonObject) {
         make.add(jsonObject.getInt("account_id"));
         make.add(jsonObject.getInt("forum_subject_id"));
         make.add(jsonObject.getString("content"));
@@ -59,8 +55,7 @@ public class ForumPostModel extends Model {
         return this;
     }
 
-    public ForumPostModel insertWithid(JSONObject jsonObject, int id)
-    {
+    public ForumPostModel insertWithid(JSONObject jsonObject, int id) {
         make.add(jsonObject.getInt("account_id"));
         make.add(id);
         make.add(jsonObject.getInt("content"));
@@ -70,6 +65,7 @@ public class ForumPostModel extends Model {
         setPost(SQL.make("INSERT INTO forum_posts (account_id, forum_subject_id, content, created_at, last_updated, likes) VALUES (?,?,?,?,?,?)", make.toArray()));
         return this;
     }
+
     public ForumPostModel update(int id, JSONObject jsonObject) {
         make.add(jsonObject.getInt("content"));
         make.add(getTimestamp());
@@ -79,13 +75,13 @@ public class ForumPostModel extends Model {
         return this;
     }
 
-    public ForumPostModel delete(int id){
+    public ForumPostModel delete(int id) {
         make.add(id);
         setDelete(SQL.make("DELETE FROM forum_posts WHERE id=?", make.toArray()));
         return this;
     }
 
-    public ForumPostModel deleteAll(int forum_subject_id){
+    public ForumPostModel deleteAll(int forum_subject_id) {
         make.add(forum_subject_id);
         setDelete(SQL.make("DELETE FROM forum_posts WHERE forum_subject_id=?", make.toArray()));
         return this;
