@@ -17,7 +17,7 @@ public class GetAccount extends Model {
     protected Object setData(Map result) {
         AccountObj accountObj = new AccountObj();
         accountObj.id = result.getInt("accounts.id");
-        accountObj.username = result.getString("accounts.username");
+        accountObj.username = result.getString("accounts.username").toLowerCase();
         if (showEmail) {
             accountObj.email = result.getString("accounts.email");
         }

@@ -8,7 +8,6 @@ import Core.Http.Tools;
 import Core.Model;
 import Core.Singleton.ConfigSingleton;
 import Core.Singleton.UserSecuritySingleton;
-import Plugin.Badge.Model.BadgeModel;
 import Plugin.Badge.Model.UserBadgeModel;
 import Plugin.Key.Obj.KeyObj;
 import org.json.JSONObject;
@@ -31,6 +30,7 @@ public class PostAccount extends Model {
     public PostAccount register(String socket, JSONObject jsonObject) {
         if (ConfigSingleton.getInstance().getBoolean("register")) {
             if (Tools.isValidEmailAddress(jsonObject.getString("email")) && !isExist(jsonObject.getString("username"), jsonObject.getString("email"))) {
+                jsonObject.put("username", jsonObject.getString("username").toLowerCase());
                 if (ConfigSingleton.getInstance().getBoolean("beta_key")) {
                     registerBeta(socket, jsonObject);
                 } else {
@@ -72,8 +72,8 @@ public class PostAccount extends Model {
             make.add(jsonObject.getString("key_value"));
             setGet(SQL.make("SELECT * FROM access_keys WHERE key_value=? AND account_id=0", make.toArray()));
             make.clear();
-            if (data.size() > 0 && ((KeyObj)data.get(0)).id != 1) {
-                registerNormal(socket, jsonObject, ((KeyObj)data.get(0)).id);
+            if (data.size() > 0 && ((KeyObj) data.get(0)).id != 1) {
+                registerNormal(socket, jsonObject, ((KeyObj) data.get(0)).id);
                 if (id != -1) {
                     int account_id = id;
                     make.add(id);

@@ -67,7 +67,7 @@ public class UserSecuritySingleton {
 
     public void addUser(int id, String username, String password, int group) {
         Map user = new Map();
-        user.put("username", username);
+        user.put("username", username.toLowerCase());
         user.put("password", password);
         user.put("id", id);
         user.put("group", group);
