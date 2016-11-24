@@ -13,5 +13,5 @@ public class ForumPostObj {
     public long created_at;
     public long last_updated;
     public int likes;
-    public AccountObj account;
+    public AccountObj account = new AccountObj();
 }
