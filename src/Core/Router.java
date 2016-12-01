@@ -5,7 +5,6 @@ import Core.Http.Error;
 import Core.Singleton.IpSingleton;
 import Core.Singleton.ServerSingleton;
 import Core.Singleton.UserSecuritySingleton;
-import Plugin.Server.Model.Server;
 import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -94,7 +93,28 @@ public class Router {
                 json = json.put("error_msg", "Data not found");
             }
         }
+        JSONObject json_tmp = new JSONObject(json.toString());
+        removeEmptyValuesJSONObject(json_tmp, json);
         return json;
+    }
+
+    private void removeEmptyValuesJSONObject(JSONObject json_tmp, JSONObject json) {
+        for (Object object : json_tmp.keySet()) {
+            //System.err.println(object + " : " + json.get(object.toString()).getClass().getTypeName());
+            if (json_tmp.get(object.toString()).getClass().getTypeName().equals("org.json.JSONArray")) {
+                removeEmptyValuesJSONArray(json_tmp.getJSONArray(object.toString()), json.getJSONArray(object.toString()));
+            } else if ((json_tmp.get(object.toString()).getClass().getTypeName().equals("java.lang.Integer") && (json_tmp.getInt(object.toString()) == -1 || json_tmp.getInt(object.toString()) == 0))
+                    || (json_tmp.get(object.toString()).getClass().getTypeName().equals("java.lang.String") && json_tmp.getString(object.toString()) == null)
+                    || (json_tmp.get(object.toString()).getClass().getTypeName().equals("java.lang.Long") && (json_tmp.getInt(object.toString()) == -1 || json_tmp.getInt(object.toString()) == 0))) {
+                json.remove(object.toString());
+            }
+        }
+    }
+
+    private void removeEmptyValuesJSONArray(JSONArray json_tmp, JSONArray json) {
+        /*for (int i = 0; i < json_tmp.length(); i++) {
+            removeEmptyValuesJSONObject();
+        }*/
     }
 
     private String getGenericRoute(String method, String route, Class<?> obj) {

@@ -3,6 +3,7 @@ package Core.Database;
 import Core.Http.Map;
 import Core.Singleton.ConfigSingleton;
 import Core.Singleton.ServerSingleton;
+import com.google.gson.annotations.Since;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 /**
  * Created by teddy on 03/04/2016.
  */
+@Since(1.8)
 public class SQLRequest {
     private ArrayList<Map> entities = new ArrayList<>();
     private String request;

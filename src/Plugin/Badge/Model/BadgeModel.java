@@ -16,10 +16,9 @@ public class BadgeModel extends Model {
         BadgeObj badgeObj = new BadgeObj();
         badgeObj.id = result.getInt("badges.id");
         badgeObj.name = result.getString("badges.name");
-        badgeObj.nb_courses_done = result.getInt("badges.nb_courses_done");
-        badgeObj.nb_exercises_done = result.getInt("badges.nb_exercises_done");
-        badgeObj.type = result.getInt("badges.type");
         badgeObj.path_img = ConfigSingleton.getInstance().getString("url_assets_protocol") + "://" + ConfigSingleton.getInstance().getString("url_assets") + "/assets/images/badge/" + result.getString("badges.path_img");
+        badgeObj.description = result.getString("badges.description");
+        badgeObj.conditions = result.getString("badges.conditions");
         return badgeObj;
     }
 
@@ -30,22 +29,20 @@ public class BadgeModel extends Model {
 
     public BadgeModel postBadge(JSONObject jsonObject) {
         make.add(jsonObject.getString("name"));
-        make.add(jsonObject.getInt("nb_courses_done"));
-        make.add(jsonObject.getInt("nb_exercises_done"));
         make.add(jsonObject.getString("path_img"));
-        make.add(jsonObject.getInt("type"));
-        setPost(SQL.make("INSERT INTO badges (name, nb_courses_done, nb_exercises_done, path_img, type) VALUES (?, ?, ?, ?, ?)", make.toArray()));
+        make.add(jsonObject.getString("description"));
+        make.add(jsonObject.getString("conditions"));
+        setPost(SQL.make("INSERT INTO badges (name, path_img, description, conditions) VALUES (?, ?, ?, ?)", make.toArray()));
         return this;
     }
 
     public BadgeModel putBadge(int id, JSONObject jsonObject) {
         make.add(jsonObject.getString("name"));
-        make.add(jsonObject.getInt("nb_courses_done"));
-        make.add(jsonObject.getInt("nb_exercises_done"));
         make.add(jsonObject.getString("path_img"));
-        make.add(jsonObject.getInt("type"));
+        make.add(jsonObject.getString("description"));
+        make.add(jsonObject.getString("conditions"));
         make.add(id);
-        setPut(SQL.make("UPDATE badges SET name=?, nb_courses_done=?, nb_exercises_done=?, path_img=?, type=? WHERE id=?", make.toArray()));
+        setPut(SQL.make("UPDATE badges SET name=?, path_img=?, description=?, conditions=? WHERE id=?", make.toArray()));
         return this;
     }
 

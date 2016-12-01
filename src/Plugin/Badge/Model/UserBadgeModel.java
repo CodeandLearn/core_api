@@ -19,10 +19,8 @@ public class UserBadgeModel extends Model {
         userBadgeObj.timestamp = result.getLong("users_badges.timestamp");
         userBadgeObj.badge.id = result.getInt("badges.id");
         userBadgeObj.badge.path_img = ConfigSingleton.getInstance().getString("url_assets_protocol") + "://" + ConfigSingleton.getInstance().getString("url_assets") + "/assets/images/badge/" + result.getString("badges.path_img");
-        userBadgeObj.badge.nb_exercises_done = result.getInt("badges.nb_exercises_done");
-        userBadgeObj.badge.nb_courses_done = result.getInt("badges.nb_courses_done");
         userBadgeObj.badge.name = result.getString("badges.name");
-        userBadgeObj.badge.type = result.getInt("badges.type");
+        userBadgeObj.badge.description = result.getString("badges.description");
         return userBadgeObj;
     }
 
@@ -50,8 +48,7 @@ public class UserBadgeModel extends Model {
             make.add(account_id);
             make.add(id);
             make.add(getTimestamp());
-            make.add(0);
-            setPost(SQL.make("INSERT INTO users_badges (account_id, badge_id, timestamp, type) VALUES (?, ?, ?, ?)", make.toArray()));
+            setPost(SQL.make("INSERT INTO users_badges (account_id, badge_id, timestamp) VALUES (?, ?, ?)", make.toArray()));
             new HistoryModel().postHistory(account_id, "badge", "obtenu un nouveau badge.", 0);
         }
         return this;

@@ -4,8 +4,11 @@ import Core.Http.Job;
 import Core.Http.Map;
 import Core.Singleton.UserSecuritySingleton;
 import Core.Task;
+import Plugin.Badge.Model.BadgeModel;
+import Plugin.Badge.Model.ConditionBadgeModel;
 import Plugin.Badge.Model.UserBadgeModel;
-import Plugin.Course.Model.GetCourse;
+import Plugin.Badge.Obj.BadgeObj;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -17,23 +20,24 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class UserBadgeTask extends Job {
     @Override
     public void task() {
+        ArrayList<Object> badges = new BadgeModel().getBadges().getData();
         CopyOnWriteArrayList<Map> users = UserSecuritySingleton.getInstance().getUsers();
         for (Map user : users) {
-            int nb = new GetCourse().getAccountCourses(user.getInt("id")).getData().size();
-            if (nb >= 5) {
-                new UserBadgeModel().postAccountBadge(user.getInt("id"), 6); //publish 5 courses
-            }
-            if (nb >= 10) {
-                new UserBadgeModel().postAccountBadge(user.getInt("id"), 7); //publish 10 courses
-            }
-            if (nb >= 30) {
-                new UserBadgeModel().postAccountBadge(user.getInt("id"), 8); //publish 30 courses
-            }
-            if (nb >= 50) {
-                new UserBadgeModel().postAccountBadge(user.getInt("id"), 9); //publish 50 courses
-            }
-            if (user.getLong("create_timestamp") > 1479963600000L && user.getLong("create_timestamp") < 1480197600000L) { //Epitech Experience dates in timestamp
-                new UserBadgeModel().postAccountBadge(user.getInt("id"), 10);  //Epitech Experience 2016
+            for (Object badge : badges) {
+                JSONObject jsonObject = new JSONObject(((BadgeObj) badge).conditions);
+                int total_item = 0;
+                int valid_item = 0;
+                for (Object current_key : jsonObject.keySet()) {
+                    JSONObject current_key_table = jsonObject.getJSONObject(current_key.toString());
+                    total_item++;
+                    if (new ConditionBadgeModel().checkCondition(current_key.toString(), user.getInt("id"), current_key_table)) {
+                        valid_item++;
+                    }
+                }
+                if (total_item == valid_item && total_item != 0) {
+                    System.err.println("validate");
+                    new UserBadgeModel().postAccountBadge(user.getInt("id"), ((BadgeObj) badge).id);
+                }
             }
         }
     }

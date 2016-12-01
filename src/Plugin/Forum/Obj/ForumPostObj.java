@@ -10,8 +10,10 @@ public class ForumPostObj {
     public int account_id;
     public int forum_subject_id;
     public String content;
-    public long created_at;
-    public long last_updated;
+    public long create_timestamp;
+    public long modify_timestamp;
     public int likes;
+
+    public ForumSubjectObj subject = new ForumSubjectObj();
     public AccountObj account = new AccountObj();
 }
