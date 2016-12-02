@@ -4,7 +4,6 @@ import Core.Database.SQL;
 import Core.Http.Map;
 import Core.Model;
 import Plugin.Forum.Obj.ForumPostObj;
-import javafx.geometry.Pos;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
