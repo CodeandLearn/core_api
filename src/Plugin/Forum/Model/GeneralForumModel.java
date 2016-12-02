@@ -13,7 +13,6 @@ public class GeneralForumModel extends Model {
         ForumObj forumObj = new ForumObj();
         forumObj.title = result.getString("forum_categories.title");
         forumObj.id = result.getInt("forum_categories.id");
-        forumObj.description = result.getString("forum_categories.description");
         forumObj.forums = new ForumModel().getForumByCategoryId(result.getInt("forum_categories.id")).getData();
         return forumObj;
     }

@@ -4,6 +4,7 @@ import Core.Database.SQL;
 import Core.Http.Map;
 import Core.Model;
 import Plugin.Forum.Obj.ForumSubjectObj;
+import org.json.JSONObject;
 
 /**
  * Created by Sheol on 30/11/2016.
@@ -24,13 +25,77 @@ public class SubjectModel extends Model {
     }
 
     public SubjectModel getSubjects() {
-        setGet("SELECT * FROM forum_subjects, forum_forums, accounts, avatars WHERE forum_subjects.forum_forum_id=forum_forums.id AND forum_subjects.account_id=accounts.id AND accounts.avatar_id=avatars.id");
+        setGet("SELECT * FROM forum_subjects, forum_forums, accounts, avatars " +
+                "WHERE forum_subjects.forum_forum_id=forum_forums.id " +
+                "AND forum_subjects.account_id=accounts.id " +
+                "AND accounts.avatar_id=avatars.id");
         return this;
     }
 
     public SubjectModel getSubjectById(int id) {
         make.add(id);
-        setGet(SQL.make("SELECT * FROM forum_subjects, forum_forums, accounts, avatars WHERE forum_subjects.forum_forum_id=forum_forums.id AND forum_subjects.account_id=accounts.id AND accounts.avatar_id=avatars.id AND forum_subjects.id=?", make.toArray()));
+        setGet(SQL.make("SELECT * FROM forum_subjects, forum_forums, accounts, avatars " +
+                "WHERE forum_subjects.forum_forum_id=forum_forums.id " +
+                "AND forum_subjects.account_id=accounts.id " +
+                "AND accounts.avatar_id=avatars.id " +
+                "AND forum_subjects.id=?", make.toArray()));
+        return this;
+    }
+
+    public SubjectModel getSubjectByForumId(int forum_id) {
+        make.add(forum_id);
+        setGet(SQL.make("SELECT * FROM forum_subjects, forum_forums, accounts, avatars " +
+                "WHERE forum_subjects.forum_forum_id=forum_forums.id " +
+                "AND forum_subjects.account_id=accounts.id " +
+                "AND accounts.avatar_id=avatars.id " +
+                "AND forum_subjects.forum_forum_id=?", make.toArray()));
+        return this;
+    }
+
+    public SubjectModel postSubject(int account_id, JSONObject jsonObject) {
+        make.add(account_id);
+        make.add(jsonObject.getInt("forum_forum_id"));
+        make.add(jsonObject.getString("title"));
+        make.add(false);
+        setPost(SQL.make("INSERT INTO forum_subjects (account_id, forum_forum_id, title, pin) VALUES (?, ?, ?, ?)", make.toArray()));
+        if (jsonObject.has("post")) {
+            new PostModel().postPost(account_id, jsonObject.getJSONObject("post"));
+        }
+        return this;
+    }
+    public SubjectModel putSubject(int account_id, int id, JSONObject jsonObject) {
+        make.add(jsonObject.getString("title"));
+        make.add(id);
+        make.add(account_id);
+        setPut(SQL.make("UPDATE forum_subjects SET title=? WHERE id=? AND account_id=?", make.toArray()));
+        return this;
+    }
+
+    public SubjectModel putAdminSubject(int id, JSONObject jsonObject) {
+        make.add(jsonObject.getString("title"));
+        make.add(id);
+        setPut(SQL.make("UPDATE forum_subjects SET title=? WHERE id=?", make.toArray()));
+        return this;
+    }
+
+    public SubjectModel pinSubject(int id, JSONObject jsonObject) {
+        make.add(jsonObject.getBoolean("pin"));
+        make.add(id);
+        setPut(SQL.make("UPDATE forum_subjects SET pin=? WHERE id=?", make.toArray()));
+        return this;
+    }
+
+
+    public SubjectModel deleteSubject(int account_id, int id) {
+        make.add(id);
+        make.add(account_id);
+        setDelete(SQL.make("DELETE FROM forum_subjects WHERE id=? AND account_id=?", make.toArray()));
+        return this;
+    }
+
+    public SubjectModel deleteAdminSubject(int id) {
+        make.add(id);
+        setDelete(SQL.make("DELETE FROM forum_subjects WHERE id=?", make.toArray()));
         return this;
     }
 }

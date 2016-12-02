@@ -4,6 +4,7 @@ import Core.Database.SQL;
 import Core.Http.Map;
 import Core.Model;
 import Plugin.FeedBack.Obj.FeedbackIssueObj;
+import org.json.JSONObject;
 
 /**
  * Created by Sheol on 01/12/2016.
@@ -48,10 +49,10 @@ public class IssueModel extends Model {
     public IssueModel getIssuesById(int id) {
         make.add(id);
         setGet(SQL.make("SELECT * FROM feedback_issues, feedback_labels, feedback_categories, feedback_icons, accounts " +
-                "WHERE feedback_issues.feedback_category_id=feedback_categories.id" +
-                "AND feedback_issues.feedback_label_id=feedback_labels.id" +
-                "AND feedback_issues.account_id=accounts.id" +
-                "AND feedback_categories.feedback_icon_id=feedback_icons.id" +
+                "WHERE feedback_issues.feedback_category_id=feedback_categories.id " +
+                "AND feedback_issues.feedback_label_id=feedback_labels.id " +
+                "AND feedback_issues.account_id=accounts.id " +
+                "AND feedback_categories.feedback_icon_id=feedback_icons.id " +
                 "AND feedback_issues.id=?", make.toArray()));
         return this;
     }
@@ -59,10 +60,10 @@ public class IssueModel extends Model {
     public IssueModel getIssuesByCategoryId(int category_id) {
         make.add(category_id);
         setGet(SQL.make("SELECT * FROM feedback_issues, feedback_labels, feedback_categories, feedback_icons, accounts " +
-                "WHERE feedback_issues.feedback_category_id=feedback_categories.id" +
-                "AND feedback_issues.feedback_label_id=feedback_labels.id" +
-                "AND feedback_issues.account_id=accounts.id" +
-                "AND feedback_categories.feedback_icon_id=feedback_icons.id" +
+                "WHERE feedback_issues.feedback_category_id=feedback_categories.id " +
+                "AND feedback_issues.feedback_label_id=feedback_labels.id " +
+                "AND feedback_issues.account_id=accounts.id " +
+                "AND feedback_categories.feedback_icon_id=feedback_icons.id " +
                 "AND feedback_categories.id=?", make.toArray()));
         return this;
     }
@@ -70,11 +71,39 @@ public class IssueModel extends Model {
     public IssueModel getIssuesByLabelId(int label_id) {
         make.add(label_id);
         setGet(SQL.make("SELECT * FROM feedback_issues, feedback_labels, feedback_categories, feedback_icons, accounts " +
-                "WHERE feedback_issues.feedback_category_id=feedback_categories.id" +
-                "AND feedback_issues.feedback_label_id=feedback_labels.id" +
-                "AND feedback_issues.account_id=accounts.id" +
-                "AND feedback_categories.feedback_icon_id=feedback_icons.id" +
+                "WHERE feedback_issues.feedback_category_id=feedback_categories.id " +
+                "AND feedback_issues.feedback_label_id=feedback_labels.id " +
+                "AND feedback_issues.account_id=accounts.id " +
+                "AND feedback_categories.feedback_icon_id=feedback_icons.id " +
                 "AND feedback_labels.id=?", make.toArray()));
+        return this;
+    }
+
+    public IssueModel postIssue(int account_id, JSONObject jsonObject) {
+        make.add(jsonObject.getString("title"));
+        make.add(jsonObject.getString("content"));
+        make.add(account_id);
+        make.add(jsonObject.getInt("feedback_label_id"));
+        make.add(jsonObject.getInt("feedback_category_id"));
+        make.add(getTimestamp());
+        make.add(false);
+        setPost(SQL.make("INSERT INTO feedback_issues (title, content, account_id, feedback_label_id, feedback_category_id, timestamp, is_closes) VALUES (?, ?, ?, ?, ?, ?, ?)", make.toArray()));
+        return this;
+    }
+
+    public IssueModel putIssue(int account_id, int id, JSONObject jsonObject) {
+        make.add(jsonObject.getString("title"));
+        make.add(jsonObject.getString("content"));
+        make.add(id);
+        make.add(account_id);
+        setPut(SQL.make("UPDATE feedback_issues SET title=?, content=? WHERE id=? AND account_id=?", make.toArray()));
+        return this;
+    }
+
+    public IssueModel deleteItem(int account_id, int id) {
+        make.add(id);
+        make.add(account_id);
+        setDelete(SQL.make("DELETE FROM feedback_issues WHERE id=? AND account_id=?", make.toArray()));
         return this;
     }
 }

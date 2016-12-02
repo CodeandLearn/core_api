@@ -8,7 +8,6 @@ import java.util.ArrayList;
 public class ForumObj {
     public int id;
     public String title;
-    public String description;
 
     public ArrayList<Object> forums;
 }
