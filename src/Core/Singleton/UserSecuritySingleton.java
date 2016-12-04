@@ -77,6 +77,10 @@ public class UserSecuritySingleton {
         users.add(user);
     }
 
+    public void cleanUsers() {
+        users.clear();
+    }
+
     public void updateUser(String socket, String key, Object value) {
         for (Map user : users) {
             for (Map currentToken : user.getArrayList("token_lib")) {
