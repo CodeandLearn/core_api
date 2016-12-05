@@ -65,6 +65,12 @@ public class AccountController {
         return new PutAccount().putAccount(socket, args.getInt("id"), jsonObject);
     }
 
+    @Methode("PUT")
+    @Route("/account/{id}/group/{group_id}")
+    public PutAccount putAccountGroup(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
+        return new PutAccount().changeUserGroup(args.getInt("id"), args.getInt("group_id"));
+    }
+
     @Methode("DELETE")
     @Route("/account")
     public DeleteAccount deleteAccount(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {

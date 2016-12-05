@@ -4,6 +4,8 @@ import Core.Database.SQL;
 import Core.Http.Map;
 import Core.Model;
 import Core.Singleton.UserSecuritySingleton;
+import Plugin.Group.Model.GroupModel;
+import Plugin.Group.Obj.GroupObj;
 import org.json.JSONObject;
 
 /**
@@ -39,6 +41,16 @@ public class PutAccount extends Model {
         make.add(id);
         setPut(SQL.make("UPDATE accounts SET username=?, email=?, avatar_id=? WHERE id=?", make.toArray()));
         UserSecuritySingleton.getInstance().updateUser(socket, "username", jsonObject.getString("username"));
+        return this;
+    }
+
+    public PutAccount changeUserGroup(int id, int group_id) {
+        make.add(group_id);
+        make.add(id);
+        setPut(SQL.make("UPDATE accounts SET group_id=? WHERE id=?", make.toArray()));
+        int power = ((GroupObj) new GroupModel().getGroupById(group_id).getData().get(0)).parent_id;
+        UserSecuritySingleton.getInstance().updateUserById(id, "group", power);
+        UserSecuritySingleton.getInstance().revokUserToken(UserSecuritySingleton.getInstance().getSocketById(id));
         return this;
     }
 

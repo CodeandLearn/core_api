@@ -43,6 +43,9 @@ public class ClientHandler implements Runnable {
                 userOutput = new DataOutputStream(clientSock.getOutputStream());
                 while (keepConnect && (tmp = userInput.readLine()) != null && tmp.length() > 0 && !IpSingleton.getInstance().isBanned(IpSingleton.getInstance().convertToIp(clientId))) {
                     keepConnect = ConfigSingleton.getInstance().getBoolean("keep-alive");
+                    if (keepConnect) {
+                        clearData();
+                    }
                     String buffer;
                     String jsonClient = "";
                     ServerSingleton.getInstance().setHttpCode(clientId, Code.OK);
@@ -95,6 +98,7 @@ public class ClientHandler implements Runnable {
                             break;
                         }
                     }
+                    tmp = null;
                 }
             } catch (SocketTimeoutException e) {
                 close(clientId);
@@ -108,6 +112,11 @@ public class ClientHandler implements Runnable {
         } catch (Exception e) {
             ServerSingleton.getInstance().log("IOException: ", e);
         }
+    }
+
+    private void clearData() {
+        method = "";
+        route = "";
     }
 
     private void close(String clientId) {

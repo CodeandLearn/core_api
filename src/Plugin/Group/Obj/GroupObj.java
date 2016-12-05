@@ -1,4 +1,4 @@
-package Plugin.Account.Obj;
+package Plugin.Group.Obj;
 
 /**
  * Created by teddy on 05/04/2016.

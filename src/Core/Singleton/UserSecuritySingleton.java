@@ -91,6 +91,14 @@ public class UserSecuritySingleton {
         }
     }
 
+    public void updateUserById(int id, String key, Object value) {
+        for (Map user : users) {
+            if (user.containsKey("id") && user.get("id").equals(id)) {
+                user.replace(key, value);
+            }
+        }
+    }
+
     public void updateSocketToken(String socket, String token) {
         for (Map user : users) {
             for (Map currentToken : user.getArrayList("token_lib")) {
@@ -235,6 +243,21 @@ public class UserSecuritySingleton {
             }
         }
         return -1;
+    }
+
+
+    public String getSocketById(int id) {
+        for (Map user : users) {
+            if (user.containsKey("id") && user.get("id").equals(id)) {
+                for (Map currentToken : user.getArrayList("token_lib")) {
+                    if (currentToken.containsKey("socket")) {
+                        System.err.println(id + " " + user.getString("socket"));
+                        return user.getString("socket");
+                    }
+                }
+            }
+        }
+        return "";
     }
 
     public void revokUserToken(String socket) {
