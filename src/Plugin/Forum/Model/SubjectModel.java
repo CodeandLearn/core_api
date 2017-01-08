@@ -53,16 +53,19 @@ public class SubjectModel extends Model {
     }
 
     public SubjectModel postSubject(int account_id, JSONObject jsonObject) {
-        make.add(account_id);
-        make.add(jsonObject.getInt("forum_forum_id"));
-        make.add(jsonObject.getString("title"));
-        make.add(false);
-        setPost(SQL.make("INSERT INTO forum_subjects (account_id, forum_forum_id, title, pin) VALUES (?, ?, ?, ?)", make.toArray()));
         if (jsonObject.has("post")) {
-            new PostModel().postPost(account_id, jsonObject.getJSONObject("post"));
+            make.add(account_id);
+            make.add(jsonObject.getInt("forum_forum_id"));
+            make.add(jsonObject.getString("title"));
+            make.add(false);
+            setPost(SQL.make("INSERT INTO forum_subjects (account_id, forum_forum_id, title, pin) VALUES (?, ?, ?, ?)", make.toArray()));
+            JSONObject post = jsonObject.getJSONObject("post");
+            post.put("forum_subject_id", id);
+            new PostModel().postPost(account_id, post);
         }
         return this;
     }
+
     public SubjectModel putSubject(int account_id, int id, JSONObject jsonObject) {
         make.add(jsonObject.getString("title"));
         make.add(id);
@@ -78,13 +81,19 @@ public class SubjectModel extends Model {
         return this;
     }
 
-    public SubjectModel pinSubject(int id, JSONObject jsonObject) {
-        make.add(jsonObject.getBoolean("pin"));
+    public SubjectModel pinSubject(int id) {
+        make.add(true);
         make.add(id);
         setPut(SQL.make("UPDATE forum_subjects SET pin=? WHERE id=?", make.toArray()));
         return this;
     }
 
+    public SubjectModel unpinSubject(int id) {
+        make.add(false);
+        make.add(id);
+        setPut(SQL.make("UPDATE forum_subjects SET pin=? WHERE id=?", make.toArray()));
+        return this;
+    }
 
     public SubjectModel deleteSubject(int account_id, int id) {
         make.add(id);

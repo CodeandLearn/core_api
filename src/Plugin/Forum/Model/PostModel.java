@@ -27,6 +27,7 @@ public class PostModel extends Model {
         forumPostObj.account.avatar.path = result.getString("avatars.path");
         forumPostObj.subject.id = result.getInt("forum_subjects.id");
         forumPostObj.subject.title = result.getString("forum_subjects.title");
+        forumPostObj.subject.pin = result.getBoolean("forum_subjects.pin");
         return forumPostObj;
     }
 
@@ -81,6 +82,7 @@ public class PostModel extends Model {
 
     public PostModel postPost(int account_id, JSONObject jsonObject) {
         make.add(account_id);
+        make.add(jsonObject.getInt("forum_subject_id"));
         make.add(jsonObject.getString("content"));
         make.add(getTimestamp());
         make.add(getTimestamp());
@@ -94,7 +96,8 @@ public class PostModel extends Model {
         make.clear();
         make.add(((ForumPostObj) data.get(0)).likes + 1);
         make.add(id);
-        setPut(SQL.make("UPDATE forum_posts SET like=? WHERE id=?", make.toArray()));
+        data.clear();
+        setPut(SQL.make("UPDATE forum_posts SET likes=? WHERE id=?", make.toArray()));
         return this;
     }
 
@@ -103,7 +106,8 @@ public class PostModel extends Model {
         make.clear();
         make.add(((ForumPostObj) data.get(0)).likes - 1);
         make.add(id);
-        setPut(SQL.make("UPDATE forum_posts SET like=? WHERE id=?", make.toArray()));
+        data.clear();
+        setPut(SQL.make("UPDATE forum_posts SET likes=? WHERE id=?", make.toArray()));
         return this;
     }
 
