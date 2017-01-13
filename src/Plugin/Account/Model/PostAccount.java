@@ -80,7 +80,7 @@ public class PostAccount extends Model {
                     make.add(((KeyObj) data.get(0)).id);
                     setPut(SQL.make("UPDATE access_keys SET account_id=? WHERE id=?", make.toArray()));
                     make.clear();
-                    new UserBadgeModel().postAccountBadge(account_id, 1);
+                    //new UserBadgeModel().postAccountBadge(account_id, 1);
                 }
             } else {
                 setCode(socket, Code.FORBIDDEN);

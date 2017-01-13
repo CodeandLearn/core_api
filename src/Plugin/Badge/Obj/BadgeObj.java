@@ -7,7 +7,8 @@ public class BadgeObj {
     public int id;
     public String name;
     public String path_img;
-    public int nb_courses_done;
-    public int nb_exercises_done;
-    public int type;
+    public String description;
+    //public String conditions = "{'courses, course_moderation':{'courses.id':'=course_moderation.course_id', 'course_moderation.validate':'>=1', 'count':5}, 'user_exercises':{'count':2}}";
+    //public int poid;
+    public String conditions;
 }

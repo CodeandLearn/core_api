@@ -55,7 +55,7 @@ public class AccountController {
     @Methode("PUT")
     @Route("/account")
     public PutAccount putAccount(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
-        new HistoryModel().postHistory(UserSecuritySingleton.getInstance().getUserId(socket), "account", "modifié les informations de son compte.", 0);
+        new HistoryModel().postHistory(UserSecuritySingleton.getInstance().getUserId(socket), "account", "modifié les informations de votre compte.", 0);
         return new PutAccount().putAccount(socket, UserSecuritySingleton.getInstance().getUserId(socket), jsonObject);
     }
 
@@ -63,6 +63,12 @@ public class AccountController {
     @Route("/account/{id}")
     public PutAccount putAccountById(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
         return new PutAccount().putAccount(socket, args.getInt("id"), jsonObject);
+    }
+
+    @Methode("PUT")
+    @Route("/account/{id}/group/{group_id}")
+    public PutAccount putAccountGroup(String socket, Oauth2 oauth2, Header header, JSONObject jsonObject, Map args) {
+        return new PutAccount().changeUserGroup(args.getInt("id"), args.getInt("group_id"));
     }
 
     @Methode("DELETE")
