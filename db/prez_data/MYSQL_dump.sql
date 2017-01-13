@@ -117,6 +117,36 @@ INSERT  IGNORE INTO `badges` (`id`, `name`, `path_img`, `description`, `conditio
 UNLOCK TABLES;
 
 --
+-- Dumping data for table `blog_posts`
+--
+
+LOCK TABLES `blog_posts` WRITE;
+/*!40000 ALTER TABLE `blog_posts` DISABLE KEYS */;
+INSERT  IGNORE INTO `blog_posts` VALUES (1,1,1,1,'Frontend+v2','Bonjour%2C+nous+sommes+fiers+de+vous+annoncer+que+nous+travaillons+actuellement+sur+la+version+v2+de+notre+frontend.%0AJ%27esp%C3%A8re+qu%27il+vous+plaira+%21%0A%0AComme+d%27habitude+n%27h%C3%A9sitez+%C3%A0+nous+donner+des+feedbacks+%21','1474483532486','1474645097512'),(3,1,1,1,'L%27aventure+Code+And+Learn','Bienvenue+sur+notre+blog+et+bienvenue+pour+le+lancement+de+notre+plateforme+%21%0A%0A%21%5Bimg%5D%28http%3A%2F%2Fwww.revue-banque.fr%2Fmedias%2Fcontent%2FRevue%2Fimages%2F11%2F1117998%2Frba-image-1117998.jpeg%29%0A%0ARejoignez+nous+dans+l%27aventure+Code+And+Learn+%21%21%21','1474630264710','1476602289843'),(4,1,1,2,'C%26L+sur+Facebook','Bonjour+%C3%A0+tous+%21%0A%0APour+ceux+d%27entre+vous+qui+ne+le+sauraient+pas+d%C3%A9j%C3%A0%2C+nous+avons+une+page+Facebook+%3A+%5Bhttps%3A%2F%2Fwww.facebook.com%2FCodeandLearn%5D%28https%3A%2F%2Fwww.facebook.com%2FCodeandLearn%29.%0A%0AJe+vous+invite+%C3%A0+la+like+un+maximum+et+%C3%A0+partager+%21','1474729495103','1476705713047'),(5,1,1,3,'Fix+des+%22%3Cbr+%2F%3E%22','Comme+le+titre+le+pr%C3%A9cise%2C+le+fix+est+deploy%C3%A9+et+tout+les+cours+et+post+blog+touch%C3%A9s+par+ce+bug+sont+d%C3%A9sormais+affich%C3%A9s+de+mani%C3%A8re+correcte+%21%0A%0ALe+retour+du+saut+%C3%A0+la+ligne+fera+surement+plaisir+%C3%A0+la+plupart+%21+%3B%29','1474729736918','1474735507756'),(6,1,1,4,'Windows+Phone','Tout+le+monde+travaille','1474734965487','1474734965487');
+/*!40000 ALTER TABLE `blog_posts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `blog_posts_category`
+--
+
+LOCK TABLES `blog_posts_category` WRITE;
+/*!40000 ALTER TABLE `blog_posts_category` DISABLE KEYS */;
+INSERT  IGNORE INTO `blog_posts_category` VALUES (1,'G%C3%A9n%C3%A9rale'),(2,'Communication'),(3,'Mise+%C3%A0+jour'),(5,'Categorie');
+/*!40000 ALTER TABLE `blog_posts_category` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `blog_posts_comments`
+--
+
+LOCK TABLES `blog_posts_comments` WRITE;
+/*!40000 ALTER TABLE `blog_posts_comments` DISABLE KEYS */;
+INSERT  IGNORE INTO `blog_posts_comments` VALUES (1,1,1,'Et+suivez+nous+sur+les+r%C3%A9seaux+sociaux+%21','1474483637688','1475177224863');
+/*!40000 ALTER TABLE `blog_posts_comments` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Dumping data for table `code_templates`
 --
 
