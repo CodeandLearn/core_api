@@ -57,7 +57,7 @@ public class SubjectModel extends Model {
             make.add(account_id);
             make.add(jsonObject.getInt("forum_forum_id"));
             make.add(jsonObject.getString("title"));
-            make.add(false);
+            make.add(0);
             setPost(SQL.make("INSERT INTO forum_subjects (account_id, forum_forum_id, title, pin) VALUES (?, ?, ?, ?)", make.toArray()));
             JSONObject post = jsonObject.getJSONObject("post");
             post.put("forum_subject_id", id);

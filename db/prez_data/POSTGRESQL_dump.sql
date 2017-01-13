@@ -1,5 +1,7 @@
 -- PostgreSQL dump 10.13
 
+INSERT INTO forum_icons (id, path) VALUES (1, '//');
+
 --
 -- Dumping data for table access_keys
 --

@@ -19,6 +19,10 @@
 -- Dumping data for table `access_keys`
 --
 
+LOCK TABLES `forum_icons` WRITE;
+INSERT  IGNORE INTO `forum_icons` (`id`, `path`) VALUES (1, '//');
+UNLOCK TABLES;
+
 LOCK TABLES `access_keys` WRITE;
 /*!40000 ALTER TABLE `access_keys` DISABLE KEYS */;
 INSERT  IGNORE INTO `access_keys` (`id`, `account_id`, `key_value`, `type`) VALUES (1,0,'XXXXXX-XXXXXX-XXXXXX-XXXXXX',0);
